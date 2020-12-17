@@ -1,0 +1,77 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red28\green0\blue207;}
+\margl1440\margr1440\vieww17660\viewh14660\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+It\'92s the extension of dim6top_LO_UFO_HanV2.\
+\
+The model includes 5-particle vertices related to the ctW, ctZ, and cbW couplings only.\
+Note that there are other potential sources for 5-particle vertices from other different operators. These are not included here.\
+\
+This model is just for the sanity check, whether to see there is any impact adding 5-particle vertices compared to previous results.\
+\
+\
+1. The model includes the following additional vertices\
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf0 \CocoaLigature0 \
+\
+V_349 = Vertex(name = \cf2 'V_349'\cf0 ,\
+               particles = [ P.t__tilde__, P.t, P.W__minus__, P.W__plus__, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_845,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_842,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_843,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_844\})\
+\
+\
+\
+V_350 = Vertex(name = \cf2 'V_350'\cf0 ,\
+               particles = [ P.b__tilde__, P.t, P.W__minus__, P.Z, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_846,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_849,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_850,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_851\})\
+\
+\
+\
+V_351 = Vertex(name = \cf2 'V_351'\cf0 ,\
+               particles = [ P.t__tilde__, P.b, P.W__plus__, P.Z, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_852,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_853,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_847,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_848\})\
+\
+\
+\
+\
+V_352 = Vertex(name = \cf2 'V_352'\cf0 ,\
+               particles = [ P.b__tilde__, P.b, P.W__minus__, P.W__plus__, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_854,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_857,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_856,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_855\})\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \CocoaLigature1 \
+\
+2. It doesn\'92t like the t-b-photon-W-h vertices (i.e. it crashes)\
+- Hence I removed the below\
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf0 \CocoaLigature0 \
+V_347 = Vertex(name = \cf2 'V_347'\cf0 ,\
+               particles = [ P.b__tilde__, P.t, P.a, P.W__minus__, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_837,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_834,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_838,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_841\})\
+\
+\
+V_348 = Vertex(name = \cf2 'V_348'\cf0 ,\
+               particles = [ P.t__tilde__, P.b, P.a, P.W__plus__, P.H ],\
+               color = [ \cf2 'Identity(1,2)'\cf0  ],\
+               lorentz = [ L.FFVVS2, L.FFVVS3, L.FFVVS5, L.FFVVS6 ],\
+               couplings = \{(\cf2 0\cf0 ,\cf2 1\cf0 ):C.GC_839,(\cf2 0\cf0 ,\cf2 0\cf0 ):C.GC_840,(\cf2 0\cf0 ,\cf2 3\cf0 ):C.GC_836,(\cf2 0\cf0 ,\cf2 2\cf0 ):C.GC_835\}\
+\
+\
+\
+}
