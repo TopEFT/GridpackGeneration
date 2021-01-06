@@ -3,7 +3,7 @@
 # Note that gs runs so that comparisons between cases with and without gs
 # normalization is especially uneasy for a running renormalization scale.
 # (default is False)
-norm_chromo_gs = False
+norm_chromo_gs = True
 
 # Use (Gf,MZ,MW) as electroweak inputs instead of the original
 # (aEMM1,Gf,MZ) one. Note that different numerical results are obtained
