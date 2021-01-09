@@ -7,8 +7,12 @@ from helpers.helper_tools import regex_match,run_process
 # voms-proxy-init -voms cms -valid 192:00
 
 MAX_TRANSFERS = 999  # Limit the number of transfers per code running
-USERNAME = 'awightma'
-SUB_DIR = '2019_04_19'
+USERNAME = ''
+SUB_DIR = 'FullR2Studies/PreliminaryStudies'
+
+if USERNAME == '':
+    print "\nUsername is empty. Exiting.\n"
+    raise Exception
 
 def main():
     dry_run = True
@@ -115,7 +119,7 @@ def getFilesToTransfer(fdir='.',p_wl=[],c_wl=[],r_wl=[]):
             continue
 
         cross_checks = [
-            "%s_%s_%s_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz" % (p,c,r),
+            "%s_%s_%s_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz" % (p,c,r),
             "%s_%s_%s_scanpoints.txt" % (p,c,r)
         ]
         if not os.path.exists(cross_checks[0]) or not os.path.exists(cross_checks[1]):

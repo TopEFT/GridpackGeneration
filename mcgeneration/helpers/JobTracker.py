@@ -42,8 +42,8 @@ class JobTracker(object):
 
         self.use_cached_update = False     # If true, then getRunningJobs() should return
 
-        self.scram_arch = 'slc6_amd64_gcc630'
-        self.cmssw_release = 'CMSSW_9_3_0'
+        self.scram_arch = 'slc7_amd64_gcc630'
+        self.cmssw_release = 'CMSSW_9_3_16'
 
         self.update()
 
