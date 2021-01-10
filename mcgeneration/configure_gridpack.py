@@ -64,8 +64,8 @@ tHq4fMatched         = MGProcess(name='tHq4fMatched'        ,process='tHq'  ,pca
 ttHJet               = MGProcess(name='ttHJet'              ,process='ttH'  ,pcard='ttHJet.dat'              ,tdir='ttHJet_template')
 ttlnuJet             = MGProcess(name='ttlnuJet'            ,process='ttlnu',pcard='ttlnuJet.dat'            ,tdir='ttlnuJet_template')
 ttllNuNuJetNoHiggs   = MGProcess(name='ttllNuNuJetNoHiggs'  ,process='ttll' ,pcard='ttllNuNuJetNoHiggs.dat'  ,tdir='ttllJet_template')
-tHq4f                = MGProcess(name='tHq4f'               ,process='tHq'  ,pcard='tHq4f.dat'               ,tdir='tllq-4fMatched_template')           # If using this run card for this process, remember to turn OFF matching (ickks=0) and set xqcutto 0. (Can use rc_ops to adjust run card params)
-tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4fMatched_template')   # If using this run card for this process, remember to turn OFF matching (ickks=0) and set xqcutto 0. (Can use rc_ops to adjust run card params)
+tHq4f                = MGProcess(name='tHq4f'               ,process='tHq'  ,pcard='tHq4f.dat'               ,tdir='tllq-4fMatched_template')           # If using this run card for this process, remember to turn OFF matching (ickkw=0) and set xqcut to 0. (Can use rc_ops to adjust run card params)
+tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4fMatched_template')   # If using this run card for this process, remember to turn OFF matching (ickkw=0) and set xqcut to 0. (Can use rc_ops to adjust run card params)
 
 # NLO
 ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO_template')
