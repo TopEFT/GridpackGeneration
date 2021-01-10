@@ -47,7 +47,6 @@ tllq4fMatched  = MGProcess(name='tllq4fMatched' ,process='tllq',pcard='tllq4fMat
 tllq4fMatchedNoSchanW   = MGProcess(name='tllq4fMatchedNoSchanW' ,process='tllq',pcard='tllq4fMatchedNoSchanW.dat' ,tdir='tllq-4fMatched_template')
 tllq4fNoSchanWJet       = MGProcess(name='tllq4fNoSchanWJet'     ,process='tllq',pcard='tllq4fNoSchanWJet.dat'     ,tdir='tllq-4fMatched_template')
 tllq4fNoSchanW1JetOnly  = MGProcess(name='tllq4fNoSchanW1JetOnly',process='tllq',pcard='tllq4fNoSchanW1JetOnly.dat',tdir='tllq-4fMatched_template')
-tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4fMatched_template')
 
 tllqJet4fNoSchanWNoHiggs = MGProcess(name='tllqJet4fNoSchanWNoHiggs',process='tllq',pcard='tllqJet4fNoSchanWNoHiggs.dat',tdir='tllq-4fMatched_template')
 tllqJet5fNoSchanWNoHiggs = MGProcess(name='tllqJet5fNoSchanWNoHiggs',process='tllq',pcard='tllqJet5fNoSchanWNoHiggs.dat',tdir='tllqJet-5fMatched_template')
@@ -59,10 +58,14 @@ ttZ    = MGProcess(name='ttZ',   process='ttZ',pcard='ttZ.dat',   tdir='EFT-ttH_
 ttZJet = MGProcess(name='ttZJet',process='ttZ',pcard='ttZJet.dat',tdir='ttHJet_template')
 
 tllq4fMatchedNoHiggs = MGProcess(name='tllq4fMatchedNoHiggs',process='tllq' ,pcard='tllq4fMatchedNoHiggs.dat',tdir='tllq-4fMatched_template')
-ttlnuJet             = MGProcess(name='ttlnuJet'            ,process='ttlnu',pcard='ttlnuJet.dat'            ,tdir='ttlnuJet_template')
-ttHJet               = MGProcess(name='ttHJet'              ,process='ttH'  ,pcard='ttHJet.dat'              ,tdir='ttHJet_template')
-ttllNuNuJetNoHiggs   = MGProcess(name='ttllNuNuJetNoHiggs'  ,process='ttll' ,pcard='ttllNuNuJetNoHiggs.dat'  ,tdir='ttllJet_template')
 tHq4fMatched         = MGProcess(name='tHq4fMatched'        ,process='tHq'  ,pcard='tHq4fMatched.dat'        ,tdir='tllq-4fMatched_template')
+
+# Processes used in TOP-19-001
+ttHJet               = MGProcess(name='ttHJet'              ,process='ttH'  ,pcard='ttHJet.dat'              ,tdir='ttHJet_template')
+ttlnuJet             = MGProcess(name='ttlnuJet'            ,process='ttlnu',pcard='ttlnuJet.dat'            ,tdir='ttlnuJet_template')
+ttllNuNuJetNoHiggs   = MGProcess(name='ttllNuNuJetNoHiggs'  ,process='ttll' ,pcard='ttllNuNuJetNoHiggs.dat'  ,tdir='ttllJet_template')
+tHq4f                = MGProcess(name='tHq4f'               ,process='tHq'  ,pcard='tHq4f.dat'               ,tdir='tllq-4fMatched_template')           # If using this run card for this process, remember to turn OFF matching (ickks=0) and set xqcutto 0. (Can use rc_ops to adjust run card params)
+tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4fMatched_template')   # If using this run card for this process, remember to turn OFF matching (ickks=0) and set xqcutto 0. (Can use rc_ops to adjust run card params)
 
 # NLO
 ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO_template')
