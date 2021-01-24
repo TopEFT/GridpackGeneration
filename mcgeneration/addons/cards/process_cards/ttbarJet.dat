@@ -30,12 +30,7 @@ set complex_mass_scheme False
 set max_npoint_for_channel 0
 import model dim6top_LO_UFO
 define p = p b b~
-define j = p b b~
-define l+ = e+ mu+
-define l- = e- mu-
-define vl = ve vm vt
-define vl~ = ve~ vm~ vt~
-generate p p > t t~ DIM6=1
-add process p p > t t~ j DIM6=1
-add process p p > t t~ j j DIM6=1
+define j = p
+generate p p > t t~ DIM6=1 @0
+add process p p > t t~ j DIM6=1 @1
 output SUBSETUP -nojpeg
