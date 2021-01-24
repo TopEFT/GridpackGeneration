@@ -18,7 +18,7 @@ from helpers.MGProcess import MGProcess
 
 #NOTE: The template directory should contain run_card.dat and customizecards.dat files
 tHq      = MGProcess(name='tHq'     ,process='tHq'   ,pcard='tHq.dat'     ,tdir='EFT-tHq_template')
-ttbar    = MGProcess(name='ttbar'   ,process='ttbar' ,pcard='ttbar.dat'   ,tdir='defaultPDFs_template')
+#ttbar    = MGProcess(name='ttbar'   ,process='ttbar' ,pcard='ttbar.dat'   ,tdir='defaultPDFs_template')
 tHlnu    = MGProcess(name='tHlnu'   ,process='tHlnu' ,pcard='tHlnu.dat'   ,tdir='centralTHW_template')
 ttWlnu   = MGProcess(name='ttWlnu'  ,process='ttWlnu',pcard='ttWlnu.dat'  ,tdir='centralTTWW_template')
 tttt     = MGProcess(name='tttt'    ,process='tttt'  ,pcard='tttt.dat'    ,tdir='tttt_template')
@@ -59,6 +59,11 @@ ttZJet = MGProcess(name='ttZJet',process='ttZ',pcard='ttZJet.dat',tdir='ttHJet_t
 
 tllq4fMatchedNoHiggs = MGProcess(name='tllq4fMatchedNoHiggs',process='tllq' ,pcard='tllq4fMatchedNoHiggs.dat',tdir='tllq-4fMatched_template')
 tHq4fMatched         = MGProcess(name='tHq4fMatched'        ,process='tHq'  ,pcard='tHq4fMatched.dat'        ,tdir='tllq-4fMatched_template')
+
+# Testing some ttbar processes
+ttbar       = MGProcess(name='ttbar'      ,process='ttbar' ,pcard='ttbar.dat'      ,tdir='ttHJet_template') # Remember to turn off matching if using this run card!!!
+ttbarJet    = MGProcess(name='ttbarJet'   ,process='ttbar' ,pcard='ttbarJet.dat'   ,tdir='ttHJet_template')
+#ttbarJetJet = MGProcess(name='ttbarJetJet',process='ttbar' ,pcard='ttbarJetJet.dat',tdir='ttHJet_template')
 
 # Processes used in TOP-19-001
 ttHJet               = MGProcess(name='ttHJet'              ,process='ttH'  ,pcard='ttHJet.dat'              ,tdir='ttHJet_template')
@@ -392,7 +397,8 @@ def main():
     gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
-    gridpack.setOptions(coupling_string="FCNC=0 DIM6=1",replace_model="dim6top_LO_UFO_HanV4_2")
+    #gridpack.setOptions(coupling_string="FCNC=0 DIM6=1",replace_model="dim6top_LO_UFO_HanV4_2")
+    gridpack.setOptions(coupling_string="FCNC=0 DIM6=1",replace_model="dim6top_LO_UFO_19-05-20")
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctZ^2=1 DIM6_ctW^2=1") # For example
