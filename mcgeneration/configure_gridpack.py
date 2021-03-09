@@ -26,6 +26,13 @@ tttt     = MGProcess(name='tttt'    ,process='tttt'  ,pcard='tttt.dat'    ,tdir=
 ttH      = MGProcess(name='ttH'     ,process='ttH',pcard='ttH.dat'     ,tdir='EFT-ttH_template')
 ttHDecay = MGProcess(name='ttHDecay',process='ttH',pcard='ttHDecay.dat',tdir='defaultPDFs_template')
 
+# Process cards added for the H interference check 
+tHTOllq4f         = MGProcess(name='tHTOllq4f'        , process='tHq'  , pcard='tHTOllq4f.dat'         , tdir='tllq-4f_template')
+tHTOllq4fNoSchanW = MGProcess(name='tHTOllq4fNoSchanW', process ='tHq' , pcard='tHTOllq4fNoSchanW.dat' , tdir='tllq-4f_template')
+ttHTOll           = MGProcess(name='ttHTOll'          , process='ttH'  , pcard='ttHTOll.dat'           , tdir='EFT-ttH_template')
+ttHTOllJet        = MGProcess(name='ttHTOllJet'       ,process='ttH'   , pcard='ttHTOllJet.dat'        , tdir='ttHJet_template')
+ttllNuNuJet = MGProcess(name='ttllNuNuJet',process='ttll' ,pcard='ttllNuNuJet.dat'  ,tdir='ttllJet_template')
+
 ttHJetgg = MGProcess(name='ttHJetgg',process='ttH',pcard='ttHJetgg.dat',tdir='ttHJet_template')
 ttHJetgq = MGProcess(name='ttHJetgq',process='ttH',pcard='ttHJetgq.dat',tdir='ttHJet_template')
 ttHJetqq = MGProcess(name='ttHJetqq',process='ttH',pcard='ttHJetqq.dat',tdir='ttHJet_template')
@@ -69,8 +76,8 @@ ttbarJet    = MGProcess(name='ttbarJet'   ,process='ttbar' ,pcard='ttbarJet.dat'
 ttHJet               = MGProcess(name='ttHJet'              ,process='ttH'  ,pcard='ttHJet.dat'              ,tdir='ttHJet_template')
 ttlnuJet             = MGProcess(name='ttlnuJet'            ,process='ttlnu',pcard='ttlnuJet.dat'            ,tdir='ttlnuJet_template')
 ttllNuNuJetNoHiggs   = MGProcess(name='ttllNuNuJetNoHiggs'  ,process='ttll' ,pcard='ttllNuNuJetNoHiggs.dat'  ,tdir='ttllJet_template')
-tHq4f                = MGProcess(name='tHq4f'               ,process='tHq'  ,pcard='tHq4f.dat'               ,tdir='tllq-4fMatched_template')           # If using this run card for this process, remember to turn OFF matching (ickkw=0) and set xqcut to 0. (Can use rc_ops to adjust run card params)
-tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4fMatched_template')   # If using this run card for this process, remember to turn OFF matching (ickkw=0) and set xqcut to 0. (Can use rc_ops to adjust run card params)
+tHq4f                = MGProcess(name='tHq4f'               ,process='tHq'  ,pcard='tHq4f.dat'               ,tdir='tllq-4f_template')
+tllq4fNoSchanWNoHiggs0p = MGProcess(name='tllq4fNoSchanWNoHiggs0p',process='tllq',pcard='tllq4fNoSchanWNoHiggs0p.dat',tdir='tllq-4f_template')
 
 # NLO
 ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO_template')
