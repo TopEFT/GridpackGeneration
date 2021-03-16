@@ -73,7 +73,7 @@
 # Type and output format
 #**********************************************************
   True    = gridpack       !True = setting up the grid pack
-  average =  event_norm    ! average/sum. Normalization of the weight in the LHEF
+  sum     =  event_norm    ! average/sum. Normalization of the weight in the LHEF
 #**********************************************************
 # Automatic ptj and mjj cuts if xqcut > 0
 # (turn off for VBF and single top processes)
