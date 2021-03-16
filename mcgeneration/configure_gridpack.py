@@ -375,19 +375,28 @@ def submit_scanfile_jobs(gp,dofs,tag,scan_files,max_submits=-1):
 
 def main():
     random.seed()
-    stype = ScanType.FROMFILE
-    btype = BatchType.CMSCONNECT
-    tag   = 'ProductionWith4QuarkOps'
+    stype = ScanType.NONE
+    btype = BatchType.NONE
+    tag   = 'ExampleTag'
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     scan_files = [
+        'scanfiles/ttll_16DOldLimitsAxisScan_run1_scanpoints.txt', # TOP-10-001 ttHJet start pt
+        'scanfiles/ttHJet_22WCs_v0.txt',
+        'scanfiles/ttlnuJet_22WCs_v0.txt',
+        'scanfiles/ttllJet_22WCs_v0.txt',
         'scanfiles/reweighting_1.txt',
         'scanfiles/reweighting_2.txt',
         'scanfiles/reweighting_3.txt',
     ]
-    #proc_list = [tllq4fMatchedNoHiggs,ttlnuJet,ttHJet,ttllNuNuJetNoHiggs,tHq4fMatched]
-    proc_list = [ttH,ttHJet,ttlnu,ttlnuJet,ttllNuNuNoHiggs,ttllNuNuJetNoHiggs,ttbar]
-    dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p]
+    #dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    dof_list  = [
+        ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
+        cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
+        cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
+        #ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
+    ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
     rc_ops = {
