@@ -239,7 +239,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
                     gp=gridpack,
                     dofs=dofs,
                     tag=tag_postfix,
-                    scan_files=scan_files,
+                    scan_files=scan_files[p.getName()],
                     max_submits=max_submits
 
                 )
@@ -380,16 +380,73 @@ def main():
     tag   = 'ExampleTag'
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
-    scan_files = [
-        'scanfiles/ttll_16DOldLimitsAxisScan_run1_scanpoints.txt', # TOP-10-001 ttHJet start pt
-        'scanfiles/ttHJet_22WCs_v0.txt',
-        'scanfiles/ttlnuJet_22WCs_v0.txt',
-        'scanfiles/ttllJet_22WCs_v0.txt',
-        'scanfiles/reweighting_1.txt',
-        'scanfiles/reweighting_2.txt',
-        'scanfiles/reweighting_3.txt',
-    ]
-    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p]
+    #scan_files = [
+    #    'scanfiles/ttll_16DOldLimitsAxisScan_run1_scanpoints.txt', # TOP-10-001 ttHJet start pt
+    #    'scanfiles/ttHJet_22WCs_v0.txt',
+    #    'scanfiles/ttlnuJet_22WCs_v0.txt',
+    #    'scanfiles/ttllJet_22WCs_v0.txt',
+    #    'scanfiles/reweighting_1.txt',
+    #    'scanfiles/reweighting_2.txt',
+    #    'scanfiles/reweighting_3.txt',
+    #]
+    scan_files = {
+        'ttHJet': [
+            'scanfiles/startpts_scale_by_1p1_ttHJet.txt',
+            'scanfiles/startpts_scale_by_1p3_ttHJet.txt',
+            'scanfiles/startpts_scale_by_1p5_ttHJet.txt',
+            'scanfiles/startpts_scale_by_2p0_ttHJet.txt',
+            'scanfiles/startpts_scale_by_5p0_ttHJet.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'ttlnuJet': [
+            'scanfiles/startpts_scale_by_1p1_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_1p3_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_1p5_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_2p0_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_5p0_ttlnuJet.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'ttllNuNuJetNoHiggs': [
+            'scanfiles/startpts_scale_by_1p1_ttllJet.txt',
+            'scanfiles/startpts_scale_by_1p3_ttllJet.txt',
+            'scanfiles/startpts_scale_by_1p5_ttllJet.txt',
+            'scanfiles/startpts_scale_by_2p0_ttllJet.txt',
+            'scanfiles/startpts_scale_by_5p0_ttllJet.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'tHq4f': [
+            'scanfiles/startpts_scale_by_1p1_tHq.txt',
+            'scanfiles/startpts_scale_by_1p3_tHq.txt',
+            'scanfiles/startpts_scale_by_1p5_tHq.txt',
+            'scanfiles/startpts_scale_by_2p0_tHq.txt',
+            'scanfiles/startpts_scale_by_5p0_tHq.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'tllq4fNoSchanWNoHiggs0p': [
+            'scanfiles/startpts_scale_by_1p1_tllq.txt',
+            'scanfiles/startpts_scale_by_1p3_tllq.txt',
+            'scanfiles/startpts_scale_by_1p5_tllq.txt',
+            'scanfiles/startpts_scale_by_2p0_tllq.txt',
+            'scanfiles/startpts_scale_by_5p0_tllq.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'ttbarJet': [
+            'scanfiles/startpts_scale_by_1p1_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_1p3_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_1p5_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_2p0_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_5p0_ttbarJet.txt',
+            'scanfiles/top19001_lo_startpt_22d.txt',
+            'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+    }
+
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet]
     #dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
