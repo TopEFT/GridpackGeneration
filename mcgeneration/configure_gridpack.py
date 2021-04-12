@@ -62,6 +62,8 @@ tllq5fNoSchanWNoHiggs = MGProcess(name='tllq5fNoSchanWNoHiggs',process='tllq',pc
 
 ttW    = MGProcess(name='ttW',   process='ttW',pcard='ttW.dat',   tdir='EFT-ttH_template')
 ttWJet = MGProcess(name='ttWJet',process='ttW',pcard='ttWJet.dat',tdir='ttHJet_template')
+ttW4f    = MGProcess(name='ttW4f',   process='ttW',pcard='ttW4f.dat',   tdir='EFT-ttH_4f_template')
+ttWJet4f = MGProcess(name='ttWJet4f',process='ttW',pcard='ttWJet4f.dat',tdir='ttHJet_4f_template')
 ttZ    = MGProcess(name='ttZ',   process='ttZ',pcard='ttZ.dat',   tdir='EFT-ttH_template')
 ttZJet = MGProcess(name='ttZJet',process='ttZ',pcard='ttZJet.dat',tdir='ttHJet_template')
 
