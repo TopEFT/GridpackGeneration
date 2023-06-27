@@ -25,6 +25,7 @@ tttt     = MGProcess(name='tttt'    ,process='tttt'  ,pcard='tttt.dat'    ,tdir=
 ttttJet  = MGProcess(name='ttttJet'    ,process='tttt'  ,pcard='ttttJet.dat'    ,tdir='ttHJet_template')
 
 ttH      = MGProcess(name='ttH'     ,process='ttH',pcard='ttH.dat'     ,tdir='EFT-ttH_template')
+ttgamma      = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma.dat'     ,tdir='EFT-ttgamma_template')
 ttHDecay = MGProcess(name='ttHDecay',process='ttH',pcard='ttHDecay.dat',tdir='defaultPDFs_template')
 
 # Process cards added for the H interference check 
@@ -448,13 +449,13 @@ def main():
         ],
     }
 
-    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet]
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
     #dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
-        #ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
+        ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
     ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
