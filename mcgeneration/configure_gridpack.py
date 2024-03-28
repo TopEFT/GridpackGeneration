@@ -98,7 +98,7 @@ ttZNLO = MGProcess(name='ttZNLO',process='ttZ',pcard='ttZ_NLO.dat',tdir='ttZ-NLO
 
 # Run card based off of the following (with edits since we do not have an extra jet):
 # https://github.com/Saptaparna/EFTAnalysis/blob/5bc88a3314f3c7f7a1457a7b777feff8e5d11323/SampleGenerationDim6/CardsWithAdditionalOperators/WZZ_1Jet_xqcut15_12Operators_4F/WZZ_1Jet_xqcut15_12Operators_4F_run_card.dat
-ZH = MGProcess(name='ZH', process='ZH', pcard='zh_smeftsim.dat', tdir='ZH_template')
+ZH = MGProcess(name='ZH', process='ZH', pcard='zh_4f.dat', tdir='zh_4f_template')
 
 
 ##############################################
