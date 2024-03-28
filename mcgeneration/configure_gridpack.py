@@ -16,6 +16,11 @@ from helpers.MGProcess import MGProcess
 #voms-proxy-init -voms cms -valid 192:00
 #nohup python configure_gridpack.py >& output.log &
 
+####################################################
+################# Define processes #################
+
+### Top processes ###
+
 #NOTE: The template directory should contain run_card.dat and customizecards.dat files
 tHq      = MGProcess(name='tHq'     ,process='tHq'   ,pcard='tHq.dat'     ,tdir='EFT-tHq_template')
 #ttbar    = MGProcess(name='ttbar'   ,process='ttbar' ,pcard='ttbar.dat'   ,tdir='defaultPDFs_template')
@@ -88,6 +93,17 @@ ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO
 ttWNLO = MGProcess(name='ttWNLO',process='ttW',pcard='ttW_NLO.dat',tdir='ttZ-NLO_template')
 ttZNLO = MGProcess(name='ttZNLO',process='ttZ',pcard='ttZ_NLO.dat',tdir='ttZ-NLO_template')
 
+
+### Ewk processes ##
+
+# Run card based off of the following (with edits since we do not have an extra jet):
+# https://github.com/Saptaparna/EFTAnalysis/blob/5bc88a3314f3c7f7a1457a7b777feff8e5d11323/SampleGenerationDim6/CardsWithAdditionalOperators/WZZ_1Jet_xqcut15_12Operators_4F/WZZ_1Jet_xqcut15_12Operators_4F_run_card.dat
+ZH = MGProcess(name='ZH', process='ZH', pcard='zh_smeftsim.dat', tdir='ZH_template')
+
+
+##############################################
+################# Define WCs #################
+
 ctp   = DegreeOfFreedom(name='ctp'  ,relations=[['ctp'] ,1.0])
 cpQM  = DegreeOfFreedom(name='cpQM' ,relations=[['cpQM'],1.0])
 cpQ3  = DegreeOfFreedom(name='cpQ3' ,relations=[['cpQ3'],1.0])
@@ -137,6 +153,24 @@ all_coeffs       = [ctp,cpQM,cpQ3,cpt,cptb,ctW,ctZ,cbW,ctG,cQQ1,cQQ8,cQt1,cQt8,c
 ana_coeffs       = [ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt,cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi]  # 16 operators
 coeffs_4Hvy      = [cQQ1,cQQ8,cQt1,cQt8,ctt1,ctb1,cQtQb1,cQtQb8]    # 8 operators
 coeffs_2Hvy_2Lgt = [cQq13,cQq83,cQq11,cQq81,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
+
+
+# WCs from SMEFTsim
+cHq1  = DegreeOfFreedom(name='cHq1'  ,relations=[['cHq1'],1.0])
+cHq3  = DegreeOfFreedom(name='cHq3'  ,relations=[['cHq3'],1.0])
+cHu   = DegreeOfFreedom(name='cHu'  ,relations=[['cHu'],1.0])
+cHd   = DegreeOfFreedom(name='cHd'  ,relations=[['cHd'],1.0])
+cHDD  = DegreeOfFreedom(name='cHDD'  ,relations=[['cHDD'],1.0])
+cHbox = DegreeOfFreedom(name='cHbox'  ,relations=[['cHbox'],1.0])
+cHB   = DegreeOfFreedom(name='cHB'  ,relations=[['cHB'],1.0])
+cHW   = DegreeOfFreedom(name='cHW'  ,relations=[['cHW'],1.0])
+cHWB  = DegreeOfFreedom(name='cHWB'  ,relations=[['cHWB'],1.0])
+cHl3  = DegreeOfFreedom(name='cHl3'  ,relations=[['cHl3'],1.0])
+cll1  = DegreeOfFreedom(name='cll1'  ,relations=[['cll1'],1.0])
+
+
+#############################################
+################# Functions #################
 
 # For submitting many gridpack jobs on cmsconnect
 def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,stype,scan_files=[],proc_run_wl={},attempt_resubmit=False):
@@ -376,6 +410,11 @@ def submit_scanfile_jobs(gp,dofs,tag,scan_files,max_submits=-1):
             return submitted
     return submitted
 
+
+
+########################################
+################# Main #################
+
 def main():
     random.seed()
     stype = ScanType.NONE
@@ -449,13 +488,23 @@ def main():
         ],
     }
 
-    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
-    #dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    # Example proc lis
+    #proc_list =  [ttbarJet,ttgamma]
+
+    # For Ewk studies
+    #proc_list = [ZH]
+    #dof_list  = [
+    #    cHq1, cHq3, cHu, cHd,
+    #    cHDD, cHbox, cHB, cHW, cHWB,
+    #]
+
+    # For TOP-22-006
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,
     dof_list  = [
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
-        ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
+        #ctt1,cQQ1,cQt1,cQt8                    # 4-heavy quarks
     ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
@@ -528,7 +577,7 @@ def main():
                 gp=gridpack,
                 dofs=dof_list,
                 tag=tag,
-                scan_files=scan_files,
+                scan_files=scan_files[p.name],
                 max_submits=-1
             )
         else:
