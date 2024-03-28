@@ -23,13 +23,13 @@
 #*********************************************************************
 # Run to generate the grid pack                                      *
 #*********************************************************************
-  False     = gridpack  !True = setting up the grid pack
+  True     = gridpack  !True = setting up the grid pack
 #*********************************************************************
 # Number of events and rnd seed                                      *
 # Warning: Do not generate more than 1M events in a single run       *
 # If you want to run Pythia, avoid more than 50k events in a run.    *
 #*********************************************************************
-  1000 = nevents ! Number of unweighted events requested 
+  5000 = nevents ! Number of unweighted events requested 
   0   = iseed   ! rnd seed (0=assigned automatically=default))
 #*********************************************************************
 # Collider type and energy                                           *
@@ -61,6 +61,10 @@ $DEFAULT_PDF_MEMBERS = reweight_PDF
  91.188  = dsqrt_q2fact2    ! fixed fact scale for pdf2
  1 = dynamical_scale_choice ! Choose one of the preselected dynamical choices
  1.0  = scalefact        ! scale factor for event-by-event scales
+#*********************************************************************
+# Type and output format
+#*********************************************************************
+ sum     =  event_norm    ! average/sum. Normalization of the weight in the LHEF
 #*********************************************************************
 # Time of flight information. (-1 means not run)
 #*********************************************************************
