@@ -28,7 +28,7 @@ set loop_color_flows False
 set gauge unitary
 set complex_mass_scheme False
 set max_npoint_for_channel 0
-import model dim6top_LO_UFO
+import model PLACEHOLDER_MODEL
 define p = p b b~
 define j = p
 define l+ = e+ mu+ ta+ 
