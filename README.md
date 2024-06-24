@@ -21,5 +21,9 @@ This repository contains the files that are necessary for setting up a `genprodu
 
 # Gridpack Options:
 - The `replace_model` option expects a list of length 2. The first element is the name of the old Madgraph model as it exists in the process card and the second element is the name of the new model that should replace the old one.
-   - Ex: `gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])`
-
+```python
+from helpers.Gridpack import Gridpack
+gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
+# Alternatively via setOptions
+gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
+```
