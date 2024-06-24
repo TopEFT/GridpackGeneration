@@ -190,19 +190,21 @@ class Gridpack(object):
             sed_str = "s|DIM6=1|{new}|g".format(new=self.ops['coupling_string'])
             run_process(['sed','-i','-e',sed_str,fpath])
 
-        old = "PLACEHOLDER_MODEL"
         if self.ops['use_coupling_model']:
             # Replace the default dim6 model with the 'each_coupling_order' version
             # NOTE: This will overwrite the 'replace_model' option
+            print "{ind}Using each_coupling_order model!".format(ind=indent_str)
+            old = "dim6top_LO_UFO"
             new = "dim6top_LO_UFO_each_coupling_order"
-        elif self.ops['replace_model']:
-            new = self.ops['replace_model']
-        else:
-            # Use a default model if custom one not specified
-            new = "dim6top_LO_UFO"
-        print "{ind}Using {model} model".format(model=new,ind=indent_str)
-        sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
-        run_process(['sed','-i','-e',sed_str,fpath])
+            sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
+            run_process(['sed','-i','-e',sed_str,fpath])
+
+        if self.ops['replace_model']:
+            rep_model = self.ops['replace_model']
+            print "{ind}Using {model} model".format(model=rep_model,ind=indent_str)
+            old = "dim6top_LO_UFO"
+            sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=rep_model)
+            run_process(['sed','-i','-e',sed_str,fpath])
 
         # Replace SUBSETUP in the process card with the correct name
         sed_str = "s|SUBSETUP|{setup}|g".format(setup=setup)
