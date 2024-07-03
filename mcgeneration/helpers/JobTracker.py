@@ -1,7 +1,7 @@
 import os
 import datetime
 import math
-from helper_tools import run_process,regex_match
+from helpers.helper_tools import run_process,regex_match
 
 # Utility class for keeping track of gridpack production jobs
 # NOTE: This assumes that all the relevant log files are in the same directory
@@ -58,7 +58,7 @@ class JobTracker(object):
         self.stuck = self.getStuckJobs(self.stuck_cutoff)
 
     def addResubmit(self,job):
-        if not self.resubmitted.has_key(job):
+        if not job in self.resubmitted:
             self.resubmitted[job] = 0
         self.resubmitted[job] += 1
 
@@ -326,25 +326,25 @@ class JobTracker(object):
             t = self.getLastModifiedTime(log_file)
             h,m,s = self.formatTime(t)
             mod_tstr = "[%s:%s:%s]" % (h.rjust(2,"0"),m.rjust(2,"0"),s.rjust(2,"0"))
-            #print "\nChecking: %s - %s - %s" % (fn,int_tstr,mod_tstr)
-            #print "\nChecking: %s - Total %s - Intg %s - LogMod %s" % (fn,tot_tstr,int_tstr,mod_tstr)
-            print "\nChecking: %s - %s - %s - %s" % (fn,tot_tstr,int_tstr,mod_tstr)
+            #print("\nChecking: %s - %s - %s" % (fn,int_tstr,mod_tstr))
+            #print("\nChecking: %s - Total %s - Intg %s - LogMod %s" % (fn,tot_tstr,int_tstr,mod_tstr))
+            print("\nChecking: %s - %s - %s - %s" % (fn,tot_tstr,int_tstr,mod_tstr))
             run_process(['tail','-n%d' % (lines),log_file])
 
     def displayJobList(self,s,arr):
-        print "%s Jobs: %d" % (s,len(arr))
+        print("%s Jobs: %d" % (s,len(arr)))
         for f in sorted(arr):
-            print "\t%s" % (f)
+            print("\t%s" % (f))
 
     def showJobs(self,wl=[]):
-        print "Last Update: %s" % (self.last_update)
+        print("Last Update: %s" % (self.last_update))
         if len(wl) == 0:
             wl = self.getJobTypes()
 
         if len(self.resubmitted):
-            print "Resubmitted Jobs:"
+            print("Resubmitted Jobs:")
             for k,v in self.resubmitted.iteritems():
-                print "\t%s: %d" % (k,v)
+                print("\t%s: %d" % (k,v))
 
         if self.RUNNING in wl:
             self.displayJobList("Running",  self.running)
@@ -372,9 +372,9 @@ if __name__ == "__main__":
     job_list = [JobTracker.RUNNING,JobTracker.CODEGEN,JobTracker.INTEGRATE,JobTracker.INTEGRATE_FILTER,JobTracker.STUCK]
     tracker.showJobs(wl=job_list)
     tracker.checkProgress(lines=5)
-    print "\nChecking finished jobs for failures:"
+    print("\nChecking finished jobs for failures:")
     for job in tracker.finished:
         if tracker.logHasError(job=job,fdir=curr_dir):
-            print "\tFinished Job %s has error!" % (job)
+            print("\tFinished Job %s has error!" % (job))
         if not tracker.logHasXsec(job=job,fdir=curr_dir):
-            print "\tFinished Job %s is missing xsec!" % (job)
+            print("\tFinished Job %s is missing xsec!" % (job))

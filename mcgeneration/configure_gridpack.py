@@ -1,7 +1,6 @@
 import os
 import subprocess
 import shutil
-import itertools
 import random
 import time
 
@@ -142,7 +141,7 @@ coeffs_2Hvy_2Lgt = [cQq13,cQq83,cQq11,cQq81,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,c
 def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,stype,scan_files=[],proc_run_wl={},attempt_resubmit=False):
     #NOTE: The proc_run_wl is only use for SLINSPACE mode
     if runs == 0:
-        print "ERROR: For Batch jobs, need to specify at least 1 run!"
+        print("ERROR: For Batch jobs, need to specify at least 1 run!")
         return
 
     tracker = JobTracker(fdir=os.getcwd())
@@ -163,7 +162,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
         tracker.update()
         tracker.showJobs(wl=[JobTracker.CODEGEN,JobTracker.INTEGRATE])
         tracker.checkProgress()
-        print ""
+        print("")
         max_submits = min(
             max_gen - len(tracker.codegen),
             max_int - len(tracker.intg_filter),
@@ -263,16 +262,16 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
                 )
             if submitted >= max_submits:
                 break
-        print ""
+        print("")
         if not submitted and len(tracker.running) == 0:
             # Nothing left to submit and all jobs have finished running
             # Note: A kill command sent to the parent still wont kill the children processes
             done = True
         else:
             time.sleep(delay)
-    print "Done submitting jobs!"
-    print "IMPORTANT: Make sure to check the condor_q for any held jobs!"
-    #print "IMPORTANT: There could still be (soon to be orphaned) running jobs, make sure to check that they complete properly!"
+    print("Done submitting jobs!")
+    print("IMPORTANT: Make sure to check the condor_q for any held jobs!")
+    #print("IMPORTANT: There could still be (soon to be orphaned) running jobs, make sure to check that they complete properly!")
 
 # Creates 1-D gridpacks at multiple linspaced starting points for each WC specified
 def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
@@ -308,12 +307,12 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             )
             if not gp.exists():
                 gp.setup()
-                print gp.baseSettings(),
+                print(gp.baseSettings())
                 submitted += gp.submit()
                 time.sleep(delay)
-                print ""
+                print("")
             else:
-                print "Skipping gridpack: %s" % (gp.getSetupString())
+                print("Skipping gridpack: %s" % (gp.getSetupString()))
             if max_submits > 0 and submitted >= max_submits:
                 return submitted
     return submitted
@@ -330,7 +329,7 @@ def submit_ndim_jobs(gp,dofs,npts,runs,tag,start_pts=[],max_submits=-1):
             dof.setLimits(0,None,None)
         pt = {}
         if idx < len(start_pts):
-            for k,v in start_pts[idx].iteritems(): pt[k] = v
+            for k,v in start_pts[idx].items(): pt[k] = v
         gp.configure(
             tag=tag,
             run=idx,
@@ -340,12 +339,12 @@ def submit_ndim_jobs(gp,dofs,npts,runs,tag,start_pts=[],max_submits=-1):
         )
         if not gp.exists():
             gp.setup()
-            print gp.baseSettings(),
+            print(gp.baseSettings())
             submitted += gp.submit()
             time.sleep(delay)
-            print ""
+            print("")
         else:
-            print "Skipping gridpack: %s" % (gp.getSetupString())
+            print("Skipping gridpack: %s" % (gp.getSetupString()))
         if max_submits > 0 and submitted >= max_submits:
             return submitted
     return submitted
@@ -366,12 +365,12 @@ def submit_scanfile_jobs(gp,dofs,tag,scan_files,max_submits=-1):
         )
         if not gp.exists():
             gp.setup()
-            print gp.baseSettings(),
+            print(gp.baseSettings())
             submitted += gp.submit()
             time.sleep(delay)
-            print ""
+            print("")
         else:
-            print "Skipping gridpack: %s" % (gp.getSetupString())
+            print("Skipping gridpack: %s" % (gp.getSetupString()))
         if max_submits > 0 and submitted >= max_submits:
             return submitted
     return submitted
@@ -535,12 +534,12 @@ def main():
             gridpack.configure(tag=tag,run=0,dofs=dof_list,num_pts=npts,start_pt=start_pt)
             if not gridpack.exists():
                 gridpack.setup()
-                print gridpack.baseSettings(),
+                print(gridpack.baseSettings())
                 submitted += gridpack.submit()
-                print ""
+                print("")
             else:
-                print "Skipping gridpack: %s" % (gridpack.getSetupString())
+                print("Skipping gridpack: %s" % (gridpack.getSetupString()))
 
 if __name__ == "__main__":
     main()
-    print "\nFinished!"
+    print("\nFinished!")
