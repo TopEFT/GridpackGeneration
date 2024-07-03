@@ -19,4 +19,11 @@ This repository contains the files that are necessary for setting up a `genprodu
 - If you are running the script from `cmsconnect`, it will create the directory in your `/local-scratch` area
 - Files in `/local-scratch` are deleted 30 days after their last modification, so if you would like to keep your gridpacks, be sure to move them to a permanent location after they are completed
 
-
+# Gridpack Options:
+- The `replace_model` option expects a list of length 2. The first element is the name of the old Madgraph model as it exists in the process card and the second element is the name of the new model that should replace the old one.
+```python
+from helpers.Gridpack import Gridpack
+gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
+# Alternatively via setOptions
+gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
+```

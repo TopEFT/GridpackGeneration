@@ -62,7 +62,7 @@ class Gridpack(object):
             'save_diagrams': False,         # Runs a modified version of the generation script that exits early to keep feynman diagrams
             'use_coupling_model': False,    # Use the 'coupling_orders' version of the dim6 model
             'coupling_string': None,        # If not None replaces "DIM6=1" with the specified string in the process card
-            'replace_model': None,          # If not None overwrites the import model line of the process card
+            'replace_model': None,          # If not None needs to be a tuple/list of length 2 that specifies the old and new model to be replaced
             'flavor_scheme': 5,
             'default_limits': [-10,10],
         }
@@ -200,10 +200,10 @@ class Gridpack(object):
             run_process(['sed','-i','-e',sed_str,fpath])
 
         if self.ops['replace_model']:
-            rep_model = self.ops['replace_model']
-            print "{ind}Using {model} model".format(model=rep_model,ind=indent_str)
-            old = "dim6top_LO_UFO"
-            sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=rep_model)
+            old = self.ops['replace_model'][0]
+            new = self.ops['replace_model'][1]
+            print "{ind}Using {model} model".format(model=old,ind=indent_str)
+            sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
             run_process(['sed','-i','-e',sed_str,fpath])
 
         # Replace SUBSETUP in the process card with the correct name
@@ -498,9 +498,15 @@ class Gridpack(object):
             print "[ERROR] Invalid BatchType for saving diagrams: {btype}".format(btype=self.ops['btype'])
             return False
 
+        if self.ops['replace_model'] and len(self.ops['replace_model']) != 2:
+            # Note: This won't catch the very unlikely edge case where the input is a string of length 2
+            print "[ERROR] Invalid option for 'replace_model': {op}".format(op=self.ops['replace_model'])
+            return False
+
         if self.ops['stype'] == ScanType.NONE:
             # Don't do any reweighting
             self.scan_pts = []
+
 
         print "{0:>{w}}Setup gridpack: {setup}...".format("",setup=setup,w=4*indent)
 
