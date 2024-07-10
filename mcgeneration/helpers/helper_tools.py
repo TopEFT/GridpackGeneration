@@ -45,8 +45,8 @@ def linspace(start,stop,num,endpoint=True,acc=7):
 
 # Checks if two W.C. phase space points are identical
 def check_point(pt1,pt2):
-    for k,v in pt1.iteritems():
-        if not pt2.has_key(k):
+    for k,v in pt1.items():
+        if k not in pt2:
             pt2[k] = 0.0    # pt2 is missing the coeff, add it and set it to SM value
         if v != pt2[k]:
             return False
@@ -58,8 +58,8 @@ def set_initial_point(file_name,dofs,flavor_scheme=5):
         if flavor_scheme == 5:
             f.write('set param_card MB 0.0 \n')
             f.write('set param_card ymb 0.0 \n')
-        for c,dof in dofs.iteritems():
-            for k,v in dof.eval(dof.getStart()).iteritems():
+        for c,dof in dofs.items():
+            for k,v in dof.eval(dof.getStart()).items():
                 f.write("set param_card %s %.6f \n" % (k,v))
         f.write('\n')
     return file_name
@@ -80,18 +80,18 @@ def make_reweight_card(file_name,dofs,pts):
         f.write(header)
         # This is a workaround for the MG bug causing first point to not be renamed
         f.write("\nlaunch --rwgt_name=dummy_point")
-        c = dofs.keys()[0]
-        for k,v in dofs[c].eval(0.0123).iteritems():
+        c = list(dofs.keys())[0]
+        for k,v in dofs[c].eval(0.0123).items():
             f.write("\nset %s %.6f" % (k,v))
         f.write("\n")
 
         for idx,pt in enumerate(pts):
             rwgt_str = "EFTrwgt%d" % (idx)
-            for k,v in pt.iteritems():
+            for k,v in pt.items():
                 rwgt_str += '_' + k + '_' + str(round(v,6))
             f.write("\nlaunch --rwgt_name=%s" % (rwgt_str))
-            for k1,v1 in pt.iteritems():
-                for k2,v2 in dofs[k1].eval(v1).iteritems():
+            for k1,v1 in pt.items():
+                for k2,v2 in dofs[k1].eval(v1).items():
                     f.write("\nset %s %.6f" % (k2,v2))
             f.write("\n")
 
@@ -151,18 +151,18 @@ def save_scan_points(fpath,dofs,rwgt_pts):
     col_sep = " "
     with open(fpath,'w') as f:
         header = "".ljust(col_spacing)
-        for k,dof in dofs.iteritems():
+        for k,dof in dofs.items():
             header += dof.getName().ljust(col_spacing) + col_sep
         start_row = "\nMGStart".ljust(col_spacing) + col_sep
-        for k,dof in dofs.iteritems():
+        for k,dof in dofs.items():
             start_row += str(dof.getStart()).ljust(col_spacing) + col_sep
         f.write(header)
         f.write(start_row)
         for idx,pt in enumerate(rwgt_pts):
             row_name = "rwgt%d" % (idx)
             row = "\n" + row_name.ljust(col_spacing) + col_sep
-            for k,dof in dofs.iteritems():
-                if not pt.has_key(dof.getName()):
+            for k,dof in dofs.items():
+                if dof.getName() not in pt:
                     row += "0.0".ljust(col_spacing) + col_sep
                 else:
                     row += str(pt[dof.getName()]).ljust(col_spacing) + col_sep

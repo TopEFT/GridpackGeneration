@@ -343,7 +343,7 @@ class JobTracker(object):
 
         if len(self.resubmitted):
             print("Resubmitted Jobs:")
-            for k,v in self.resubmitted.iteritems():
+            for k,v in self.resubmitted.items():
                 print("\t%s: %d" % (k,v))
 
         if self.RUNNING in wl:

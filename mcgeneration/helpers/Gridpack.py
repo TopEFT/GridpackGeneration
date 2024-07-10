@@ -94,7 +94,7 @@ class Gridpack(object):
         return r
 
     def setOptions(self,**kwargs):
-        for op,v in kwargs.items():
+        for op,v in list(kwargs.items()):
             if not self.hasOption(op):
                 print("[ERROR] Unable to set option. Unknown Option: {op}".format(op=op))
                 raise RuntimeError
@@ -119,7 +119,7 @@ class Gridpack(object):
         self.mg_runcard = MGRunCard(card_name=self.MG_RUN_CARD,card_dir=cdir)
 
     def modifyRunCard(self,**ops):
-        for op,val in ops.items():
+        for op,val in list(ops.items()):
             if not self.mg_runcard.hasOption(op):
                 print("[ERROR] Unknown run card option: {op}".format(op=op))
                 raise RuntimeError
@@ -298,7 +298,7 @@ class Gridpack(object):
         indent = "\t"*depth
         info = ""
         if header: info += indent + "Limit Settings: %s\n" % (self.getSetupString())
-        for c,dof in self.ops['coeffs'].items():
+        for c,dof in list(self.ops['coeffs'].items()):
             key = "%s_%s" % (self.ops['limits_name'],c)
             if header: info += "\t"
             info += indent + "%s: [" % (key.ljust(11))
@@ -419,7 +419,7 @@ class Gridpack(object):
             extra_wc = []
             for idx,pt in enumerate(pts):
                 new_pt = {}
-                for k,v in pt.items():
+                for k,v in list(pt.items()):
                     # Keep only the WCs which have been specified
                     if k in self.ops['coeffs']:
                         new_pt[k] = v
@@ -427,7 +427,7 @@ class Gridpack(object):
                         extra_wc.append(k)
                 if idx == 0:
                     # Set the starting point from the scanpoints file
-                    for k in self.ops['coeffs'].keys():
+                    for k in list(self.ops['coeffs'].keys()):
                         if not k in new_pt:
                         #if not new_pt.has_key(k):
                             # Any WCs which are missing from the scanpoints file are set to SM value
@@ -451,7 +451,7 @@ class Gridpack(object):
             if num_pts > 0:
                 # Make sure we have enough points to reconstruct the parametrization
                 if self.ops['stype'] == ScanType.FRANDOM:
-                    N = len(self.ops['coeffs'].keys())
+                    N = len(list(self.ops['coeffs'].keys()))
                     num_pts = max(num_pts,1.2*(1+2*N+N*(N-1)/2))
                 elif self.ops['stype'] == ScanType.SLINSPACE:
                     num_pts = max(num_pts,3)
@@ -540,8 +540,8 @@ class Gridpack(object):
         if self.ops['flavor_scheme'] == 5:
             extra_customize_ops.append('set param_card MB 0.0')
             extra_customize_ops.append('set param_card ymb 0.0')
-        for c,dof in self.ops['coeffs'].items():
-            for k,v in dof.eval(dof.getStart()).items():
+        for c,dof in list(self.ops['coeffs'].items()):
+            for k,v in list(dof.eval(dof.getStart()).items()):
                 extra_customize_ops.append('set param_card {wc} {val:.6f}'.format(wc=k,val=v))
         self.modifyCustomizeCard(*extra_customize_ops)
         self.modifyRunCard(**self.ops['runcard_ops'])
