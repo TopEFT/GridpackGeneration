@@ -2,7 +2,7 @@ import os
 import shutil
 import re
 
-from helper_tools import run_process
+from helpers.helper_tools import run_process
 
 class BaseCard(object):
     def __init__(self,card_dir,card_name):
@@ -47,12 +47,12 @@ class BaseCard(object):
                 s = "{src} and {dst} refer to the same file!".format(src=src,dst=dst)
                 raise RuntimeError(s)
             if force:
-                print "Removing existing file {dst}...".format(dst=dst)
+                print("Removing existing file {dst}...".format(dst=dst))
                 os.remove(dst)
             else:
                 s = "{file} already exists!".format(file=dst)
                 raise RuntimeError(s)
-        print "Copying to {dst}...".format(dst=dst)
+        print("Copying to {dst}...".format(dst=dst))
         shutil.copyfile(src,dst)
 
     def getFilePath(self):
@@ -66,7 +66,7 @@ class BaseCard(object):
             Checks if the option exists or not
                 k: The name of the option as it appears in the card
         """
-        return self.__ops.has_key(k)
+        return k in self.__ops
 
     def setOption(self,k,v):
         """
@@ -98,7 +98,7 @@ class BaseCard(object):
         """
         for k in self.list():
             v = self.__ops[k]
-            print "{0:>{w1}} = {1:<{w2}}".format(k,v,w1=self.key_width,w2=self.val_width)
+            print("{0:>{w1}} = {1:<{w2}}".format(k,v,w1=self.key_width,w2=self.val_width))
 
     def parse(self):
         """
@@ -154,12 +154,12 @@ class MGRunCard(BaseCard):
             w2=self.val_width,
             w3=self.line_width
         )
-        print h
-        print "-"*(len(h))
+        print(h)
+        print("-"*(len(h)))
         for k in self.list():
             v = self.getOption(k)
             l = self.__line_map[k]
-            print "{0:>{w1}} = {1:<{w2}} -- {2}".format(k,v,l,w1=self.key_width,w2=self.val_width)
+            print("{0:>{w1}} = {1:<{w2}} -- {2}".format(k,v,l,w1=self.key_width,w2=self.val_width))
 
     def save(self,dst,force=False):
         self.copy(dst,force=force)
@@ -179,7 +179,7 @@ class MGRunCard(BaseCard):
             old = old.replace('\\','\\\\').replace('*','\\*')
             new = new.replace('\\','\\\\').replace('*','\\*')
             
-            #print "{old:<{w}} --> {new}".format(old=old,new=new,w=self.line_width)
+            #print("{old:<{w}} --> {new}".format(old=old,new=new,w=self.line_width))
 
             sed_cmd = "s|{old}|{new}|g".format(old=old,new=new)
             run_process(['sed','-i','-e',sed_cmd,dst])
@@ -209,7 +209,7 @@ class MGCustomizeCard(BaseCard):
     def dump(self):
         for k in self.list():
             v = self.getOption(k)
-            print "[{0:>{w1}}] {1:<{w2}}".format(k,v,w1=self.key_width,w2=self.val_width)
+            print("[{0:>{w1}}] {1:<{w2}}".format(k,v,w1=self.key_width,w2=self.val_width))
 
     def save(self,dst,force=False,indent=0):
         indent_str = " "*4*indent
@@ -218,12 +218,12 @@ class MGCustomizeCard(BaseCard):
                 s = "{ind}{dst} is not a file!".format(dst=dst,ind=indent_str)
                 raise RuntimeError(s)
             if force:
-                print "{ind}Removing {dst}...".format(dst=dst,ind=indent_str)
+                print("{ind}Removing {dst}...".format(dst=dst,ind=indent_str))
                 os.remove(dst)
             else:
                 s = "{ind}{file} already exists!".format(file=dst,ind=indent_str)
                 raise RuntimeError(s)
-        print "{ind}Saving to {dst}...".format(dst=dst,ind=indent_str)
+        print("{ind}Saving to {dst}...".format(dst=dst,ind=indent_str))
         with open(dst,'w') as f:
             for k in self.list():
                 v = self.getOption(k)

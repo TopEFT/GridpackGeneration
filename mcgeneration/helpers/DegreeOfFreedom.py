@@ -11,7 +11,7 @@ class DegreeOfFreedom(object):
         return self.name
 
     def getCoefficients(self):
-        return self.relations.keys()
+        return list(self.relations.keys())
 
     def getStart(self):
         return self.limits[0]
@@ -37,7 +37,7 @@ class DegreeOfFreedom(object):
 
     def eval(self,x):
         output = {}
-        for wc,scale in self.relations.iteritems():
+        for wc,scale in self.relations.items():
             if x*scale == 0.0:
                 output[wc] = 0.0
             else:
@@ -46,7 +46,7 @@ class DegreeOfFreedom(object):
 
     def getCouplingString(self):
         s = "FCNC=0 DIM6^2==1"
-        for k in self.relations.keys():
+        for k in list(self.relations.keys()):
             s += " DIM6_%s^2==1" % (k)
         return s
 

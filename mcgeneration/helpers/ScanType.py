@@ -1,6 +1,6 @@
 import random
 
-from helper_tools import linspace, check_point
+from helpers.helper_tools import linspace, check_point
 
 class ScanType(object):
     FRANDOM   = 'full_random'
@@ -49,7 +49,7 @@ class ScanType(object):
             return pts_arr
         sm_pt = {}
         start_pt = {}
-        coeffs = dofs.keys()
+        coeffs = list(dofs.keys())
         arr = []
         for c in coeffs:
             sm_pt[c] = 0.0
@@ -83,7 +83,7 @@ class ScanType(object):
             return pts_arr
         sm_pt = {}
         start_pt = {}
-        coeffs = dofs.keys()
+        coeffs = list(dofs.keys())
         for c in coeffs:
             sm_pt[c] = 0.0
             start_pt[c] = dofs[c].getStart()
@@ -112,7 +112,7 @@ class ScanType(object):
             return pts_arr
         sm_pt = {}
         start_pt = {}
-        coeffs = dofs.keys()
+        coeffs = list(dofs.keys())
         for c in coeffs:
             sm_pt[c] = 0.0
             start_pt[c] = dofs[c].getStart()
@@ -146,7 +146,7 @@ class ScanType(object):
             return pts_arr
         sm_pt = {}
         start_pt = {}
-        coeffs = dofs.keys()
+        coeffs = list(dofs.keys())
         for c in coeffs:
             sm_pt[c] = 0.0
             start_pt[c] = dofs[c].getStart()
