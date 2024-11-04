@@ -28,7 +28,7 @@ set loop_color_flows False
 set gauge unitary
 set complex_mass_scheme False
 set max_npoint_for_channel 0
-import model dim6top_LO_UFO
+import model SMEFTsim_topU3l_alphaScheme_UFO
 define p = p b b~
 define j = p
 define w = w+ w-
@@ -36,5 +36,5 @@ define l+ = e+ mu+ ta+
 define l- = e- mu- ta-
 define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
-generate p p > t t~ h DIM6=1, h > l+ l- DIM6=1 @0
+generate p p > t t~ h SMHLOOP=0, h > l+ l- SMHLOOP=0 @0
 output SUBSETUP -nojpeg
