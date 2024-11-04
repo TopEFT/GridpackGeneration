@@ -94,7 +94,7 @@ class Gridpack(object):
         return r
 
     def setOptions(self,**kwargs):
-        for op,v in kwargs.iteritems():
+        for op,v in kwargs.items():
             if not self.hasOption(op):
                 print "[ERROR] Unable to set option. Unknown Option: {op}".format(op=op)
                 raise RuntimeError
@@ -119,7 +119,7 @@ class Gridpack(object):
         self.mg_runcard = MGRunCard(card_name=self.MG_RUN_CARD,card_dir=cdir)
 
     def modifyRunCard(self,**ops):
-        for op,val in ops.iteritems():
+        for op,val in ops.items():
             if not self.mg_runcard.hasOption(op):
                 print "[ERROR] Unknown run card option: {op}".format(op=op)
                 raise RuntimeError
@@ -188,7 +188,7 @@ class Gridpack(object):
             # Replace the amp order specification with a new custom one
             print "{ind}Custom Couplings: {couplings}".format(couplings=self.ops['coupling_string'],ind=indent_str)
             sed_str = "s|DIM6=1|{new}|g".format(new=self.ops['coupling_string'])
-            run_process(['sed','-i','-e',sed_str,fpath])
+            subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         if self.ops['use_coupling_model']:
             # Replace the default dim6 model with the 'each_coupling_order' version
@@ -197,18 +197,18 @@ class Gridpack(object):
             old = "dim6top_LO_UFO"
             new = "dim6top_LO_UFO_each_coupling_order"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
-            run_process(['sed','-i','-e',sed_str,fpath])
+            subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         if self.ops['replace_model']:
             rep_model = self.ops['replace_model']
             print "{ind}Using {model} model".format(model=rep_model,ind=indent_str)
             old = "dim6top_LO_UFO"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=rep_model)
-            run_process(['sed','-i','-e',sed_str,fpath])
+            subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         # Replace SUBSETUP in the process card with the correct name
         sed_str = "s|SUBSETUP|{setup}|g".format(setup=setup)
-        run_process(['sed','-i','-e',sed_str,fpath])
+        subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
         return fpath
 
     def saveReweightCard(self):
@@ -298,7 +298,7 @@ class Gridpack(object):
         indent = "\t"*depth
         info = ""
         if header: info += indent + "Limit Settings: %s\n" % (self.getSetupString())
-        for c,dof in self.ops['coeffs'].iteritems():
+        for c,dof in self.ops['coeffs'].items():
             key = "%s_%s" % (self.ops['limits_name'],c)
             if header: info += "\t"
             info += indent + "%s: [" % (key.ljust(11))
@@ -419,7 +419,7 @@ class Gridpack(object):
             extra_wc = []
             for idx,pt in enumerate(pts):
                 new_pt = {}
-                for k,v in pt.iteritems():
+                for k,v in pt.items():
                     # Keep only the WCs which have been specified
                     if self.ops['coeffs'].has_key(k):
                         new_pt[k] = v
@@ -428,7 +428,7 @@ class Gridpack(object):
                 if idx == 0:
                     # Set the starting point from the scanpoints file
                     for k in self.ops['coeffs'].keys():
-                        if not new_pt.has_key(k):
+                        if not k in new_pt:
                             # Any WCs which are missing from the scanpoints file are set to SM value
                             missing_wc.append(k)
                             self.ops['coeffs'][k].setLimits(0,0,0)
@@ -471,7 +471,7 @@ class Gridpack(object):
                 else:
                     # The WC doesn't exist in the limits file, so use defaults
                     low,high = self.ops['default_limits']
-                if start_pt.has_key(c):
+                if c in start_pt:
                     strength = start_pt[c]
                 else:
                     strength = calculate_start_point(low,high,1.25)
@@ -537,8 +537,8 @@ class Gridpack(object):
         if self.ops['flavor_scheme'] == 5:
             extra_customize_ops.append('set param_card MB 0.0')
             extra_customize_ops.append('set param_card ymb 0.0')
-        for c,dof in self.ops['coeffs'].iteritems():
-            for k,v in dof.eval(dof.getStart()).iteritems():
+        for c,dof in self.ops['coeffs'].items():
+            for k,v in dof.eval(dof.getStart()).items():
                 extra_customize_ops.append('set param_card {wc} {val:.6f}'.format(wc=k,val=v))
         self.modifyCustomizeCard(*extra_customize_ops)
         self.modifyRunCard(**self.ops['runcard_ops'])

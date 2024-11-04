@@ -17,10 +17,13 @@ cat<<-EOF
     transfer_output_files = ${card_name}.log, ${sandbox_output}
     transfer_output_remaps = "${card_name}.log = ${card_name}_codegen.log"
     +WantIOProxy=true
-        +IsGridpack=true
-        +GridpackCard = "${card_name}"
+    +IsGridpack=true
+    +GridpackCard = "${card_name}"
     
-    +REQUIRED_OS = "${rhel_ver}"
+    #+REQUIRED_OS = "${rhel_ver}"
+    Requirements = HAS_SINGULARITY == True
+    +SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-el7:latest"
+    use_x509userproxy = true
     request_cpus = $cores
     request_memory = $memory
     Queue 1
