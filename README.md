@@ -16,7 +16,7 @@ To set up the python 2.7 environment, run
 unset PYTHONPATH # To avoid conflicts.  
 unset PERL5LIB # To avoid conflicts.  
 micromamba env create -f environment.yml
-micromamba activate py2y
+micromamba activate py27
 ```
 
 - First, `cd` into `mcgeneration`
@@ -26,6 +26,7 @@ micromamba activate py2y
    - Additional files from `mcgeneration` are copied to `genproductions` as well  
    - The script will move you to the `genproductions` directory it just created  
 - To make gridpacks:
+   - Activate your python 2.7 environemnt `micromamba activate py27`
    - From `genproductions`, `cd` into `bin/MadGraph5_aMCatNLO`  
    - Open `configure_gridpack.py` and modify according to the type of gridpack or gridpacks you would like to produce  
    - Run `configure_gridpack.py`  
