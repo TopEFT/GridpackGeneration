@@ -31,5 +31,5 @@ set max_npoint_for_channel 0
 import model SMEFTsim_topU3l_alphaScheme_UFO
 define p = p b b~
 define j = p
-generate p p > t t~ SMHLOOP=0
+generate p p > t t~ NP=1
 output SUBSETUP -nojpeg

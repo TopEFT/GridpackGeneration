@@ -187,7 +187,7 @@ class Gridpack(object):
         if not self.ops['coupling_string'] is None:
             # Replace the amp order specification with a new custom one
             print "{ind}Custom Couplings: {couplings}".format(couplings=self.ops['coupling_string'],ind=indent_str)
-            sed_str = "s|SMHLOOP=0|{new}|g".format(new=self.ops['coupling_string'])
+            sed_str = "s|NP=1|{new}|g".format(new=self.ops['coupling_string'])
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         if self.ops['use_coupling_model']:

@@ -36,6 +36,6 @@ define l- = e- mu- ta-
 define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
 
-generate p p > t t~ > l+ vl l- vl~ b  b~ a SMHLOOP=0 @0
+generate p p > t t~ > l+ vl l- vl~ b  b~ a NP=1 @0
 
 output SUBSETUP -nojpeg

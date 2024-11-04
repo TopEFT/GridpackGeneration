@@ -36,6 +36,6 @@ define l- = e- mu-
 define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
 define w = w+ w-
-generate p p > t j z SMHLOOP=0
-add process p p > t~ j z SMHLOOP=0
+generate p p > t j z NP=1
+add process p p > t~ j z NP=1
 output SUBSETUP -nojpeg
