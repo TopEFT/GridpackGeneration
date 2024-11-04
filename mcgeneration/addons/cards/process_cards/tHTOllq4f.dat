@@ -33,8 +33,8 @@ define l+ = e+ mu+ ta+
 define l- = e- mu- ta-
 define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
-#generate p p > t b~ h FCNC=0 NP=1 @0
-#add process p p > t~ b h FCNC=0 NP=1 @1
+#generate p p > t b~ h NP=1 @0
+#add process p p > t~ b h NP=1 @1
 generate p p > t b~ j h NP=1, h > l+ l- NP=1 @0
 add process p p > t~ b j h NP=1, h > l+ l- NP=1  @1
 output SUBSETUP -nojpeg

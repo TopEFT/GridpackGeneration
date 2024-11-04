@@ -36,6 +36,6 @@ define l- = e- mu-
 define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
 define w = w+ w-
-generate p p > t t~ z FCNC=0 QCD=2 QED=1 DIM6=2
-generate p p > t t~ z j FCNC=0 QCD=2 QED=1 DIM6=2
+generate p p > t t~ z QCD=2 QED=1 DIM6=2
+generate p p > t t~ z j QCD=2 QED=1 DIM6=2
 output SUBSETUP -nojpeg
