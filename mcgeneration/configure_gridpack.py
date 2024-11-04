@@ -89,14 +89,14 @@ ttWNLO = MGProcess(name='ttWNLO',process='ttW',pcard='ttW_NLO.dat',tdir='ttZ-NLO
 ttZNLO = MGProcess(name='ttZNLO',process='ttZ',pcard='ttZ_NLO.dat',tdir='ttZ-NLO_template')
 
 ctp   = DegreeOfFreedom(name='ctp'  ,relations=[['ctp'] ,1.0])
-cpQM  = DegreeOfFreedom(name='cpQM' ,relations=[['cpQM'],1.0])
-cpQ3  = DegreeOfFreedom(name='cpQ3' ,relations=[['cpQ3'],1.0])
-cpt   = DegreeOfFreedom(name='cpt'  ,relations=[['cpt'] ,1.0])
+cHQ1  = DegreeOfFreedom(name='cHQ1' ,relations=[['cHQ1'],1.0])
+cHQ3  = DegreeOfFreedom(name='cHj3' ,relations=[['cHj3'],1.0])
+cHt   = DegreeOfFreedom(name='cHt'  ,relations=[['cHt'] ,1.0])
 cptb  = DegreeOfFreedom(name='cptb' ,relations=[['cptb'],1.0])
-ctW   = DegreeOfFreedom(name='ctW'  ,relations=[['ctW'] ,1.0])
-ctZ   = DegreeOfFreedom(name='ctZ'  ,relations=[['ctZ'] ,1.0])
+ctWRe = DegreeOfFreedom(name='ctWRe',relations=[['ctWRe'] ,1.0])
+ctBRe = DegreeOfFreedom(name='ctBRe',relations=[['ctBRe'] ,1.0])
 cbW   = DegreeOfFreedom(name='cbW'  ,relations=[['cbW'] ,1.0])
-ctG   = DegreeOfFreedom(name='ctG'  ,relations=[['ctG'] ,1.0])
+ctGRe = DegreeOfFreedom(name='ctGRe',relations=[['ctGRe'] ,1.0])
 cQei  = DegreeOfFreedom(name='cQei' ,relations=[['cQe1','cQe2','cQe3'],1.0])
 ctli  = DegreeOfFreedom(name='ctli' ,relations=[['ctl1','ctl2','ctl3'],1.0])
 ctei  = DegreeOfFreedom(name='ctei' ,relations=[['cte1','cte2','cte3'],1.0])
@@ -118,10 +118,10 @@ cQtQb1 = DegreeOfFreedom(name='cQtQb1' ,relations=[['cQtQb1'],1.0])
 cQtQb8 = DegreeOfFreedom(name='cQtQb8' ,relations=[['cQtQb8'],1.0])
 
 # Two-heavy-two-light quarks
-cQq13 = DegreeOfFreedom(name='cQq13' ,relations=[['cQq13'],1.0])
-cQq83 = DegreeOfFreedom(name='cQq83' ,relations=[['cQq83'],1.0])
-cQq11 = DegreeOfFreedom(name='cQq11' ,relations=[['cQq11'],1.0])
-cQq81 = DegreeOfFreedom(name='cQq81' ,relations=[['cQq81'],1.0])
+cQj31 = DegreeOfFreedom(name='cQj31' ,relations=[['cQj31'],1.0])
+cQj38 = DegreeOfFreedom(name='cQj38' ,relations=[['cQj38'],1.0])
+cQj11 = DegreeOfFreedom(name='cQj11' ,relations=[['cQj11'],1.0])
+cQj18 = DegreeOfFreedom(name='cQj18' ,relations=[['cQj18'],1.0])
 cQu1  = DegreeOfFreedom(name='cQu1'  ,relations=[['cQu1'],1.0])
 cQu8  = DegreeOfFreedom(name='cQu8'  ,relations=[['cQu8'],1.0])
 cQd1  = DegreeOfFreedom(name='cQd1'  ,relations=[['cQd1'],1.0])
@@ -133,10 +133,10 @@ ctu8  = DegreeOfFreedom(name='ctu8'  ,relations=[['ctu8'],1.0])
 ctd1  = DegreeOfFreedom(name='ctd1'  ,relations=[['ctd1'],1.0])
 ctd8  = DegreeOfFreedom(name='ctd8'  ,relations=[['ctd8'],1.0])
 
-all_coeffs       = [ctp,cpQM,cpQ3,cpt,cptb,ctW,ctZ,cbW,ctG,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQei,ctli,ctei,cQl3i,cQlMi,ctlSi,ctlTi]
-ana_coeffs       = [ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt,cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi]  # 16 operators
+all_coeffs       = [ctp,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQei,ctli,ctei,cQl3i,cQlMi,ctlSi,ctlTi]
+ana_coeffs       = [ctp,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi]  # 16 oHerators
 coeffs_4Hvy      = [cQQ1,cQQ8,cQt1,cQt8,ctt1,ctb1,cQtQb1,cQtQb8]    # 8 operators
-coeffs_2Hvy_2Lgt = [cQq13,cQq83,cQq11,cQq81,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
+coeffs_2Hvy_2Lgt = [cQj31,cQj38,cQq11,cQj18,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
 
 # For submitting many gridpack jobs on cmsconnect
 def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,stype,scan_files=[],proc_run_wl={},attempt_resubmit=False):
@@ -471,7 +471,7 @@ def main():
     gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
-    gridpack.setOptions(coupling_string="FCNC=0 DIM6=1",replace_model="dim6top_LO_UFO_19-05-20")
+    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model="SMEFTsim_topU3l_alphaScheme_UFO")
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctZ^2=1 DIM6_ctW^2=1") # For example

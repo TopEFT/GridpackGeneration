@@ -71,14 +71,14 @@ class DegreeOfFreedom(object):
 
 if __name__ == "__main__":
     ctp   = DegreeOfFreedom(name='ctp',relations=[['ctp'],1.0])
-    cpQM  = DegreeOfFreedom(name='cpQM',relations=[['cpQM'],1.0])
-    cpQ3  = DegreeOfFreedom(name='cpQ3',relations=[['cpQ3'],1.0])
+    cHq1  = DegreeOfFreedom(name='cHq1',relations=[['cHq1'],1.0])
     cpt   = DegreeOfFreedom(name='cpt',relations=[['cpt'],1.0])
+    cHt   = DegreeOfFreedom(name='cHt',relations=[['cHt'],1.0])
     cptb  = DegreeOfFreedom(name='cptb',relations=[['cptb'],1.0])
-    ctW   = DegreeOfFreedom(name='ctW',relations=[['ctW'],1.0])
-    ctZ   = DegreeOfFreedom(name='ctZ',relations=[['ctZ'],1.0])
+    ctWRe = DegreeOfFreedom(name='ctWRe',relations=[['ctWRe'],1.0])
+    ctBRe = DegreeOfFreedom(name='ctBRe',relations=[['ctBRe'],1.0])
     cbW   = DegreeOfFreedom(name='cbW',relations=[['cbW'],1.0])
-    ctG   = DegreeOfFreedom(name='ctG',relations=[['ctG'],1.0])
+    ctGRe = DegreeOfFreedom(name='ctGRe',relations=[['ctGRe'],1.0])
     cQQ1  = DegreeOfFreedom(name='cQQ1',relations=[['cQQ1'],1.0])
     cQQ8  = DegreeOfFreedom(name='cQQ8',relations=[['cQQ8'],1.0])
     cQt1  = DegreeOfFreedom(name='cQt1',relations=[['cQt1'],1.0])
@@ -96,10 +96,10 @@ if __name__ == "__main__":
     ################################################################################################
 
     cQDW = DegreeOfFreedom(name='cQDW')
-    cQDW.setCoefficient(['cQq13','cQl31','cQl32','cQl33'],1.0)
+    cQDW.setCoefficient(['cQj31','cQl31','cQl32','cQl33'],1.0)
 
     cQDB = DegreeOfFreedom(name='cQDB')
-    cQDB.setCoefficient(['cQq11'],6.0)
+    cQDB.setCoefficient(['cQj11'],6.0)
     cQDB.setCoefficient(['cQu1'],1.5)
     cQDB.setCoefficient(['cQd1','cQb1'],-3.0)
     cQDB.setCoefficient(['cQlM1','cQlM2','cQlM3'],-2.0)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     ctDB.setCoefficient(['cte1','cte2','cte3'],-1.0)
 
     cQDG = DegreeOfFreedom(name='cQDG')
-    cQDG.setCoefficient(['cQq81','cQu8','cQd8','cQb8'],1.0)
+    cQDG.setCoefficient(['cQj18','cQu8','cQd8','cQb8'],1.0)
 
     ctDG = DegreeOfFreedom(name='ctDG')
     ctDG.setCoefficient(['ctq8','ctu8','ctd8','ctb8'],1.0)

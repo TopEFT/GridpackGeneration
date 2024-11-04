@@ -27,7 +27,7 @@ class Gridpack(object):
         self.MG_RUN_CARD      = 'run_card.dat'
 
         # The custom limits file for determining range of WC values
-        self.LIMITS_FILE = "dim6top_LO_UFO_limits.txt"
+        self.LIMITS_FILE = "SMEFTsin_limits.txt"
 
         # These file name conventions are determined by genproductions scripts
         self.TARBALL_POSTFIX  = 'tarball'
@@ -194,15 +194,15 @@ class Gridpack(object):
             # Replace the default dim6 model with the 'each_coupling_order' version
             # NOTE: This will overwrite the 'replace_model' option
             print "{ind}Using each_coupling_order model!".format(ind=indent_str)
-            old = "dim6top_LO_UFO"
-            new = "dim6top_LO_UFO_each_coupling_order"
+            old = "SMEFTsim"
+            new = "SMEFTsim_each_coupling_order"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         if self.ops['replace_model']:
             rep_model = self.ops['replace_model']
             print "{ind}Using {model} model".format(model=rep_model,ind=indent_str)
-            old = "dim6top_LO_UFO"
+            old = "SMEFTsim"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=rep_model)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
