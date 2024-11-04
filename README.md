@@ -3,6 +3,22 @@
 This repository contains the files that are necessary for setting up a `genproducitons` directory that can be used to produce EFT gridpacks
 
 ## Instructions: 
+To create gridpacks for Run 2 UL (using dim6top), you need python 2.7.
+The easiest way to do this is on CMS connect is with conda/mamba.
+
+Install micromamba with (only needed once per user)
+```bash
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+```
+
+To set up the python 2.7 environment, run
+```bash
+unset PYTHONPATH # To avoid conflicts.  
+unset PERL5LIB # To avoid conflicts.  
+micromamba env create -f environment.yml
+micromamba activate py2y
+```
+
 - First, `cd` into `mcgeneration`
 - Next run `source setup_production.sh`
    - This script will checkout `cms-sw/genproductions`  
