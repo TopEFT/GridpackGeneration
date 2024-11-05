@@ -37,7 +37,7 @@ class DegreeOfFreedom(object):
 
     def eval(self,x):
         output = {}
-        for wc,scale in self.relations.iteritems():
+        for wc,scale in self.relations.items():
             if x*scale == 0.0:
                 output[wc] = 0.0
             else:

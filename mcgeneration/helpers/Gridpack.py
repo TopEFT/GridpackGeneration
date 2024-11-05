@@ -77,7 +77,7 @@ class Gridpack(object):
         return
 
     def hasOption(self,op_name):
-        return self.ops.has_key(op_name)
+        return op_name in self.ops
 
     # Note: Some options are complex objects (e.g. lists/dicts) and so the returned dict will contain
     #       only refs to those objects
@@ -96,7 +96,7 @@ class Gridpack(object):
     def setOptions(self,**kwargs):
         for op,v in kwargs.items():
             if not self.hasOption(op):
-                print "[ERROR] Unable to set option. Unknown Option: {op}".format(op=op)
+                print("[ERROR] Unable to set option. Unknown Option: {op}".format(op=op))
                 raise RuntimeError
             self.ops[op] = v
 
@@ -121,7 +121,7 @@ class Gridpack(object):
     def modifyRunCard(self,**ops):
         for op,val in ops.items():
             if not self.mg_runcard.hasOption(op):
-                print "[ERROR] Unknown run card option: {op}".format(op=op)
+                print("[ERROR] Unknown run card option: {op}".format(op=op))
                 raise RuntimeError
             self.mg_runcard.setOption(op,val)
 
@@ -181,19 +181,20 @@ class Gridpack(object):
 
         if self.ops['save_diagrams']:
             # Remove the nojpeg option from the output line of the process card
-            print "{ind}Saving diagrams!".format(ind=indent_str)
-            run_process(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",fpath])
+            print("{ind}Saving diagrams!".format(ind=indent_str))
+            subprocess.Popen(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",fpath]).communicate()
+            #run_process(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",fpath])
 
         if not self.ops['coupling_string'] is None:
             # Replace the amp order specification with a new custom one
-            print "{ind}Custom Couplings: {couplings}".format(couplings=self.ops['coupling_string'],ind=indent_str)
+            print("{ind}Custom Couplings: {couplings}".format(couplings=self.ops['coupling_string'],ind=indent_str))
             sed_str = "s|NP=1|{new}|g".format(new=self.ops['coupling_string'])
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         if self.ops['use_coupling_model']:
             # Replace the default dim6 model with the 'each_coupling_order' version
             # NOTE: This will overwrite the 'replace_model' option
-            print "{ind}Using each_coupling_order model!".format(ind=indent_str)
+            print("{ind}Using each_coupling_order model!".format(ind=indent_str))
             old = "SMEFTsim"
             new = "SMEFTsim_each_coupling_order"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
@@ -201,7 +202,7 @@ class Gridpack(object):
 
         if self.ops['replace_model']:
             rep_model = self.ops['replace_model']
-            print "{ind}Using {model} model".format(model=rep_model,ind=indent_str)
+            print("{ind}Using {model} model".format(model=rep_model,ind=indent_str))
             old = "SMEFTsim"
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=rep_model)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
@@ -400,7 +401,7 @@ class Gridpack(object):
     def configure(self,tag,run,dofs,num_pts,start_pt={},scan_file=None):
         """ Parses options to produce gridpack in a particular way. """
         if len(self.ops['default_limits']) != 2:
-            print "Invalid input for default limits!"
+            print("Invalid input for default limits!")
             self.is_configured = False
             return
 
@@ -421,7 +422,7 @@ class Gridpack(object):
                 new_pt = {}
                 for k,v in pt.items():
                     # Keep only the WCs which have been specified
-                    if self.ops['coeffs'].has_key(k):
+                    if k in self.ops['coeffs']:
                         new_pt[k] = v
                     else:
                         extra_wc.append(k)
@@ -437,10 +438,10 @@ class Gridpack(object):
                 else:
                     self.scan_pts.append(new_pt)
             if len(missing_wc):
-                print "[WARNING] Scanpoints file is missing WCs used in this gridpack configuration, %s" % (str(missing_wc))
+                print("[WARNING] Scanpoints file is missing WCs used in this gridpack configuration, %s" % (str(missing_wc)))
             if len(extra_wc):
-                print "[WARNING] Scanpoints file has WCs that were not specified in this gridpack configuration, their values will be set to SM."
-                print "\t%s" % (str(extra_wc)) 
+                print("[WARNING] Scanpoints file has WCs that were not specified in this gridpack configuration, their values will be set to SM.")
+                print("\t%s" % (str(extra_wc)) )
             self.ops['num_rwgt_pts'] = len(self.scan_pts)
         else:
             self.scan_pts = []  # Clear the scan_pts array incase it was used previously
@@ -464,7 +465,7 @@ class Gridpack(object):
                     # The dof already has limits set
                     continue
                 key = "%s_%s" % (self.ops['limits_name'],c)
-                if wc_limits.has_key(key):
+                if key in wc_limits:
                     # Use limits based on those found in the limits file
                     low  = round(wc_limits[key][0],6)
                     high = round(wc_limits[key][1],6)
@@ -491,29 +492,30 @@ class Gridpack(object):
 
         setup = self.getSetupString()
         if self.exists():
-            print "{0:>{w}}Skipping gridpack setup: {setup}".format("",setup=setup,w=4*indent)
+            print("{0:>{w}}Skipping gridpack setup: {setup}".format("",setup=setup,w=4*indent))
             return False
 
         if self.ops['save_diagrams'] and self.ops['btype'] != BatchType.LOCAL:
-            print "[ERROR] Invalid BatchType for saving diagrams: {btype}".format(btype=self.ops['btype'])
+            print("[ERROR] Invalid BatchType for saving diagrams: {btype}".format(btype=self.ops['btype']))
             return False
 
         if self.ops['stype'] == ScanType.NONE:
             # Don't do any reweighting
             self.scan_pts = []
 
-        print "{0:>{w}}Setup gridpack: {setup}...".format("",setup=setup,w=4*indent)
+        print("{0:>{w}}Setup gridpack: {setup}...".format("",setup=setup,w=4*indent))
 
         # Set the random seed adding extra events to the pilotrun
         # NOTE: This physically modifies the gridpack generation script
         seed = int(random.uniform(1,1e6))
-        print "{ind:>{w}}Seed: {seed:d}".format(seed=seed,ind="",w=4*(indent+1))
+        print("{ind:>{w}}Seed: {seed:d}".format(seed=seed,ind="",w=4*(indent+1)))
         sed_str = "s|RWSEED=[0-9]*|RWSEED={seed:d}|g".format(seed=seed)
-        run_process(['sed','-i','-e',sed_str,self.GENPROD_SCRIPT])
+        subprocess.Popen(['sed','-i','-e',sed_str,self.GENPROD_SCRIPT]).communicate()
+        #run_process(['sed','-i','-e',sed_str,self.GENPROD_SCRIPT])
 
         target_dir = self.getTargetDirectory(create=False)
         if os.path.exists(target_dir):
-            print "{0:>{w}}NOTE: The cards directory already exists, will overwrite existing cards.".format("",w=4*(indent+1))
+            print("{0:>{w}}NOTE: The cards directory already exists, will overwrite existing cards.".format("",w=4*(indent+1)))
         else:
             # Create the needed directories
             self.getTargetDirectory(create=True)
@@ -560,77 +562,82 @@ class Gridpack(object):
 
         #if self.ops['save_diagrams']:
         #    # Remove the nojpeg option from the output line of the process card
-        #    print "\tSaving diagrams!"
-        #    run_process(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",proc_tar])
+        #    print("\tSaving diagrams!")
+        #    subprocess.Popen(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",proc_tar]).communicate()
+        #run_process(['sed','-i','-e',"s|SUBSETUP -nojpeg|SUBSETUP|g",proc_tar])
         #if not self.ops['coupling_string'] is None:
-        #    print "\tCustom Couplings: %s" % (self.ops['coupling_string'])
-        #    run_process(['sed','-i','-e',"s|DIM6=1|%s|g" % (self.ops['coupling_string']),proc_tar])
+        #    print("\tCustom Couplings: %s" % (self.ops['coupling_string']))
+        #    subprocess.Popen(['sed','-i','-e',"s|DIM6=1|%s|g" % (self.ops['coupling_string']),proc_tar]).communicate()
+        #run_process(['sed','-i','-e',"s|DIM6=1|%s|g" % (self.ops['coupling_string']),proc_tar])
         #if self.ops['use_coupling_model']:
-        #    print "\tUsing each_coupling_order model!"
-        #    run_process(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model dim6top_LO_UFO_each_coupling_order|g",proc_tar])
+        #    print("\tUsing each_coupling_order model!")
+        #    subprocess.Popen(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model dim6top_LO_UFO_each_coupling_order|g",proc_tar]).communicate()
+        #run_process(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model dim6top_LO_UFO_each_coupling_order|g",proc_tar])
         #if self.ops['replace_model']:
         #    rep_model = self.ops['replace_model']
-        #    print "\tUsing %s model" % (rep_model)
-        #    run_process(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model %s|g" % (rep_model),proc_tar])
+        #    print("\tUsing %s model" % (rep_model))
+        #    subprocess.Popen(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model %s|g" % (rep_model),proc_tar]).communicate()
+        #run_process(['sed','-i','-e',"s|import model dim6top_LO_UFO|import model %s|g" % (rep_model),proc_tar])
         ## Replace SUBSETUP in the process card
+        #subprocess.Popen(['sed','-i','-e',"s|SUBSETUP|%s|g" % (setup),proc_tar]).communicate()
         #run_process(['sed','-i','-e',"s|SUBSETUP|%s|g" % (setup),proc_tar])
         return True
 
     def clean(self):
         """ Remove all folders/files created by the setup()/submit() methods """
         if not self.is_configured:
-            print "The gridpack has not been configured yet, so no cleaning can be done!"
+            print("The gridpack has not been configured yet, so no cleaning can be done!")
             return
 
         os.chdir(self.HOME_DIR)
 
-        print "Cleaning files related to current gridpack configuration: %s" % (self.getSetupString())
+        print("Cleaning files related to current gridpack configuration: %s" % (self.getSetupString()))
         target_dir = self.getTargetDirectory(create=False)
         if os.path.exists(target_dir) and os.path.isdir(target_dir):
             # This is where the modified madgraph cards are stored
-            print "\tRemoving existing directory: %s " % (target_dir)
+            print("\tRemoving existing directory: %s " % (target_dir))
             shutil.rmtree(target_dir)
 
         setup_dir = self.getSetupString()
         if os.path.exists(setup_dir) and os.path.isdir(setup_dir):
             # This is the directory that gets created by the setup_production.sh script (in LOCAL or CMSCONNECT mode)
-            print "\tRemoving existing directory: %s " % (setup_dir)
+            print("\tRemoving existing directory: %s " % (setup_dir))
             shutil.rmtree(setup_dir)
 
         gridrun_dir = self.getGridrunOutputDirectory()
         if os.path.exists(gridrun_dir) and os.path.isdir(gridrun_dir):
             # This is the directory that is used to unpack and run a gridpack tarball
-            print "\tRemoving existing directory: %s " % (gridrun_dir)
+            print("\tRemoving existing directory: %s " % (gridrun_dir))
             shutil.rmtree(gridrun_dir)
 
         tarball_file = self.getTarballString()
         if os.path.exists(tarball_file) and not os.path.isdir(tarball_file):
             # This is the tarball created by the setup_production.sh script
-            print "\tRemoving existing file: %s" % (tarball_file)
+            print("\tRemoving existing file: %s" % (tarball_file))
             os.remove(tarball_file)
 
         scanpoints_file = self.getScanfileString()
         if os.path.exists(scanpoints_file) and not os.path.isdir(scanpoints_file):
             # This is the txt file which contains the recorded starting point and list of madgraph rwgt points
-            print "\tRemoving existing file: %s" % (scanpoints_file)
+            print("\tRemoving existing file: %s" % (scanpoints_file))
             os.remove(scanpoints_file)
 
         log_file = "%s.log" % (self.getSetupString())
         if os.path.exists(log_file) and not os.path.isdir(log_file):
             # This is the log file created by the setup_production.sh script
-            print "\tRemoving existing file: %s" % (log_file)
+            print("\tRemoving existing file: %s" % (log_file))
             os.remove(log_file)
 
         debug_file = "%s.debug" % (self.getSetupString())
         if os.path.exists(debug_file) and not os.path.isdir(debug_file):
             # This is the debug file created by the setup_production.sh script (only in CMSCONNECT mode)
-            print "\tRemoving existing file: %s" % (debug_file)
+            print("\tRemoving existing file: %s" % (debug_file))
             os.remove(debug_file)
 
         codegen_file = "%s_codegen.log" % (self.getSetupString())
         if os.path.exists(codegen_file) and not os.path.isdir(codegen_file):
             # This is the codegen log file created by the setup_production.sh script (only in CMSCONNECT mode)
-            print "\tRemoving existing file: %s" % (codegen_file)
+            print("\tRemoving existing file: %s" % (codegen_file))
             os.remove(codegen_file)
 
         self.is_configured = False
@@ -641,27 +648,30 @@ class Gridpack(object):
         target_dir = self.getTargetDirectory()
         btype = self.ops['btype']
         if not os.path.exists(target_dir):
-            print "[ERROR] Can't find target directory, %s" % (target_dir)
+            print("[ERROR] Can't find target directory, %s" % (target_dir))
             return False
-        print "Submit gridpack: %s..." % (setup)
-        print "\tBatchType: %s" % (btype)
+        print("Submit gridpack: %s..." % (setup))
+        print("\tBatchType: %s" % (btype))
         if btype == BatchType.LOCAL:
             # For interactive/serial running
             if self.ops['save_diagrams']:
-                run_process(['./diagram_generation.sh',setup,target_dir])
+                subprocess.Popen(['./diagram_generation.sh',setup,target_dir]).communicate()
+                #run_process(['./diagram_generation.sh',setup,target_dir])
             else:
-                run_process(['./gridpack_generation.sh',setup,target_dir,"local","ALL",self.CURR_ARCH,self.CURR_RELEASE])
+                subprocess.Popen(['./gridpack_generation.sh',setup,target_dir,"local","ALL",self.CURR_ARCH,self.CURR_RELEASE]).communicate()
+                #run_process(['./gridpack_generation.sh',setup,target_dir,"local","ALL",self.CURR_ARCH,self.CURR_RELEASE])
             return True
         elif btype == BatchType.LSF:
             # For batch running
-            run_process(['./submit_gridpack_generation.sh','15000','15000','1nd',setup,target_dir,'8nh'])
+            subprocess.Popen(['./submit_gridpack_generation.sh','15000','15000','1nd',setup,target_dir,'8nh']).communicate()
+            #run_process(['./submit_gridpack_generation.sh','15000','15000','1nd',setup,target_dir,'8nh'])
             return True
         elif btype == BatchType.CMSCONNECT:
             # For cmsconnect running
             debug_file = "%s.debug" % (setup)
             cmsconnect_cores = 1
-            print '\tCurrent PATH: {0}'.format(os.getcwd())
-            print '\tWill execute: ./submit_cmsconnect_gridpack_generation.sh {setup} {dir} {cores} "{mem}" {arch} {release}'.format(
+            print('\tCurrent PATH: {0}'.format(os.getcwd()))
+            print('\tWill execute: ./submit_cmsconnect_gridpack_generation.sh {setup} {dir} {cores} "{mem}" {arch} {release}'.format()
                 setup=setup,
                 dir=target_dir,
                 cores=str(cmsconnect_cores),
@@ -677,11 +687,12 @@ class Gridpack(object):
             return True
         elif btype == BatchType.CONDOR:
             # Not currently working
-            print "\tCondor running is not currently working. Sorry!"
+            print("\tCondor running is not currently working. Sorry!")
+            #subprocess.Popen(['./submit_condor_gridpack_generation.sh',setup,target_dir]).communicate()
             #run_process(['./submit_condor_gridpack_generation.sh',setup,target_dir])
             return True
         elif btype == BatchType.NONE:
-            print "\tSkipping gridpack generation, %s" % (setup)
+            print("\tSkipping gridpack generation, %s" % (setup))
             return True
         return False
 
@@ -690,38 +701,41 @@ class Gridpack(object):
         os.chdir(self.HOME_DIR)
 
         setup = self.getSetupString()
-        print "Running Gridpack: %s" % (setup)
-        print "\tSetting up directories..."
+        print("Running Gridpack: %s" % (setup))
+        print("\tSetting up directories...")
 
         output_dir = self.getGridrunOutputDirectory(create=False)
         if os.path.exists(output_dir):
-            print "Removing existing output directory: %s" % (output_dir)
+            print("Removing existing output directory: %s" % (output_dir))
             shutil.rmtree(output_dir)
         output_dir = self.getGridrunOutputDirectory(create=True)
         #if os.path.exists(output_dir):
         #    # We already ran the gridpack once!
-        #    print "Output directory already exists, skipping gridpack run: %s" % (setup)
+        #    print("Output directory already exists, skipping gridpack run: %s" % (setup))
         #    return
         #else:
         #    os.mkdir(output_dir)
 
         tarball = self.getTarballString()
         if not os.path.exists(tarball):
-            print "No tarball file found! Skipping..."
+            print("No tarball file found! Skipping...")
             return
-        #print "\tMoving tarball..."
+        #print("\tMoving tarball...")
         #shutil.move(tarball,output_dir)
 
-        print "\tExtracting tarball..."
-        run_process(['tar','xaf',tarball,'-C',output_dir])
+        print("\tExtracting tarball...")
+        subprocess.Popen(['tar','xaf',tarball,'-C',output_dir]).communicate()
+        #run_process(['tar','xaf',tarball,'-C',output_dir])
 
         os.chdir(output_dir)
 
-        #print "\tExtracting tarball..."
+        #print("\tExtracting tarball...")
+        #subprocess.Popen(['tar','xaf',tarball]).communicate()
         #run_process(['tar','xaf',tarball])
 
-        print "\tRunning gridpack..."
-        run_process(['./runcmsgrid.sh',str(events),str(seed),str(cores)])
+        print("\tRunning gridpack...")
+        subprocess.Popen(['./runcmsgrid.sh',str(events),str(seed),str(cores)]).communicate()
+        #run_process(['./runcmsgrid.sh',str(events),str(seed),str(cores)])
 
         os.chdir(self.HOME_DIR)
         return
@@ -736,11 +750,11 @@ if __name__ == "__main__":
         btype=BatchType.NONE
     )
 
-    ctG  = DegreeOfFreedom(name='ctG'  ,relations=[['ctG'] ,1.0])
-    ctW  = DegreeOfFreedom(name='ctW'  ,relations=[['ctW'] ,1.0])
+    ctGRe= DegreeOfFreedom(name='ctGRe'  ,relations=[['ctGRe'] ,1.0])
+    ctWRe= DegreeOfFreedom(name='ctWRe'  ,relations=[['ctWRe'] ,1.0])
     ctei = DegreeOfFreedom(name='ctei' ,relations=[['cte1','cte2','cte3'],1.0])
 
-    dof_list = [ctG,ctW,ctei]
+    dof_list = [ctGRe,ctWRe,ctei]
 
     ################################################################################################
     # Example using Gridpack class

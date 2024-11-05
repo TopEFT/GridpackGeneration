@@ -11,7 +11,7 @@ USERNAME = ''
 SUB_DIR = 'FullR2Studies/PreliminaryStudies'
 
 if USERNAME == '':
-    print "\nUsername is empty. Exiting.\n"
+    print("\nUsername is empty. Exiting.\n")
     raise Exception
 
 def main():
@@ -43,8 +43,8 @@ def main():
         if "_scanpoints.txt" in fn:
             remote_fn = protocol+tar_host+tar_dir+scan_dir+fn
 
-        print "#"*100
-        print "[%d/%d] Transfering File: %s" % (idx+1,len(transfer_files),fn)
+        print("#"*100)
+        print("[%d/%d] Transfering File: %s" % (idx+1,len(transfer_files),fn))
         
         local_sz      = getFileSize(fn)
         local_chksum  = getCheckSum(fn)
@@ -58,31 +58,31 @@ def main():
 
         if remote_chksum == local_chksum:
             # The file is already present and has correct checksum
-            print "%sRemote file already exists, skipping..." % (indent)
-            print ""
+            print("%sRemote file already exists, skipping..." % (indent))
+            print("")
             continue
 
-        print "%sTarget: %s" % (indent,remote_fn)
-        print "%sSize: %.2f MB" % (indent,float(local_sz)/(1024*1024))
+        print("%sTarget: %s" % (indent,remote_fn))
+        print("%sSize: %.2f MB" % (indent,float(local_sz)/(1024*1024)))
 
         if not dry_run:
             try:
                 stdout_arr = run_process(['gfal-copy','-fp',fn,remote_fn],indent=1)
                 copied_chksum = getCheckSum(remote_fn)
             except KeyboardInterrupt:
-                print "Ending early!"
+                print("Ending early!")
                 failed_copies.append(fn)
                 break
         else:
             copied_chksum = -1
 
         if copied_chksum != local_chksum:
-            print "%sResult: FAILED" % (indent)
+            print("%sResult: FAILED" % (indent))
             failed_copies.append(fn)
         else:
-            print "%sResult: SUCCESS" % (indent)
+            print("%sResult: SUCCESS" % (indent))
             good_copies.append(fn)
-        print "%sDone!" % (indent)
+        print("%sDone!" % (indent))
 
     with open(bad_fname,'w') as f:
         f.write('failed copies:\n')
@@ -142,7 +142,7 @@ def getRemoteFiles(fdir):
     # NOTE: Not currently finished!
     files = []
     arr = run_process(['gfal-ls',fdir],verbose=True)
-    print arr
+    print(arr)
 
     return files
 
@@ -167,7 +167,7 @@ def getCheckSum(f):
 #def run_process(inputs,verbose=True,indent=0):
 #    indent_str = "\t"*indent
 #    if verbose:
-#        print indent_str+"Command: "+" ".join(inputs)
+#        print(indent_str+"Command: "+" ".join(inputs))
 #    p = subprocess.Popen(inputs,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 #    stdout = []
 #    while True:
@@ -176,7 +176,7 @@ def getCheckSum(f):
 #            break
 #        if l:
 #            stdout.append(l.strip())
-#            if verbose: print indent_str+l.strip()
+#            if verbose: print(indent_str+l.strip())
 #    return stdout
 
 
