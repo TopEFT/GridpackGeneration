@@ -1,7 +1,6 @@
 import os
 import subprocess
 import shutil
-import itertools
 import random
 import time
 
@@ -308,7 +307,7 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             )
             if not gp.exists():
                 gp.setup()
-                print(gp.baseSettings(),)
+                print(gp.baseSettings())
                 submitted += gp.submit()
                 time.sleep(delay)
                 print("")
@@ -330,7 +329,7 @@ def submit_ndim_jobs(gp,dofs,npts,runs,tag,start_pts=[],max_submits=-1):
             dof.setLimits(0,None,None)
         pt = {}
         if idx < len(start_pts):
-            for k,v in start_pts[idx].iteritems(): pt[k] = v
+            for k,v in start_pts[idx].items(): pt[k] = v
         gp.configure(
             tag=tag,
             run=idx,
@@ -340,7 +339,7 @@ def submit_ndim_jobs(gp,dofs,npts,runs,tag,start_pts=[],max_submits=-1):
         )
         if not gp.exists():
             gp.setup()
-            print(gp.baseSettings(),)
+            print(gp.baseSettings())
             submitted += gp.submit()
             time.sleep(delay)
             print("")
@@ -366,7 +365,7 @@ def submit_scanfile_jobs(gp,dofs,tag,scan_files,max_submits=-1):
         )
         if not gp.exists():
             gp.setup()
-            print(gp.baseSettings(),)
+            print(gp.baseSettings())
             submitted += gp.submit()
             time.sleep(delay)
             print("")
@@ -471,7 +470,7 @@ def main():
     gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
-    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model="SMEFTsim_topU3l_alphaScheme_UFO")
+    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model="SMEFTsim_topU3l_MwScheme_UFO_ctGpatched")
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctZ^2=1 DIM6_ctW^2=1") # For example
@@ -528,14 +527,14 @@ def main():
                 gp=gridpack,
                 dofs=dof_list,
                 tag=tag,
-                scan_files=scan_files,
+                scan_files=scan_files[tag],
                 max_submits=-1
             )
         else:
             gridpack.configure(tag=tag,run=0,dofs=dof_list,num_pts=npts,start_pt=start_pt)
             if not gridpack.exists():
                 gridpack.setup()
-                print(gridpack.baseSettings(),)
+                print(gridpack.baseSettings())
                 submitted += gridpack.submit()
                 print("")
             else:
