@@ -450,11 +450,11 @@ def main():
 
     proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
     proc_list = [ttHJet]
-    #dof_list  = [ctW , ctp , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQj11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    #dof_list  = [ctWRe , ctp , cHQ1 , cte , ctl,cQe , ctBRe , cQl1i , cQl3 , ctGRe , cleQt3Re , cbW , cHQ3 , cptb , cHt , cleQt1Re,cQd1,cQd8,cQj11  ,cQj31  ,cQQ1,cQj18  ,cQj38  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
-        ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
+        ctp,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt, # TOP-19-001 2-heavy
         cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re, # TOP-19-001 4f
-        cQq13,cQq83,cQj11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
+        cQj31,cQj38,cQj11,ctq1,cQj18,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
     ]
 
@@ -474,7 +474,7 @@ def main():
     gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model="SMEFTsim_topU3l_MwScheme_UFO_ctGpatched")
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
-    #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctZ^2=1 DIM6_ctW^2=1") # For example
+    #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctB^2=1 DIM6_ctW^2=1") # For example
 
     if stype == ScanType.SLINSPACE:
         tag = tag + "AxisScan"
