@@ -1,7 +1,7 @@
 import os
 import datetime
 import math
-from helper_tools import run_process,regex_match
+from helpers.helper_tools import run_process,regex_match
 
 # Utility class for keeping track of gridpack production jobs
 # NOTE: This assumes that all the relevant log files are in the same directory
