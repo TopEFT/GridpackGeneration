@@ -87,7 +87,7 @@ ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO
 ttWNLO = MGProcess(name='ttWNLO',process='ttW',pcard='ttW_NLO.dat',tdir='ttZ-NLO_template')
 ttZNLO = MGProcess(name='ttZNLO',process='ttZ',pcard='ttZ_NLO.dat',tdir='ttZ-NLO_template')
 
-ctH   = DegreeOfFreedom(name='ctH'  ,relations=[['ctH'] ,1.0])
+ctHRe   = DegreeOfFreedom(name='ctHRe'  ,relations=[['ctHRe'] ,1.0])
 cHQ1  = DegreeOfFreedom(name='cHQ1' ,relations=[['cHQ1'],1.0])
 cHQ3  = DegreeOfFreedom(name='cHj3' ,relations=[['cHj3'],1.0])
 cHt   = DegreeOfFreedom(name='cHt'  ,relations=[['cHt'] ,1.0])
@@ -132,8 +132,8 @@ ctu8  = DegreeOfFreedom(name='ctu8'  ,relations=[['ctu8'],1.0])
 ctd1  = DegreeOfFreedom(name='ctd1'  ,relations=[['ctd1'],1.0])
 ctd8  = DegreeOfFreedom(name='ctd8'  ,relations=[['ctd8'],1.0])
 
-all_coeffs       = [ctH,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQe,ctl,cte,cQl3,cQl1i,cleQt1Re,cleQt3Re]
-ana_coeffs       = [ctH,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re]  # 16 oHerators
+all_coeffs       = [ctHRe,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQe,ctl,cte,cQl3,cQl1i,cleQt1Re,cleQt3Re]
+ana_coeffs       = [ctHRe,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re]  # 16 oHerators
 coeffs_4Hvy      = [cQQ1,cQQ8,cQt1,cQt8,ctt1,ctb1,cQtQb1,cQtQb8]    # 8 operators
 coeffs_2Hvy_2Lgt = [cQj31,cQj38,cQq11,cQj18,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
 
@@ -449,9 +449,9 @@ def main():
     }
 
     proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
-    #dof_list  = [ctW , ctH , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    #dof_list  = [ctW , ctHRe , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
-        ctH,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
+        ctHRe,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks

@@ -58,19 +58,19 @@ class DegreeOfFreedom(object):
 # ctDG = 1.0*ctj8  = 1.0*ctu8 =  1.0*ctd8 =  1.0*ctb8
 
 #ANALYSIS_COEFFS = [ # As suggested by Adam
-#    'ctH','cpQM','cpQ3','cHtb','cHtbRe','ctWReRe', 'ctBRe', 'cbWReRe','ctG',
+#    'ctHRe','cpQM','cpQ3','cHtb','cHtbRe','ctWReRe', 'ctBRe', 'cbWReRe','ctG',
 #    'cQl31','cQlM1','cQe1','ctl1','cte1','ctlS1','ctlT1',
 #    'cQl32','cQlM2','cQe2','ctl2','cte2','ctlS2','ctlT2',
 #    'cQl33','cQlM3','cQe3','ctl3','cte3','ctlS3','ctlT3',
 #]
 
 #TOP_PHILIC_COEFFS = [
-#    'ctH','cpQM','cpQ3','cHtb','cHtbRe','ctWReRe', 'ctBRe', 'cbWReRe','ctG', # 9 two-heavy quark + bosons
+#    'ctHRe','cpQM','cpQ3','cHtb','cHtbRe','ctWReRe', 'ctBRe', 'cbWReRe','ctG', # 9 two-heavy quark + bosons
 #    'cQQ1','cQQ8','cQt1','cQt8','ctt1',                         # 5 four heavy quarks
 #]
 
 if __name__ == "__main__":
-    ctH   = DegreeOfFreedom(name='ctH',relations=[['ctH'],1.0])
+    ctHRe   = DegreeOfFreedom(name='ctHRe',relations=[['ctHRe'],1.0])
     cHq1  = DegreeOfFreedom(name='cHq1',relations=[['cHq1'],1.0])
     cHtb   = DegreeOfFreedom(name='cHtb',relations=[['cHtb'],1.0])
     cHt   = DegreeOfFreedom(name='cHt',relations=[['cHt'],1.0])
