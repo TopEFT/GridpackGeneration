@@ -671,14 +671,15 @@ class Gridpack(object):
             debug_file = "%s.debug" % (setup)
             cmsconnect_cores = 1
             print('\tCurrent PATH: {0}'.format(os.getcwd()))
-            print('\tWill execute: ./submit_cmsconnect_gridpack_generation.sh {setup} {dir} {cores} "{mem}" {arch} {release}'.format()
+            print('\tWill execute: ./submit_cmsconnect_gridpack_generation.sh {setup} {dir} {cores} "{mem}" {arch} {release}'.format(
                 setup=setup,
                 dir=target_dir,
                 cores=str(cmsconnect_cores),
                 mem="15 Gb",
+                disk="15 Gb",
                 arch=self.CURR_ARCH,
                 release=self.CURR_RELEASE
-            )
+            ))
             subprocess.Popen(
                 ["./submit_cmsconnect_gridpack_generation.sh",setup,target_dir,str(cmsconnect_cores),"15 Gb",self.CURR_ARCH,self.CURR_RELEASE],
                 stdout=open(debug_file,'w'),
