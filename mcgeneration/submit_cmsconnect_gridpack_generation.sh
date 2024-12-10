@@ -20,7 +20,10 @@ cat<<-EOF
     +IsGridpack=true
     +GridpackCard = "${card_name}"
     
-    +REQUIRED_OS = "${rhel_ver}"
+    Requirements = HAS_SINGULARITY == True
+    +SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9"
+    #+REQUIRED_OS = "${rhel_ver}"
+
     request_cpus = $cores
     request_memory = $memory
     Queue 1
