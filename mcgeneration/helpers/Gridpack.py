@@ -8,7 +8,7 @@ from helpers.ScanType import ScanType
 from helpers.DegreeOfFreedom import DegreeOfFreedom
 from helpers.helper_tools import *
 
-from CardEditor import MGRunCard, MGCustomizeCard
+from helpers.CardEditor import MGRunCard, MGCustomizeCard
 
 # Class for configuring and setting up the submission for a single gridpack, can also run a produced gridpack tarball
 class Gridpack(object):
