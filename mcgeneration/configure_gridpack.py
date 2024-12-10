@@ -135,7 +135,7 @@ ctd8  = DegreeOfFreedom(name='ctd8'  ,relations=[['ctd8'],1.0])
 all_coeffs       = [ctp,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQe,ctl,cte,cQl3,cQl1i,cleQt1Re,cleQt3Re]
 ana_coeffs       = [ctp,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re]  # 16 oHerators
 coeffs_4Hvy      = [cQQ1,cQQ8,cQt1,cQt8,ctt1,ctb1,cQtQb1,cQtQb8]    # 8 operators
-coeffs_2Hvy_2Lgt = [cQj31,cQj38,cQq11,cQj18,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
+coeffs_2Hvy_2Lgt = [cQj31,cQj38,cQj11,cQj18,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
 
 # For submitting many gridpack jobs on cmsconnect
 def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,stype,scan_files=[],proc_run_wl={},attempt_resubmit=False):
@@ -450,11 +450,11 @@ def main():
 
     proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
     proc_list = [ttHJet]
-    #dof_list  = [ctW , ctp , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    #dof_list  = [ctW , ctp , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQj11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re, # TOP-19-001 4f
-        cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
+        cQq13,cQq83,cQj11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
     ]
 
