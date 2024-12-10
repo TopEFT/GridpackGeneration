@@ -3,10 +3,10 @@ import subprocess
 import shutil
 import random
 
-from BatchType import BatchType
-from ScanType import ScanType
-from DegreeOfFreedom import DegreeOfFreedom
-from helper_tools import *
+from helpers.BatchType import BatchType
+from helpers.ScanType import ScanType
+from helpers.DegreeOfFreedom import DegreeOfFreedom
+from helpers.helper_tools import *
 
 from CardEditor import MGRunCard, MGCustomizeCard
 
