@@ -5,8 +5,7 @@
 EFTMCPATH=`pwd -P`
 # path should end with genproductions 
 GENPRODPATH=${EFTMCPATH}/../../genproductions
-#if [ "$(hostname)" == "login.uscms.org" ]; then
-if [ "$(hostname)" == "login-el7.uscms.org" ]; then
+if [ "$(hostname)" == "login.uscms.org" ]; then
     # path for cmsconnect submit node
     GENPRODPATH="/ospool/cms-user/${USER}/genproductions"
 fi
