@@ -27,7 +27,7 @@ class Gridpack(object):
         self.MG_RUN_CARD      = 'run_card.dat'
 
         # The custom limits file for determining range of WC values
-        self.LIMITS_FILE = "SMEFTsin_limits.txt"
+        self.LIMITS_FILE = "SMEFTsim_limits.txt"
 
         # These file name conventions are determined by genproductions scripts
         self.TARBALL_POSTFIX  = 'tarball'
