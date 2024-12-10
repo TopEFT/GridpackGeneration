@@ -471,7 +471,7 @@ def main():
     gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
-    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model="SMEFTsim_topU3l_MwScheme_UFO_ctGpatched")
+    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_topU3l_MwScheme_UFO_ctGpatched"])
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctB^2=1 DIM6_ctW^2=1") # For example
