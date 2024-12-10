@@ -87,7 +87,7 @@ ttHNLO = MGProcess(name='ttHNLO',process='ttH',pcard='ttH_NLO.dat',tdir='ttZ-NLO
 ttWNLO = MGProcess(name='ttWNLO',process='ttW',pcard='ttW_NLO.dat',tdir='ttZ-NLO_template')
 ttZNLO = MGProcess(name='ttZNLO',process='ttZ',pcard='ttZ_NLO.dat',tdir='ttZ-NLO_template')
 
-ctp   = DegreeOfFreedom(name='ctp'  ,relations=[['ctp'] ,1.0])
+ctH   = DegreeOfFreedom(name='ctH'  ,relations=[['ctH'] ,1.0])
 cHQ1  = DegreeOfFreedom(name='cHQ1' ,relations=[['cHQ1'],1.0])
 cHQ3  = DegreeOfFreedom(name='cHj3' ,relations=[['cHj3'],1.0])
 cHt   = DegreeOfFreedom(name='cHt'  ,relations=[['cHt'] ,1.0])
@@ -96,13 +96,13 @@ ctWRe = DegreeOfFreedom(name='ctWRe',relations=[['ctWRe'] ,1.0])
 ctBRe = DegreeOfFreedom(name='ctBRe',relations=[['ctBRe'] ,1.0])
 cbW   = DegreeOfFreedom(name='cbW'  ,relations=[['cbW'] ,1.0])
 ctGRe = DegreeOfFreedom(name='ctGRe',relations=[['ctGRe'] ,1.0])
-cQei  = DegreeOfFreedom(name='cQei' ,relations=[['cQe1','cQe2','cQe3'],1.0])
-ctli  = DegreeOfFreedom(name='ctli' ,relations=[['ctl1','ctl2','ctl3'],1.0])
-ctei  = DegreeOfFreedom(name='ctei' ,relations=[['cte1','cte2','cte3'],1.0])
-cQl3i = DegreeOfFreedom(name='cQl3i',relations=[['cQl31','cQl32','cQl33'],1.0])
-cQlMi = DegreeOfFreedom(name='cQlMi',relations=[['cQlM1','cQlM2','cQlM3'],1.0])
-ctlSi = DegreeOfFreedom(name='ctlSi',relations=[['ctlS1','ctlS2','ctlS3'],1.0])
-ctlTi = DegreeOfFreedom(name='ctlTi',relations=[['ctlT1','ctlT2','ctlT3'],1.0])
+cQe   = DegreeOfFreedom(name='cQe' ,relations=[['cQe'],1.0])
+ctl   = DegreeOfFreedom(name='ctl' ,relations=[['ctl'],1.0])
+cte   = DegreeOfFreedom(name='cte' ,relations=[['cte'],1.0])
+cQl3  = DegreeOfFreedom(name='cQl3',relations=[['cQl3'],1.0])
+cQl1i = DegreeOfFreedom(name='cQl1i',relations=[['cQl1'],1.0])
+cleQt1Re = DegreeOfFreedom(name='cleQt1Re',relations=[['cleQt1Re',],1.0])
+cleQt3Re = DegreeOfFreedom(name='cleQt3Re',relations=[['cleQt3Re',1.0])
 
 # Four heavy quarks
 cQQ1   = DegreeOfFreedom(name='cQQ1'   ,relations=[['cQQ1'],1.0])
@@ -132,8 +132,8 @@ ctu8  = DegreeOfFreedom(name='ctu8'  ,relations=[['ctu8'],1.0])
 ctd1  = DegreeOfFreedom(name='ctd1'  ,relations=[['ctd1'],1.0])
 ctd8  = DegreeOfFreedom(name='ctd8'  ,relations=[['ctd8'],1.0])
 
-all_coeffs       = [ctp,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQei,ctli,ctei,cQl3i,cQlMi,ctlSi,ctlTi]
-ana_coeffs       = [ctp,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi]  # 16 oHerators
+all_coeffs       = [ctH,cHQ1,cHQ3,cHt,cptb,ctWRe,ctBRe,cbW,ctGRe,cQQ1,cQQ8,cQt1,cQt8,ctt1,cQe,ctl,cte,cQl3,cQl1i,cleQt1Re,cleQt3Re]
+ana_coeffs       = [ctH,cHQ1,ctWRe,ctBRe,ctGRe,cbW,cHQ3,cptb,cHt,cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re]  # 16 oHerators
 coeffs_4Hvy      = [cQQ1,cQQ8,cQt1,cQt8,ctt1,ctb1,cQtQb1,cQtQb8]    # 8 operators
 coeffs_2Hvy_2Lgt = [cQj31,cQj38,cQq11,cQj18,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,ctu8,ctd1,ctd8]  # 14 operators
 
@@ -449,10 +449,10 @@ def main():
     }
 
     proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
-    #dof_list  = [ctW , ctp , cpQM , ctei , ctli,cQei , ctZ , cQlMi , cQl3i , ctG , ctlTi , cbW , cpQ3 , cptb , cpt , ctlSi,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
+    #dof_list  = [ctW , ctH , cpQM , cte , ctl,cQe , ctZ , cQl1i , cQl3 , ctG , cleQt3Re , cbW , cpQ3 , cptb , cpt , cleQt1Re,cQd1,cQd8,cQq11  ,cQq13  ,cQQ1,cQq81  ,cQq83  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctq1,ctq8,ctt1,ctu1,ctu8]
     dof_list  = [
-        ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
-        cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
+        ctH,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
+        cQl3,cQl1i,cQe,ctl,cte,cleQt1Re,cleQt3Re, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
     ]
