@@ -29,6 +29,7 @@ else
     #for FILE in addons helpers scanfiles diagram_generation.sh clean_diagrams.sh submit_madpack_ttbareft.sh configure_gridpack.py transfer_gridpacks.py transfer_diagrams.py ; do 
 	cp -r ${EFTMCPATH}/${FILE} ${GENPRODPATH}/bin/MadGraph5_aMCatNLO/.
     done
+    cp -r ${EFTMCPATH}/PLUGIN ${GENPRODPATH}/bin/MadGraph5_aMCatNLO/.
     chmod 755 ${GENPRODPATH}/bin/MadGraph5_aMCatNLO/submit_cmsconnect_gridpack_generation.sh
     cd ${GENPRODPATH}/.
     echo "You are done with setting up genproduction for EFT gridpack generation!"
