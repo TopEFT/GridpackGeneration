@@ -46,7 +46,7 @@ make_tarball () {
     if [ -e merge.pl ]; then
         EXTRA_TAR_ARGS+="merge.pl "
     fi
-    XZ_OPT="$XZ_OPT" tar -cJpsf ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz mgbasedir process runcmsgrid.sh gridpack_generation*.log InputCards $EXTRA_TAR_ARGS
+    XZ_OPT="$XZ_OPT" tar -cJpf ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz mgbasedir process runcmsgrid.sh gridpack_generation*.log InputCards $EXTRA_TAR_ARGS
 
     echo "Gridpack created successfully at ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz"
     echo "End of job"
@@ -158,7 +158,9 @@ make_gridpack () {
       #Create a workplace to work#
       ############################
       export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+      set +u
       source $VO_CMS_SW_DIR/cmsset_default.sh
+      set -u
 
       scram project -n ${name}_gridpack CMSSW ${RELEASE} ;
       if [ ! -d ${name}_gridpack ]; then  
@@ -173,8 +175,7 @@ make_gridpack () {
         echo "Use HTCondor for gridpack generation"
         source ${PRODHOME}/Utilities/source_condor.sh
       fi
-      set -u 
-        
+
       #############################################
       #Copy, Unzip and Delete the MadGraph tarball#
       #############################################
@@ -213,15 +214,19 @@ make_gridpack () {
     
       echo "set auto_update 0" > mgconfigscript
       echo "set automatic_html_opening False" >> mgconfigscript
+      echo "set auto_convert_model True" >> mgconfigscript
       if [ $iscmsconnect -gt 0 ]; then
         echo "set output_dependencies internal" >> mgconfigscript
       fi
     #  echo "set output_dependencies internal" >> mgconfigscript
-      echo "set lhapdf $LHAPDFCONFIG" >> mgconfigscript
+      echo "set lhapdf_py3 $LHAPDFCONFIG" >> mgconfigscript
     #   echo "set ninja $PWD/HEPTools/lib" >> mgconfigscript
     
       if [ "$queue" == "local" ]; then
           echo "set run_mode 2" >> mgconfigscript
+      elif [ "$queue" == "pdmv" ]; then
+          echo "set run_mode 2" >> mgconfigscript
+	  echo "set nb_core $NB_CORE" >> mgconfigscript
       else
           #suppress lsf emails
           export LSB_JOB_REPORT_MAIL="N"
@@ -260,7 +265,7 @@ make_gridpack () {
           fi      
       fi
     
-      echo "save options" >> mgconfigscript
+      echo "save options --all" >> mgconfigscript
     
       ./bin/mg5_aMC mgconfigscript
     
@@ -340,7 +345,7 @@ make_gridpack () {
       fi
     
       is5FlavorScheme=0
-      if tail -n 20 $LOGFILE | grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~"; then 
+      if tail -n 999 $LOGFILE | grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~"; then 
         is5FlavorScheme=1
       fi
     
@@ -380,7 +385,7 @@ make_gridpack () {
       echo "WARNING: If you changed the process card you need to clean the folder and run from scratch"
     
       if [ "$is5FlavorScheme" -eq -1 ]; then
-        if cat $LOGFILE_NAME*.log | grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~"; then 
+        if grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~" $LOGFILE_NAME*.log; then 
             is5FlavorScheme=1
         else
             is5FlavorScheme=0
@@ -394,10 +399,10 @@ make_gridpack () {
         if [ "${BASH_SOURCE[0]}" != "${0}" ]; then return 1; else exit 1; fi
       fi
       cd $WORKDIR
-    
+
       eval `scram runtime -sh`
       export BOOSTINCLUDES=`scram tool tag boost INCLUDE`
-    
+
       # need to source condor once more if the codegen & integrate steps are separated
       if [[ $queue == *"condor"* ]]; then
         echo "Use HTCondor for gridpack generation"
@@ -525,7 +530,7 @@ make_gridpack () {
       echo "reweight=OFF" >> makegrid.dat
       echo "done" >> makegrid.dat
       if [ -e $CARDSDIR/${name}_customizecards.dat ]; then
-              cat $CARDSDIR/${name}_customizecards.dat >> makegrid.dat
+              cat $CARDSDIR/${name}_customizecards.dat | sed '/^$/d;/^#.*$/d' >> makegrid.dat
               echo "" >> makegrid.dat
       fi
       echo "done" >> makegrid.dat
@@ -534,7 +539,7 @@ make_gridpack () {
       # Run this step separately in debug mode since it gives so many problems
       if [ -e $CARDSDIR/${name}_reweight_card.dat ]; then
           echo "preparing reweighting step"
-          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat 
+          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat
 	  extract_width $isnlo $WORKDIR $CARDSDIR ${name}
       fi
       
@@ -579,7 +584,7 @@ make_gridpack () {
       echo "done" > makegrid.dat
       echo "set gridpack True" >> makegrid.dat
       if [ -e $CARDSDIR/${name}_customizecards.dat ]; then
-              cat $CARDSDIR/${name}_customizecards.dat >> makegrid.dat
+              cat $CARDSDIR/${name}_customizecards.dat | sed '/^$/d;/^#.*$/d' >> makegrid.dat
               echo "" >> makegrid.dat
       fi
       echo "done" >> makegrid.dat
@@ -623,7 +628,7 @@ make_gridpack () {
           prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat 
 	  extract_width $isnlo $WORKDIR $CARDSDIR ${name}
       fi
-    
+      
       #prepare madspin grids if necessary
       if [ -e $CARDSDIR/${name}_madspin_card.dat ]; then
         echo "import $WORKDIR/unweighted_events.lhe.gz" > madspinrun.dat
@@ -631,7 +636,6 @@ make_gridpack () {
         $WORKDIR/$MGBASEDIRORIG/MadSpin/madspin madspinrun.dat 
         rm madspinrun.dat
         rm -rf tmp*
-        cp $CARDSDIR/${name}_madspin_card.dat $WORKDIR/process/madspin_card.dat
       fi
     
       echo "preparing final gridpack"
@@ -711,6 +715,7 @@ jobstep=${4}
 
 # sync default cmssw with the current OS 
 export SYSTEM_RELEASE=`cat /etc/redhat-release`
+echo $SYSTEM_RELEASE
 
 # set scram_arch 
 if [ -n "$5" ]; then
@@ -732,10 +737,10 @@ fi
 if [ -n "$6" ]; then
     cmssw_version=${6}
 else
-    if [[ $SYSTEM_RELEASE == *"release 6"* ]]; then 
-        cmssw_version=CMSSW_10_2_24_patch1 
-    elif [[ $SYSTEM_RELEASE == *"release 7"* ]]; then 
-        cmssw_version=CMSSW_10_6_19 
+    if [[ $SYSTEM_RELEASE == *"release 7"* ]]; then 
+        cmssw_version=CMSSW_12_4_8
+    elif [[ $SYSTEM_RELEASE == *"release 8"* ]]; then
+        cmssw_version=CMSSW_12_4_8
     elif [[ $SYSTEM_RELEASE == *"release 9"* ]]; then
 	cmssw_version=CMSSW_13_2_9
     else 
@@ -835,7 +840,7 @@ if [ "${name}" != "interactive" ]; then
     set -o pipefail
     # Do not exit main shell if make_gridpack fails. We want to return rather than exit if we are sourcing this script.
     set +e
-    make_gridpack | tee $LOGFILE
+    make_gridpack |& tee $LOGFILE
     pipe_status=$PIPESTATUS
     # tee above will create a subshell, so exit calls inside function will just affect that subshell instance and return the exitcode in this shell.
     # This breaks cases when the calls inside make_gridpack try to exit the main shell with some error, hence not having the gridpack directory.
