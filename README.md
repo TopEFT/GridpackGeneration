@@ -19,4 +19,9 @@ This repository contains the files that are necessary for setting up a `genprodu
 - If you are running the script from `cmsconnect`, it will create the directory in your `/local-scratch` area
 - Files in `/local-scratch` are deleted 30 days after their last modification, so if you would like to keep your gridpacks, be sure to move them to a permanent location after they are completed
 
-
+## Making Run 2 gridpacks on CMS Connect:
+To correctly make gridpacks for Run 2 (based on slc7/cc7) you must enter singularity:
+```
+cmssw-cc7-condor-python27
+```
+This command should be executed from the `bin` folder (*not* the MadGraph5 folder, otherwise the git repository won't be available).

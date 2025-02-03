@@ -747,6 +747,7 @@ fi
 
 #catch unset variables
 set -u
+unset PERL5LIB
 
 if [ -z ${carddir} ]; then
     echo "Card directory not provided"
