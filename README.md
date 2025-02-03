@@ -24,4 +24,4 @@ To correctly make gridpacks for Run 2 (based on slc7/cc7) you must enter singula
 ```
 cmssw-cc7-condor-python27
 ```
-This command should be executed from the `bin` folder (*not* the MadGraph5 folder, otherwise the git repository won't be available).
+This command should be executed from the base `genproductions` folder (*not* the MadGraph5 folder, otherwise the git repository won't be available).
