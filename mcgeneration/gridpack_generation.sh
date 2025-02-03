@@ -42,7 +42,7 @@ make_tarball () {
     if [ -e merge.pl ]; then
         EXTRA_TAR_ARGS+="merge.pl "
     fi
-    XZ_OPT="$XZ_OPT" tar -cJpsf ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz mgbasedir process runcmsgrid.sh gridpack_generation*.log InputCards $EXTRA_TAR_ARGS
+    XZ_OPT="$XZ_OPT" tar -cJpf ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz mgbasedir process runcmsgrid.sh gridpack_generation*.log InputCards $EXTRA_TAR_ARGS
 
     echo "Gridpack created successfully at ${PRODHOME}/${name}_${scram_arch}_${cmssw_version}_tarball.tar.xz"
     echo "End of job"
@@ -80,6 +80,39 @@ make_gridpack () {
       if [ "${BASH_SOURCE[0]}" != "${0}" ]; then return 1; else exit 1; fi
     fi
 
+    if [ -e $CARDSDIR/${name}_madspin_card.dat ]; then
+      if grep -F "Nevents_for_max_weight" $CARDSDIR/${name}_madspin_card.dat; then
+        sed -i 's|Nevents_for_max_weight|Nevents_for_max_weigth|g' $CARDSDIR/${name}_madspin_card.dat
+        echo "Unfixing the typo fix : Nevents_for_max_weight -> Nevents_for_max_weigth"
+      fi
+    fi
+
+    # avoid compute_widths in customizecards 
+    if [ -e $CARDSDIR/${name}_customizecards.dat ]; then
+        if grep -F "compute_widths" $CARDSDIR/${name}_customizecards.dat ; then
+            echo "<<compute_widths X>> is used in your customizecards.dat"
+            echo "This could be problematic from time to time, so instead use <<set decay wX AUTO>> for width computations. Please take a look at \"compute_widths\" under \"Troubleshooting_and_Suggestions\" section."
+            echo "https://twiki.cern.ch/twiki/bin/view/CMS/QuickGuideMadGraph5aMCatNLO#Troubleshooting_and_Suggestions"
+            exit 1;
+        fi
+    fi
+
+    # avoid characters in weight names that potentially corrupt lhe header 
+    if [ -e $CARDSDIR/${name}_reweight_card.dat ]; then
+        for weightname in `grep rwgt_name $CARDSDIR/${name}_reweight_card.dat` ; do
+            if [[ "$weightname" == *"rwgt_name="* ]]; then
+                remove="rwgt_name="
+                weightname=${weightname#*$remove}
+            else
+                continue
+            fi
+            if [[ $weightname == *['!'@#\$%^\&*()\+\[\]{}]* ]]; then 
+                echo " Please remove problematic characters from weight name: $weightname"  
+                exit 1;    
+            fi
+        done 
+    fi
+
     # CMS Connect runs git status inside its own script.
     if [ $iscmsconnect -eq 0 ]; then
       cd $PRODHOME
@@ -97,6 +130,8 @@ make_gridpack () {
     
     MG_EXT=".tar.gz"
     MG=MG5_aMC_v2.6.5$MG_EXT
+    #MG=MG5_aMC_v2.9.18$MG_EXT
+    #MG=MG5_aMC_v2.9.13$MG_EXT
     MGSOURCE=https://cms-project-generators.web.cern.ch/cms-project-generators/$MG
     
     MGBASEDIRORIG=$(echo ${MG%$MG_EXT} | tr "." "_")
@@ -118,7 +153,9 @@ make_gridpack () {
       #Create a workplace to work#
       ############################
       export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+      set +u
       source $VO_CMS_SW_DIR/cmsset_default.sh
+      set -u
 
       scram project -n ${name}_gridpack CMSSW ${RELEASE} ;
       if [ ! -d ${name}_gridpack ]; then  
@@ -152,6 +189,7 @@ make_gridpack () {
       cd $MGBASEDIRORIG
       cat $PRODHOME/patches/*.patch | patch -p1
       cp -r $PRODHOME/PLUGIN/CMS_CLUSTER/ PLUGIN/ 
+      cp $PRODHOME/PLUGIN/*.sh/ PLUGIN/ 
       # Intended for expert use only!
       if ls $CARDSDIR/${name}*.patch; then
         echo "    WARNING: Applying custom user patch. I hope you know what you're doing!"
@@ -166,6 +204,7 @@ make_gridpack () {
     
       echo "set auto_update 0" > mgconfigscript
       echo "set automatic_html_opening False" >> mgconfigscript
+      #echo "set auto_convert_model T" >> mgconfigscript
       if [ $iscmsconnect -gt 0 ]; then
         echo "set output_dependencies internal" >> mgconfigscript
       fi
@@ -175,6 +214,10 @@ make_gridpack () {
     
       if [ "$queue" == "local" ]; then
           echo "set run_mode 2" >> mgconfigscript
+	  echo "set nb_core 8" >> mgconfigscript
+      elif [ "$queue" == "pdmv" ]; then
+          echo "set run_mode 2" >> mgconfigscript
+	  echo "set nb_core $NB_CORE" >> mgconfigscript
       else
           #suppress lsf emails
           export LSB_JOB_REPORT_MAIL="N"
@@ -192,13 +235,13 @@ make_gridpack () {
     #         echo "set cluster_queue $queue" >> mgconfigscript
           fi 
           if [ $iscmsconnect -gt 0 ]; then
-          n_retries=10
-          long_wait=300
-          short_wait=120
+    	  n_retries=10
+    	  long_wait=300
+    	  short_wait=120
           else
-          n_retries=3
-          long_wait=60
-          short_wait=30
+    	  n_retries=3
+    	  long_wait=60
+    	  short_wait=30
           fi
           echo "set cluster_status_update $long_wait $short_wait" >> mgconfigscript
           echo "set cluster_nb_retry $n_retries" >> mgconfigscript
@@ -226,7 +269,7 @@ make_gridpack () {
           #get needed BSM model
           if [[ $model = *[!\ ]* ]]; then
             echo "Loading extra model $model"
-            wget --no-check-certificate https://cms-project-generators.web.cern.ch/cms-project-generators/$model    
+            wget --no-check-certificate https://cms-project-generators.web.cern.ch/cms-project-generators/$model	
             cd models
             if [[ $model == *".zip"* ]]; then
               unzip ../$model
@@ -273,16 +316,17 @@ make_gridpack () {
           if [ "${runMadSTR}" -lt 1 ] || [ "${runMadSTR}" -gt 6 ] ; then
               echo "istr should be between 1 and 6" # wrong settings 
               exit 1
-      fi
+	  fi
       fi
       if [  "$runMadSTR" == 0 ]; then 
-      ./$MGBASEDIRORIG/bin/mg5_aMC ${name}_proc_card.dat # normal run without plugin 
+	  ./$MGBASEDIRORIG/bin/mg5_aMC ${name}_proc_card.dat # normal run without plugin 
       else
-      echo "Invoke MadSTR plugin when starting MG5_aMC@NLO" 
-      cp -r $PRODHOME/PLUGIN/MadSTR $MGBASEDIRORIG/PLUGIN/ # copy plugin 
+	  echo "Invoke MadSTR plugin when starting MG5_aMC@NLO" 
+	  cp -r $PRODHOME/PLUGIN/MadSTR $MGBASEDIRORIG/PLUGIN/ # copy plugin 
           ./$MGBASEDIRORIG/bin/mg5_aMC --mode=MadSTR ${name}_proc_card.dat # run invoking MadSTR plugin
       fi
-    
+      cat ${name}_proc_card.dat
+	
       is5FlavorScheme=0
       if tail -n 20 $LOGFILE | grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~"; then 
         is5FlavorScheme=1
@@ -323,7 +367,7 @@ make_gridpack () {
       echo "WARNING: If you changed the process card you need to clean the folder and run from scratch"
     
       if [ "$is5FlavorScheme" -eq -1 ]; then
-        if cat $LOGFILE_NAME*.log | grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~"; then 
+        if grep -q -e "^p *=.*b\~.*b" -e "^p *=.*b.*b\~" $LOGFILE_NAME*.log; then 
             is5FlavorScheme=1
         else
             is5FlavorScheme=0
@@ -340,6 +384,8 @@ make_gridpack () {
     
       eval `scram runtime -sh`
       export BOOSTINCLUDES=`scram tool tag boost INCLUDE`
+      #pip install --user htcondor
+      export PYTHONPATH="/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.4/3.4.57/el7-x86_64/usr/lib/python2.7/site-packages:/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/3.4/3.4.57/el7-x86_64/usr/lib64/python2.7/site-packages"
     
       #if lhapdf6 external is available then above points to lhapdf5 and needs to be overridden
       LHAPDF6TOOLFILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/available/lhapdf6.xml
@@ -462,7 +508,7 @@ make_gridpack () {
       echo "reweight=OFF" >> makegrid.dat
       echo "done" >> makegrid.dat
       if [ -e $CARDSDIR/${name}_customizecards.dat ]; then
-              cat $CARDSDIR/${name}_customizecards.dat >> makegrid.dat
+              cat $CARDSDIR/${name}_customizecards.dat | sed '/^$/d;/^#.*$/d' >> makegrid.dat
               echo "" >> makegrid.dat
       fi
       echo "done" >> makegrid.dat
@@ -471,7 +517,8 @@ make_gridpack () {
       # Run this step separately in debug mode since it gives so many problems
       if [ -e $CARDSDIR/${name}_reweight_card.dat ]; then
           echo "preparing reweighting step"
-          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat 
+          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat
+	  extract_width $isnlo $WORKDIR $CARDSDIR ${name}
       fi
       
       echo "finished pilot run"
@@ -505,6 +552,7 @@ make_gridpack () {
       fi
       
     else
+      #export PYTHONPATH="/usr/lib64/python3.9/site-packages/"
       #LO mode
       #######################
       #Run the integration and generate the grid
@@ -515,7 +563,7 @@ make_gridpack () {
       echo "done" > makegrid.dat
       echo "set gridpack True" >> makegrid.dat
       if [ -e $CARDSDIR/${name}_customizecards.dat ]; then
-              cat $CARDSDIR/${name}_customizecards.dat >> makegrid.dat
+              cat $CARDSDIR/${name}_customizecards.dat | sed '/^$/d;/^#.*$/d' >> makegrid.dat
               echo "" >> makegrid.dat
       fi
       echo "done" >> makegrid.dat
@@ -548,13 +596,14 @@ make_gridpack () {
       # awightma start: Force the re-weight step to only use 1 core
       echo "nb_core = 1" >> $WORKDIR/process/madevent/Cards/me5_configuration.txt
       # awightma end
-      
+
       # precompile reweighting if necessary
       if [ -e $CARDSDIR/${name}_reweight_card.dat ]; then
           echo "preparing reweighting step"
-          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat 
+          prepare_reweight $isnlo $WORKDIR $scram_arch $CARDSDIR/${name}_reweight_card.dat
+	  extract_width $isnlo $WORKDIR $CARDSDIR ${name}
       fi
-    
+      
       #prepare madspin grids if necessary
       if [ -e $CARDSDIR/${name}_madspin_card.dat ]; then
         echo "import $WORKDIR/unweighted_events.lhe.gz" > madspinrun.dat
@@ -662,6 +711,8 @@ else
         cmssw_version=CMSSW_10_2_24_patch1 
     elif [[ $SYSTEM_RELEASE == *"release 7"* ]]; then 
         cmssw_version=CMSSW_10_6_19 
+    elif [[ $SYSTEM_RELEASE == *"release 9"* ]]; then
+	cmssw_version=CMSSW_13_2_9
     else 
         echo "No default CMSSW for current OS!"
         if [ "${BASH_SOURCE[0]}" != "${0}" ]; then return 1; else exit 1; fi        
@@ -730,8 +781,18 @@ fi
 
 #For correct running you should place at least the run and proc card in a folder under the name "cards" in the same folder where you are going to run the script
 RUNHOME=`pwd`
+
+if [[ `uname -a` == *"lxplus"* ]]; then
+  if [[ $RUNHOME == *"/eos/home-"* ]]; then
+      echo "Running in /eos/home-X/~ which is not really stable. Use /eos/user/X/ instead."
+      exit 1;
+      #Preventing the use of /eos/home-X/ solely based on experience! Might not be a REAL problem.
+  fi
+fi
+
 LOGFILE=${RUNHOME}/${name}.log
 LOGFILE_NAME=${LOGFILE/.log/}
+LOGFILE_NAME=${RUNHOME}/${name}
 
 # where to search for datacards, that have to follow a naming code: 
 #   ${name}_proc_card_mg5.dat
@@ -750,7 +811,7 @@ if [ "${name}" != "interactive" ]; then
     set -o pipefail
     # Do not exit main shell if make_gridpack fails. We want to return rather than exit if we are sourcing this script.
     set +e
-    make_gridpack | tee $LOGFILE
+    make_gridpack |& tee $LOGFILE
     pipe_status=$PIPESTATUS
     # tee above will create a subshell, so exit calls inside function will just affect that subshell instance and return the exitcode in this shell.
     # This breaks cases when the calls inside make_gridpack try to exit the main shell with some error, hence not having the gridpack directory.
