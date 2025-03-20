@@ -7,7 +7,7 @@ cd /ospool/cms-user/$USER/genproductions_run3/genproductions/
 and enter the CC7 singularity with condor
 ```
 cmssw-cc7-condor
-```.
+```
 The first thing you'll need to do is unset the PERL5 libaries as this causses issues with CMSSW
 ```
 unset PERL5LIB
