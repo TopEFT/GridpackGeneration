@@ -11,7 +11,7 @@ cmssw-cc7-condor
 The first thing you'll need to do is unset the PERL5 libaries as this causses issues with CMSSW
 ```
 unset PERL5LIB
-```.
+```
 Next, change directories into the MG5 base
 ```
 bin/MadGraph5_aMCatNLO/
