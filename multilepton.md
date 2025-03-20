@@ -21,5 +21,5 @@ For Run 3 gridpacks we are using `CMSSW_12_4_8` with `slc7_amd64_gcc10`.
 
 
 # Producing Run 2 gridpacks for the multilepton analysis
-The procedure for Run 2 gridpacks is almost identical to Run 3 except we use `cmssw-cc7-condor-python27`.
-*Note*: make sure you are using the `master` branch which checks out the `mg265UL` branch of the genproductions tools.
+The procedure for Run 2 gridpacks is almost identical to Run 3 except we use `cmssw-cc7-condor-python27`.</br>
+**Note**: make sure you are using the `master` branch which checks out the `mg265UL` branch of the genproductions tools.
