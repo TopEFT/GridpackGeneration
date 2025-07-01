@@ -58,8 +58,10 @@ hostname = socket.gethostname()
 def singularityWraper():
     if "lxplus" in hostname:
         return f'\nMY.WantOS = \"{hostname.split(".")[0].replace("lxplus","el")}\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
-    elif "uscms" in hostname:
-        return '\nMY.WantOS = \"el9\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
+    elif "cmscon" in hostname:
+        return '\nMY.WantOS = \"scl7\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
+    else:
+        return '\nMY.WantOS = \"scl7\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
 
 def cleansubproc(subproc):
     subproc.terminate()
@@ -234,7 +236,6 @@ class CMSCondorCluster(CondorCluster):
                   getenv=True
                   %(leave_in_queue)s
                   Requirements = HAS_SINGULARITY == True
-                  +SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-el9:latest"
                   
                   +JobFlavour = "%(job_flavour)s"
                   
