@@ -21,10 +21,14 @@ tHq      = MGProcess(name='tHq'     ,process='tHq'   ,pcard='tHq.dat'     ,tdir=
 tHlnu    = MGProcess(name='tHlnu'   ,process='tHlnu' ,pcard='tHlnu.dat'   ,tdir='centralTHW_template')
 ttWlnu   = MGProcess(name='ttWlnu'  ,process='ttWlnu',pcard='ttWlnu.dat'  ,tdir='centralTTWW_template')
 tttt     = MGProcess(name='tttt'    ,process='tttt'  ,pcard='tttt.dat'    ,tdir='tttt_template')
-ttttJet  = MGProcess(name='ttttJet'    ,process='tttt'  ,pcard='ttttJet.dat'    ,tdir='ttHJet_template')
+ttttJet  = MGProcess(name='ttttJet'    ,process='tttt'  ,pcard='ttttJet.dat'    ,tdir='ttttJet_template')
 
 ttH      = MGProcess(name='ttH'     ,process='ttH',pcard='ttH.dat'     ,tdir='EFT-ttH_template')
-ttgamma      = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma.dat'     ,tdir='EFT-ttgamma_template')
+tW       = MGProcess(name='tW'      ,process='tW' ,pcard='tW.dat'      ,tdir='EFT-tW_template')
+ttgamma      = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma_dilep.dat'     ,tdir='EFT-ttgamma_template')
+ttgamma100   = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma.dat'     ,tdir='EFT-ttgamma100_template')
+ttgamma200   = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma.dat'     ,tdir='EFT-ttgamma200_template')
+ttgamma_dilep      = MGProcess(name='ttgamma'     ,process='ttgamma',pcard='ttgamma_dilep.dat'     ,tdir='EFT-ttgamma_template')
 ttHDecay = MGProcess(name='ttHDecay',process='ttH',pcard='ttHDecay.dat',tdir='defaultPDFs_template')
 
 # Process cards added for the H interference check 
@@ -96,13 +100,59 @@ ctWRe    = DegreeOfFreedom(name='ctWRe',relations=[['ctWRe'] ,1.0])
 ctBRe    = DegreeOfFreedom(name='ctBRe',relations=[['ctBRe'] ,1.0])
 cbWRe    = DegreeOfFreedom(name='cbWRe'  ,relations=[['cbWRe'] ,1.0])
 ctGRe    = DegreeOfFreedom(name='ctGRe',relations=[['ctGRe'] ,1.0])
+ctGIm    = DegreeOfFreedom(name='ctGIm',relations=[['ctGIm'] ,1.0])
 cQe      = DegreeOfFreedom(name='cQe' ,relations=[['cQe'],1.0])
+cQe1      = DegreeOfFreedom(name='cQe1' ,relations=[['cQe1'],1.0])
+cQe2      = DegreeOfFreedom(name='cQe2' ,relations=[['cQe2'],1.0])
+cQe3      = DegreeOfFreedom(name='cQe3' ,relations=[['cQe3'],1.0])
 ctl      = DegreeOfFreedom(name='ctl' ,relations=[['ctl'],1.0])
+ctl1      = DegreeOfFreedom(name='ctl1' ,relations=[['ctl1'],1.0])
+ctl2      = DegreeOfFreedom(name='ctl2' ,relations=[['ctl2'],1.0])
+ctl3      = DegreeOfFreedom(name='ctl3' ,relations=[['ctl3'],1.0])
 cte      = DegreeOfFreedom(name='cte' ,relations=[['cte'],1.0])
+cte1      = DegreeOfFreedom(name='cte1' ,relations=[['cte1'],1.0])
+cte2      = DegreeOfFreedom(name='cte2' ,relations=[['cte2'],1.0])
+cte3      = DegreeOfFreedom(name='cte3' ,relations=[['cte3'],1.0])
 cQl3     = DegreeOfFreedom(name='cQl3',relations=[['cQl3'],1.0])
 cQl1     = DegreeOfFreedom(name='cQl1',relations=[['cQl1'],1.0])
-cleQt1Re = DegreeOfFreedom(name='cleQt1Re',relations=[['cleQt1Re'],1.0])
-cleQt3Re = DegreeOfFreedom(name='cleQt3Re',relations=[['cleQt3Re'],1.0])
+cQl11     = DegreeOfFreedom(name='cQl11',relations=[['cQl11'],1.0])
+cQl12     = DegreeOfFreedom(name='cQl12',relations=[['cQl12'],1.0])
+cQl13     = DegreeOfFreedom(name='cQl13',relations=[['cQl13'],1.0])
+cQl31 = DegreeOfFreedom(name='cQl31', relations=[['cQl31'], 1.0])
+cQl32 = DegreeOfFreedom(name='cQl32', relations=[['cQl32'], 1.0])
+cQl33 = DegreeOfFreedom(name='cQl33', relations=[['cQl33'], 1.0])
+cleQt1Re11 = DegreeOfFreedom(name='cleQt1Re11', relations=[['cleQt1Re11'], 1.0])
+cleQt1Re22 = DegreeOfFreedom(name='cleQt1Re22', relations=[['cleQt1Re22'], 1.0])
+cleQt1Re33 = DegreeOfFreedom(name='cleQt1Re33', relations=[['cleQt1Re33'], 1.0])
+cleQt3Re11 = DegreeOfFreedom(name='cleQt3Re11', relations=[['cleQt3Re11'], 1.0])
+cleQt3Re22 = DegreeOfFreedom(name='cleQt3Re22', relations=[['cleQt3Re22'], 1.0])
+cleQt3Re33 = DegreeOfFreedom(name='cleQt3Re33', relations=[['cleQt3Re33'], 1.0])
+#cleQt1Re = DegreeOfFreedom(name='cleQt1Re', relations=[['cleQt1Re'], 1.0])
+cleQt1Re = DegreeOfFreedom(name='cleQt1Re', relations=[["cleQt1Re11", "cleQt1Re22", "cleQt1Re33"], 1.0])
+#cleQt3Re = DegreeOfFreedom(name='cleQt3Re', relations=[['cleQt3Re'], 1.0])
+cleQt3Re = DegreeOfFreedom(name='cleQt3Re', relations=[["cleQt3Re11", "cleQt3Re22", "cleQt3Re33"], 1.0])
+ctp   = DegreeOfFreedom(name='ctp'  ,relations=[['ctp'] ,1.0])
+cpQM  = DegreeOfFreedom(name='cpQM' ,relations=[['cpQM'],1.0])
+cHQ1  = DegreeOfFreedom(name='cHQ1' ,relations=[['cHQ1'],1.0])
+cpQ3  = DegreeOfFreedom(name='cpQ3' ,relations=[['cpQ3'],1.0])
+cHQ3  = DegreeOfFreedom(name='cHQ3' ,relations=[['cHQ3'],1.0])
+cpt   = DegreeOfFreedom(name='cpt'  ,relations=[['cpt'] ,1.0])
+cHt   = DegreeOfFreedom(name='cHt'  ,relations=[['cHt'] ,1.0])
+cptb  = DegreeOfFreedom(name='cptb' ,relations=[['cptb'],1.0])
+ctW   = DegreeOfFreedom(name='ctW'  ,relations=[['ctW'] ,1.0])
+ctWRe = DegreeOfFreedom(name='ctWRe',relations=[['ctWRe'] ,1.0])
+ctZ   = DegreeOfFreedom(name='ctZ'  ,relations=[['ctZ'] ,1.0])
+ctBRe = DegreeOfFreedom(name='ctBRe',relations=[['ctBRe'] ,1.0])
+cbW   = DegreeOfFreedom(name='cbW'  ,relations=[['cbW'] ,1.0])
+ctG   = DegreeOfFreedom(name='ctG'  ,relations=[['ctG'] ,1.0])
+ctGRe = DegreeOfFreedom(name='ctGRe',relations=[['ctGRe'] ,1.0])
+cQei  = DegreeOfFreedom(name='cQei' ,relations=[['cQe1','cQe2','cQe3'],1.0])
+ctli  = DegreeOfFreedom(name='ctli' ,relations=[['ctl1','ctl2','ctl3'],1.0])
+ctei  = DegreeOfFreedom(name='ctei' ,relations=[['cte1','cte2','cte3'],1.0])
+cQl3i = DegreeOfFreedom(name='cQl3i',relations=[['cQl31','cQl32','cQl33'],1.0])
+cQlMi = DegreeOfFreedom(name='cQlMi',relations=[['cQlM1','cQlM2','cQlM3'],1.0])
+ctlSi = DegreeOfFreedom(name='ctlSi',relations=[['ctlS1','ctlS2','ctlS3'],1.0])
+ctlTi = DegreeOfFreedom(name='ctlTi',relations=[['ctlT1','ctlT2','ctlT3'],1.0])
 
 # Four heavy quarks
 cQQ1   = DegreeOfFreedom(name='cQQ1'   ,relations=[['cQQ1'],1.0])
@@ -112,6 +162,7 @@ cQt8   = DegreeOfFreedom(name='cQt8'   ,relations=[['cQt8'],1.0])
 cQb1   = DegreeOfFreedom(name='cQb1'   ,relations=[['cQb1'],1.0])
 cQb8   = DegreeOfFreedom(name='cQb8'   ,relations=[['cQb8'],1.0])
 ctt    = DegreeOfFreedom(name='ctt'    ,relations=[['ctt'],1.0])
+ctt1   = DegreeOfFreedom(name='ctt1'   ,relations=[['ctt1'],1.0])
 ctb1   = DegreeOfFreedom(name='ctb1'   ,relations=[['ctb1'],1.0])
 cQtQb1 = DegreeOfFreedom(name='cQtQb1' ,relations=[['cQtQb1'],1.0])
 cQtQb8 = DegreeOfFreedom(name='cQtQb8' ,relations=[['cQtQb8'],1.0])
@@ -126,6 +177,33 @@ cQu8  = DegreeOfFreedom(name='cQu8'  ,relations=[['cQu8'],1.0])
 cQd1  = DegreeOfFreedom(name='cQd1'  ,relations=[['cQd1'],1.0])
 cQd8  = DegreeOfFreedom(name='cQd8'  ,relations=[['cQd8'],1.0])
 ctj1  = DegreeOfFreedom(name='ctj1'  ,relations=[['ctj1'],1.0])
+ctj8  = DegreeOfFreedom(name='ctj8'  ,relations=[['ctj8'],1.0])
+cbGRe  = DegreeOfFreedom(name='cbGRe'  ,relations=[['cbGRe'],1.0])
+clj1  = DegreeOfFreedom(name='clj1'  ,relations=[['clj1'],1.0])
+cHbox  = DegreeOfFreedom(name='cHbox'  ,relations=[['cHbox'],1.0])
+ctu1  = DegreeOfFreedom(name='ctu1'  ,relations=[['ctu1'],1.0])
+ctu8  = DegreeOfFreedom(name='ctu8'  ,relations=[['ctu8'],1.0])
+ctd1  = DegreeOfFreedom(name='ctd1'  ,relations=[['ctd1'],1.0])
+ctd8  = DegreeOfFreedom(name='ctd8'  ,relations=[['ctd8'],1.0])
+ctb8  = DegreeOfFreedom(name='ctb8'  ,relations=[['ctb8'],1.0])
+clu   = DegreeOfFreedom(name='clu'   ,relations=[['clu'],1.0])
+cld   = DegreeOfFreedom(name='cld'   ,relations=[['cld'],1.0])
+cbBRe = DegreeOfFreedom(name='cbBRe' ,relations=[['cbBRe'],1.0])
+cQq13 = DegreeOfFreedom(name='cQq13' ,relations=[['cQq13'],1.0])
+cQj31 = DegreeOfFreedom(name='cQj31' ,relations=[['cQj31'],1.0])
+cQq83 = DegreeOfFreedom(name='cQq83' ,relations=[['cQq83'],1.0])
+cQj38 = DegreeOfFreedom(name='cQj38' ,relations=[['cQj38'],1.0])
+cQq11 = DegreeOfFreedom(name='cQq11' ,relations=[['cQq11'],1.0])
+cQj11 = DegreeOfFreedom(name='cQj11' ,relations=[['cQj11'],1.0])
+cQq81 = DegreeOfFreedom(name='cQq81' ,relations=[['cQq81'],1.0])
+cQj18 = DegreeOfFreedom(name='cQj18' ,relations=[['cQj18'],1.0])
+cQu1  = DegreeOfFreedom(name='cQu1'  ,relations=[['cQu1'],1.0])
+cQu8  = DegreeOfFreedom(name='cQu8'  ,relations=[['cQu8'],1.0])
+cQd1  = DegreeOfFreedom(name='cQd1'  ,relations=[['cQd1'],1.0])
+cQd8  = DegreeOfFreedom(name='cQd8'  ,relations=[['cQd8'],1.0])
+ctq1  = DegreeOfFreedom(name='ctq1'  ,relations=[['ctq1'],1.0])
+ctj1  = DegreeOfFreedom(name='ctj1'  ,relations=[['ctj1'],1.0])
+ctq8  = DegreeOfFreedom(name='ctq8'  ,relations=[['ctq8'],1.0])
 ctj8  = DegreeOfFreedom(name='ctj8'  ,relations=[['ctj8'],1.0])
 ctu1  = DegreeOfFreedom(name='ctu1'  ,relations=[['ctu1'],1.0])
 ctu8  = DegreeOfFreedom(name='ctu8'  ,relations=[['ctu8'],1.0])
@@ -379,7 +457,8 @@ def main():
     random.seed()
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
-    tag   = 'ExampleTag'
+    tag   = 'Run3_52WCs_SMEFTsim_top'
+    restrict = False 
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
@@ -393,7 +472,8 @@ def main():
     #]
     scan_files = {
         'ttHJet': [
-            'scanfiles/startpts_scale_by_1p1_ttHJet.txt',
+            #'scanfiles/startpts_scale_by_1p1_ttHJet_ctH.txt',
+            'scanfiles/startpts_scale_by_1p1_SMEFT_ttHJet.txt',
             #'scanfiles/startpts_scale_by_1p3_ttHJet.txt',
             #'scanfiles/startpts_scale_by_1p5_ttHJet.txt',
             #'scanfiles/startpts_scale_by_2p0_ttHJet.txt',
@@ -402,40 +482,46 @@ def main():
             #'scanfiles/top19001_hi_startpt_22d.txt',
         ],
         'ttlnuJet': [
-            'scanfiles/startpts_scale_by_1p1_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_1p3_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_1p5_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_2p0_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_5p0_ttlnuJet.txt',
-            'scanfiles/top19001_lo_startpt_22d.txt',
-            'scanfiles/top19001_hi_startpt_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_SMEFT_ttlnuJet.txt',
+            #'scanfiles/startpts_scale_by_1p3_ttlnuJet.txt',
+            #'scanfiles/startpts_scale_by_1p5_ttlnuJet.txt',
+            #'scanfiles/startpts_scale_by_2p0_ttlnuJet.txt',
+            #'scanfiles/startpts_scale_by_5p0_ttlnuJet.txt',
+            #'scanfiles/top19001_lo_startpt_22d.txt',
+            #'scanfiles/top19001_hi_startpt_22d.txt',
         ],
         'ttllNuNuJetNoHiggs': [
-            'scanfiles/startpts_scale_by_1p1_ttllJet.txt',
-            'scanfiles/startpts_scale_by_1p3_ttllJet.txt',
-            'scanfiles/startpts_scale_by_1p5_ttllJet.txt',
-            'scanfiles/startpts_scale_by_2p0_ttllJet.txt',
-            'scanfiles/startpts_scale_by_5p0_ttllJet.txt',
-            'scanfiles/top19001_lo_startpt_22d.txt',
-            'scanfiles/top19001_hi_startpt_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_SMEFT_ttllJet.txt',
+            #'scanfiles/startpts_scale_by_1p3_ttllJet.txt',
+            #'scanfiles/startpts_scale_by_1p5_ttllJet.txt',
+            #'scanfiles/startpts_scale_by_2p0_ttllJet.txt',
+            #'scanfiles/startpts_scale_by_5p0_ttllJet.txt',
+            #'scanfiles/top19001_lo_startpt_22d.txt',
+            #'scanfiles/top19001_hi_startpt_22d.txt',
         ],
         'tHq4f': [
-            'scanfiles/startpts_scale_by_1p1_tHq.txt',
-            'scanfiles/startpts_scale_by_1p3_tHq.txt',
-            'scanfiles/startpts_scale_by_1p5_tHq.txt',
-            'scanfiles/startpts_scale_by_2p0_tHq.txt',
-            'scanfiles/startpts_scale_by_5p0_tHq.txt',
-            'scanfiles/top19001_lo_startpt_22d.txt',
-            'scanfiles/top19001_hi_startpt_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_SMEFT_tHq.txt',
+            #'scanfiles/startpts_scale_by_1p3_tHq.txt',
+            #'scanfiles/startpts_scale_by_1p5_tHq.txt',
+            #'scanfiles/startpts_scale_by_2p0_tHq.txt',
+            #'scanfiles/startpts_scale_by_5p0_tHq.txt',
+            #'scanfiles/top19001_lo_startpt_22d.txt',
+            #'scanfiles/top19001_hi_startpt_22d.txt',
         ],
         'tllq4fNoSchanWNoHiggs0p': [
-            'scanfiles/startpts_scale_by_1p1_tllq.txt',
-            'scanfiles/startpts_scale_by_1p3_tllq.txt',
-            'scanfiles/startpts_scale_by_1p5_tllq.txt',
-            'scanfiles/startpts_scale_by_2p0_tllq.txt',
-            'scanfiles/startpts_scale_by_5p0_tllq.txt',
-            'scanfiles/top19001_lo_startpt_22d.txt',
-            'scanfiles/top19001_hi_startpt_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_SMEFT_tllq.txt',
+            #'scanfiles/startpts_scale_by_1p3_tllq.txt',
+            #'scanfiles/startpts_scale_by_1p5_tllq.txt',
+            #'scanfiles/startpts_scale_by_2p0_tllq.txt',
+            #'scanfiles/startpts_scale_by_5p0_tllq.txt',
+            #'scanfiles/top19001_lo_startpt_22d.txt',
+            #'scanfiles/top19001_hi_startpt_22d.txt',
+        ],
+        'tttt': [
+            'scanfiles/startpts_scale_by_1p1_SMEFT_tttt.txt'
+        ],
+        'ttttJet': [
+            'scanfiles/startpts_scale_by_1p1_tttt.txt'
         ],
         'ttbarJet': [
             'scanfiles/startpts_scale_by_1p1_ttbarJet.txt',
@@ -446,16 +532,28 @@ def main():
             'scanfiles/top19001_lo_startpt_22d.txt',
             'scanfiles/top19001_hi_startpt_22d.txt',
         ],
+        'ttgamma': [
+            #'scanfiles/startpts_ttA_0j.txt',
+            #'scanfiles/startpts_ttgamma_ctW.txt',
+            #'scanfiles/startpts_scale_by_1p1_ttHJet.txt',
+            #'scanfiles/startpts_scale_by_1p1_ttgamma_SMEFTsim.txt',
+            'scanfiles/startpts_ttgamma_SMEFTsim_ttgamma.txt',
+            #'scanfiles/startpts_ttgamma2_ttgamma.txt',
+        ],
+        'tW': [
+            'scanfiles/startpts_scale_by_1p1_SMEFT_tW.txt',
+        ],
     }
 
-    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
-    proc_list = [ttHJet]
-    #dof_list  = [ctWRe , ctHRe , cHQ1 , cte , ctl,cQe , ctBRe , cQl1 , cQl3 , ctGRe , cleQt3Re , cbWRe , cHQ3 , cHtbRe , cHt , cleQt1Re,cQd1,cQd8,cQj11  ,cQj31  ,cQQ1,cQj18  ,cQj38  ,cQQ8,cQt1,cQt8,cQtQb1 ,cQtQb8 ,cQu1,cQu8,ctb1,ctd1,ctd8,ctj1,ctj8,ctt,ctu1,ctu8]
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,tttt,ttgamma]
     dof_list  = [
         ctHRe,cHQ1,ctWRe,ctBRe,ctGRe,cbWRe,cHQ3,cHtbRe,cHt, # TOP-19-001 2-heavy
-        cQl3,cQl1,cQe,ctl,cte,cleQt1Re,cleQt3Re, # TOP-19-001 4f
+        cQl31,cQl32,cQl33,cQl11,cQl12,cQl12,cQe1,cQe2,cQe3,ctl1,ctl2,ctl2,cte1,cte2,cte3, # TOP-19-001 4f
+	    cleQt3Re11, cleQt3Re22, cleQt3Re33, cleQt1Re11, cleQt1Re22, cleQt1Re33, # lepton flavor split
         cQj31,cQj38,cQj11,ctj1,cQj18,ctj8,      # 2-light 2-heavey quarks
-        ctt,cQQ1,cQt1,cQt8                     # 4-heavy quarks
+        #ctt,cQQ1,cQt1,cQt8,                     # 4-heavy quarks (Uncomment for tttt)
+        # New from SMP-24-003
+        clj1, cHbox, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbBRe, ctu8, cQu8
     ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
@@ -468,10 +566,10 @@ def main():
     sm_pt    = {}
     for dof in dof_list: sm_pt[dof.getName()] = 0.0
 
-    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
+    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0],restrict=restrict)
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
-    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_topU3l_MwScheme_UFO_ctGpatched"])
+    gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_top_MwScheme_UFO"])
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctB^2=1 DIM6_ctW^2=1") # For example
@@ -528,7 +626,7 @@ def main():
                 gp=gridpack,
                 dofs=dof_list,
                 tag=tag,
-                scan_files=scan_files[tag],
+                scan_files=scan_files[p.getName()],
                 max_submits=-1
             )
         else:
