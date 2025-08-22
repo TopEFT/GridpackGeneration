@@ -7,8 +7,7 @@ EFTMCPATH=`pwd -P`
 GENPRODPATH=${EFTMCPATH}/../../genproductions
 if [ "$(hostname)" == "cmscon.hep.wisc.edu" ]; then
     # path for cmsconnect submit node
-    GENPRODPATH="/ospool/cms-user/${USER}/genproductions_run3"/genproductions
-    eval "mkdir -p ${GENPRODPATH}"
+    GENPRODPATH="/home/${USER}/genproductions_run3"/genproductions
 fi
 ### end of settings 
 

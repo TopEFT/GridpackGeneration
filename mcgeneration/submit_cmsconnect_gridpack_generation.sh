@@ -252,7 +252,7 @@ if [ -e "${card_name}_codegen.log" ]; then rm "${card_name}_codegen.log"; fi
 # Create a temp directory in user's stash area.
 # Modify permissions so that XRootD can write to it.
 # @TODO: Find a better way to do this.
-stash_tmpdir=$(mktemp -d --tmpdir=/ospool/cms-user/$USER)
+stash_tmpdir=$(mktemp -d --tmpdir=/home/$USER)
 chmod 777 "$stash_tmpdir"
 
 create_codegen_exe > "$codegen_exe"
