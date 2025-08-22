@@ -203,7 +203,7 @@ class Gridpack(object):
         if self.ops['replace_model']:
             old = self.ops['replace_model'][0]
             new = self.ops['replace_model'][1]
-            print("{ind}Using {model} model".format(model=old,ind=indent_str))
+            print("{ind}Using {model} model".format(model=new,ind=indent_str))
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
