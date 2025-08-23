@@ -40,8 +40,8 @@ class Gridpack(object):
         self.SCANFILE_TYPE    = 'txt'
 
         # Used when naming the final gridpack tarball
-        self.CURR_ARCH        = 'el9_amd64_gcc11'
-        self.CURR_RELEASE     = 'CMSSW_13_2_9'
+        self.CURR_ARCH        = 'slc7_amd64_gcc10'
+        self.CURR_RELEASE     = 'CMSSW_12_4_8'
 
         # The script that is used to actually run the gridpack production
         self.GENPROD_SCRIPT   = 'gridpack_generation.sh'
