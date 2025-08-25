@@ -17,7 +17,7 @@ This repository contains the files that are necessary for setting up a `genprodu
    - From `genproductions`, `cd` into `bin/MadGraph5_aMCatNLO`  
    - Open `configure_gridpack.py` and modify according to the type of gridpack or gridpacks you would like to produce  
    - Run `configure_gridpack.py`  
-- Follow the [multilepton](multilepton.md) for Run 3 multilepton samples.
+- Follow the [multilepton](multilepton.md) document for Run 3 multilepton samples.
 
 ## Notes:
 - If you are running the script from anywhere besides `cmsconnect`, the script will create the `genproductions` directory in the same directory that `GridpackGeneration` is located in
@@ -36,5 +36,5 @@ gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
 Sometimes a gridpack will get past the `codegen` stage but fail in the `integrate`, resulting in a `.tar.xz` file less than 10 MB. <br>
 Use the `resubmit.py` script to resubmit these files (:memo: this script *must* be run with `python3`)
 ```python
-python3 resubmit.py`
+python3 resubmit.py
 ```
