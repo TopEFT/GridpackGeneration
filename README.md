@@ -27,3 +27,10 @@ gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
 # Alternatively via setOptions
 gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
 ```
+
+# Resubmitting failed gridpacks:
+Sometimes a gridpack will get past the `codegen` stage but fail in the `integrate`, resulting in a `.tar.xz` file less than 10 MB. <br>
+Use the `resubmit.py` script to resubmit these files (:memo: this script *must* be run with `python3`)
+```python
+python3 resubmit.py`
+```
