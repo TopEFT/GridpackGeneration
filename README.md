@@ -5,7 +5,7 @@ This repository contains the files that are necessary for setting up a `genprodu
 ## Instructions: 
 - :memo: Make sure you're on the `SMEFTsim_run3` branch
   - ```
-    git checkout -b SMEFTsim_run3
+    git checkout SMEFTsim_run3
     ```
 - First, `cd` into `mcgeneration`
 - Next run `source setup_production.sh`
