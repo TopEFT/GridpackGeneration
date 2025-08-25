@@ -1,8 +1,9 @@
 # Producing Run 3 gridpacks for the multilepton analysis
 Once this repo has been setup and `cms-sw/genproductions` has been checked out (see README.md) you are ready to make gridpacks.
+:Warning: Make sure you have your [grid certificate](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookStartingGrid#BasicGrid) configured on CMS Connect
 Go to base `genproductions` 
 ```
-cd /ospool/cms-user/$USER/genproductions_run3/genproductions/
+cd /home/$USER/genproductions_run3/genproductions/
 ```
 and enter the CC7 singularity with condor
 ```
