@@ -458,6 +458,7 @@ def main():
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
     tag   = 'Run3_52WCs_SMEFTsim_top'
+    restrict = False 
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
@@ -565,7 +566,7 @@ def main():
     sm_pt    = {}
     for dof in dof_list: sm_pt[dof.getName()] = 0.0
 
-    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
+    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0],restrict=restrict)
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
     gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_top_MwScheme_UFO"])

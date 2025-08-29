@@ -65,6 +65,7 @@ class Gridpack(object):
             'replace_model': None,          # If not None overwrites the import model line of the process card
             'flavor_scheme': 5,
             'default_limits': [-10,10],
+            'restrict': False,
         }
 
         self.setOptions(**kwargs)
@@ -203,6 +204,7 @@ class Gridpack(object):
         if self.ops['replace_model']:
             old = self.ops['replace_model'][0]
             new = self.ops['replace_model'][1]
+            if self.ops['restrict']: new += '_' + self.ops['process']
             print("{ind}Using {model} model".format(model=new,ind=indent_str))
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
@@ -229,6 +231,10 @@ class Gridpack(object):
 
         save_scan_points(scanfile,self.ops['coeffs'],self.scan_pts)
         make_reweight_card(rwgt_tar,self.ops['coeffs'],self.scan_pts)
+        # FIXME automate paths
+        if self.ops['restrict']:
+            mpath = 'addons/models/SMEFTsim_topU3l_MwScheme_UFO_ctGpatched/restrict_massless_q_{ops}.dat'.format(ops=self.ops["process"])
+            make_restrict_card(mpath, self.ops['coeffs'])
 
         return rwgt_tar
 
