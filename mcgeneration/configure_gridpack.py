@@ -457,7 +457,7 @@ def main():
     random.seed()
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
-    tag   = 'Run3_52WCs_SMEFTsim_top'
+    tag   = 'Example1'
     restrict = False 
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
