@@ -204,7 +204,9 @@ class Gridpack(object):
         if self.ops['replace_model']:
             old = self.ops['replace_model'][0]
             new = self.ops['replace_model'][1]
-            if self.ops['restrict']: new += '_' + self.ops['process']
+            if self.ops['restrict']: new += f'-massless_{self.ops["process"]}'
+            if len(list(self.ops['coeffs'])) == 1:
+                new += f'_{list(self.ops["coeffs"])[0]}'
             print("{ind}Using {model} model".format(model=new,ind=indent_str))
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
@@ -231,10 +233,12 @@ class Gridpack(object):
 
         save_scan_points(scanfile,self.ops['coeffs'],self.scan_pts)
         make_reweight_card(rwgt_tar,self.ops['coeffs'],self.scan_pts)
-        # FIXME automate paths
         if self.ops['restrict']:
-            mpath = 'addons/models/SMEFTsim_topU3l_MwScheme_UFO_ctGpatched/restrict_massless_q_{ops}.dat'.format(ops=self.ops["process"])
-            make_restrict_card(mpath, self.ops['coeffs'])
+            mpath  =  'addons/models/SMEFTsim_top_MwScheme_UFO/restrict_massless.dat'
+            ompath = f'addons/models/SMEFTsim_top_MwScheme_UFO/restrict_massless_{self.ops["process"]}.dat'
+            if len(list(self.ops['coeffs'])) == 1:
+                ompath = ompath[:-4] + f'_{list(self.ops["coeffs"])[0]}.dat'
+            make_restrict_card(mpath, ompath, keep=True, SMEFT=list(self.ops['coeffs']))
 
         return rwgt_tar
 

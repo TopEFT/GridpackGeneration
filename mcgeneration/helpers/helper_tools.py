@@ -136,10 +136,13 @@ def make_restrict_card(file_name,out_fname,keep=True,**blocks):
 
             # Avoid dealing with lines that should never need to be edited
             if not skip:
+                x = l.split(' # ')
+                if len(x) == 1:
+                    continue
                 data, param_name = [x.strip() for x in l.split(" # ")]
                 # data should always be 2 numbers separated by a single space
                 idx, value = data.split()
-                if blocks.has_key(block):
+                if block in blocks:
                     params = blocks[block]
                     if keep:
                         # Zero out any params that aren't specified
@@ -156,8 +159,8 @@ def make_restrict_card(file_name,out_fname,keep=True,**blocks):
                             l = f"{indent}{idx:>3} 0.{counter:0>7}e+00 # {param_name}"
                             counter += 1
             # The new restrict card should be (as far as lines go) a 1-to-1 mirror of the base card
-            lines.append(l)
-    with open(out_file,'w') as f:
+            lines.append(l.rstrip())
+    with open(out_fname,'w') as f:
         f.write("\n".join(lines))
 
 # Reads a limit file and returns a dictionary mapping the WCs to their respective high,low limits to use
