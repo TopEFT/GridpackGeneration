@@ -380,6 +380,8 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             model_dir = "addons/models/{model}".format(model=model)
             ref_restrict = restrict_ops['ref']
             new_restrict = "{ref}_{name}.dat".format(ref=ref_restrict.removesuffix('.dat'),name=dof.getName())
+            new_model = "{model}-{restrict}".format(model=model,restrict=new_restrict.removesuffix('.dat'))
+
             ref_restrict = os.path.join(model_dir,ref_restrict)
             new_restrict = os.path.join(model_dir,new_restrict)
             # Create a new restrict card in the directory of the model specified by the MGProcess
