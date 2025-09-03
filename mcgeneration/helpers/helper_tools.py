@@ -96,49 +96,61 @@ def make_reweight_card(file_name,dofs,pts):
                     f.write("\nset %s %.6f" % (k2,v2))
             f.write("\n")
 
-def make_restrict_card(file_name,out_fname,keep=True,**blocks):
+def make_restrict_card(ref_fpath,out_fpath,keep=True,**blocks):
     '''
-        file_name: Name of the restrict card to read, which will serve as the basis for the new restrict card
-        out_fname: Name of the modified restrict card
+        ref_fpath: Full path to the reference restrict card to read, which will serve as the basis
+                   for the new restrict card
+        out_fpath: Full path to write the modified restrict card to.
         keep: If true, then for a given block, the listed parameters will be NOT zero'd out.
               If false, then for a given block, the listed parameters will be zero'd out.
         blocks: {
-            "block_A" : ["param1"."param2", ...],
+            "block_A" : ["param1", "param2", ...],
             "block_B" : [ ... ],
         }
+
+        NOTE: If a lhablock is not included as part of the 'blocks' dictionary, then all parameters
+              in that block will be untouched. If you want to zero out all parameters for a particular
+              block, then simply include that block and give it an empty list (with keep=True).
+
+        NOTE: The keys of the 'blocks' dictionary are case sensitive and need to match exactly with
+              how they are spelled in the reference restrict card. The same goes for the parameter
+              names.
+
+        NOTE: The newly made restrict card needs to be placed in the directory of the model that the
+              process card intends to use, e.g. "addons/models/NAME_OF_MODEL". The gridpack_generation.sh
+              script has a line that will copy everything under "addons/models" into the MG base
+              directory that gets created on the fly in gridpack_generation.sh. This is how MG is able
+              to find custom models that aren't default included in MG.
+
+        NOTE: The 'for' loop explicitly avoids using any 'continue' statements, since we want the
+              new restrict card to be a 1-to-1 match of the original, with the only changes being
+              the values of specific parameters in certain lhablocks.
     '''
     counter = 1
     indent = " "*2
     lines = []
     block = None
-    with open(file_name,'r') as f:
-        for l in f.readlines():
+    with open(ref_fpath,'r') as f:
+        for line_no,l in enumerate(f.readlines()):
             # Check if this ENTIRE line is a comment
             is_comment = l.startswith("#")
             # Check if this line specifies the start of a new LHA block section
             is_block_header = l.lower().startswith("block")
             # Check if this line is an empty line
-            is_empty_line = len(l) == 0
+            is_empty_line = len(l.strip()) == 0
             # Skip lines we know we won't need to edit
             skip = is_comment or is_block_header or is_empty_line
-
             if is_block_header:
                 # Store the name of the current block
                 block = l.split()[1]
-            
             if l.lower().startswith("decay"):
                 # Decay lines are their own thing separate from LHA block stuff, so don't mess with them
                 skip = True
             elif block == "QNUMBERS":
                 # QNUMBERS blocks have a bit different syntax then other blocks, so avoid them as well
                 skip = True
-
-
             # Avoid dealing with lines that should never need to be edited
             if not skip:
-                x = l.split(' # ')
-                if len(x) == 1:
-                    continue
                 data, param_name = [x.strip() for x in l.split(" # ")]
                 # data should always be 2 numbers separated by a single space
                 idx, value = data.split()
@@ -147,21 +159,23 @@ def make_restrict_card(file_name,out_fname,keep=True,**blocks):
                     if keep:
                         # Zero out any params that aren't specified
                         if param_name in params:
-                            l = f"{indent}{idx:>3} 0.{counter:0>7}e+00 # {param_name}"
+                            l = f"{indent}{idx:>3} 0.{counter:0<7}e+00 # {param_name} "
                             counter += 1
                         else:
-                            l = f"{indent}{idx:>3} 0.0000000e+00 # {param_name}"
+                            l = f"{indent}{idx:>3} 0.0000000e+00 # {param_name} "
                     else:
                         # Zero out any params that are specified
                         if param_name in params:
-                            l = f"{indent}{idx:>3} 0.0000000e+00 # {param_name}"
+                            l = f"{indent}{idx:>3} 0.0000000e+00 # {param_name} "
                         else:
-                            l = f"{indent}{idx:>3} 0.{counter:0>7}e+00 # {param_name}"
+                            l = f"{indent}{idx:>3} 0.{counter:0<7}e+00 # {param_name} "
                             counter += 1
             # The new restrict card should be (as far as lines go) a 1-to-1 mirror of the base card
-            lines.append(l.rstrip())
-    with open(out_fname,'w') as f:
+            lines.append(l.rstrip("\n"))
+
+    with open(out_fpath,'w') as f:
         f.write("\n".join(lines))
+        f.write("\n")
 
 # Reads a limit file and returns a dictionary mapping the WCs to their respective high,low limits to use
 def parse_limit_file(fpath):

@@ -370,6 +370,33 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             high_lim = round(wc_limits[lim_key][1],6)
         else:
             low_lim,high_lim = gp.getOption('default_limits')
+
+        ###############################
+        restrict_ops = gp.getOption('restrict')
+        if restrict_ops:
+            # The getModel() method takes care of the case where we've specified a different model than
+            #   what the MGProcess process card uses
+            model = gp.getModel()
+            model_dir = "addons/models/{model}".format(model=model)
+            ref_restrict = restrict_ops['ref']
+            new_restrict = "{ref}_{name}.dat".format(ref=ref_restrict.removesuffix('.dat'),name=dof.getName())
+            ref_restrict = os.path.join(model_dir,ref_restrict)
+            new_restrict = os.path.join(model_dir,new_restrict)
+            # Create a new restrict card in the directory of the model specified by the MGProcess
+            keep = restrict_ops['keep']
+            # Its ok to specify a parameter that doesn't show up in a particular lhablock. Also,
+            #   for operators that have been defined as linear combinations, we need to use the actual
+            #   parameter names, rather than what we get from dof.getName()
+            blocks = {k: list(dof.getCoefficients()) for k in restrict_ops['blocks']}
+            make_restrict_card(ref_restrict,new_restrict,keep=keep,**blocks)
+            # We can't use the 'replace_model' option to set the restrict card as this will overwrite
+            #   that option, which might have already been used to specify a different model. Modifying
+            #   the gridpack options like this feels rather dangerous, but not sure how to do this
+            #   any other way
+            restrict_ops['replace'] = [model,new_model]
+            gp.setOptions(restrict=restrict_ops)
+        ###############################
+
         for idx,start in enumerate(linspace(low_lim,high_lim,runs)):
             if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
                 continue
@@ -458,7 +485,14 @@ def main():
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
     tag   = 'Example1'
-    restrict = False 
+    # Set the restrict option to None or False to avoid using the restrict card machinary
+    restrict = {
+        "ref": "restrict_massless.dat", # Name of the restrict card to use as the reference
+        "blocks": ["SMEFT","SMEFTcpv"], # Name of the lhablock(s) that we want to modify
+        "keep": True,                   # Keep only the parameters we specify
+        "replace": None,                # This needs to be set prior to each Gridpack.setup() call
+    }
+    # restrict = None
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
@@ -566,10 +600,11 @@ def main():
     sm_pt    = {}
     for dof in dof_list: sm_pt[dof.getName()] = 0.0
 
-    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0],restrict=restrict)
+    gridpack = Gridpack(stype=stype,btype=btype,default_limits=[-20.0,20.0])
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
     gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_top_MwScheme_UFO"])
+    gridpack.setOptions(restrict=restrict)
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctB^2=1 DIM6_ctW^2=1") # For example
