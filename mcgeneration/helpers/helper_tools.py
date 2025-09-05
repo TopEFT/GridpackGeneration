@@ -12,7 +12,7 @@ def run_process(inputs,verbose=True,indent=0):
     stdout = []
     while True:
         l = p.stdout.readline()
-        if l == '' and p.poll() is not None:
+        if l == b'' and p.poll() is not None:
             break
         if l:
             stdout.append(l.strip())

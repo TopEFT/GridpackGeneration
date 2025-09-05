@@ -42,8 +42,8 @@ class JobTracker(object):
 
         self.use_cached_update = False     # If true, then getRunningJobs() should return
 
-        self.scram_arch = 'el9_amd64_gcc11'
-        self.cmssw_release = 'CMSSW_13_2_9'
+        self.scram_arch = 'slc7_amd64_gcc10'
+        self.cmssw_release = 'CMSSW_12_4_8'
 
         self.update()
 
@@ -329,7 +329,7 @@ class JobTracker(object):
             #print("\nChecking: %s - %s - %s" % (fn,int_tstr,mod_tstr))
             #print("\nChecking: %s - Total %s - Intg %s - LogMod %s" % (fn,tot_tstr,int_tstr,mod_tstr))
             print("\nChecking: %s - %s - %s - %s" % (fn,tot_tstr,int_tstr,mod_tstr))
-            run_process(['tail','-n%d' % (lines),log_file])
+            run_process(['tail','-n%d' % (lines),log_file], verbose=False)
 
     def displayJobList(self,s,arr):
         print("%s Jobs: %d" % (s,len(arr)))
