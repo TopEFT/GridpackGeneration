@@ -4,7 +4,7 @@ import shutil
 import random
 import time
 
-from helpers.helper_tools import linspace, parse_limit_file, find_process
+from helpers.helper_tools import linspace, parse_limit_file, find_process, make_restrict_card
 from helpers.ScanType import ScanType
 from helpers.BatchType import BatchType
 from helpers.DegreeOfFreedom import DegreeOfFreedom
