@@ -258,7 +258,8 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             if tracker.getTarballTime(job) > 3*(tar_cut+delay):
                 # Skip checking jobs that finished sufficiently long ago
                 continue
-            if tracker.resubmitted.has_key(job) and tracker.resubmitted[job] >= resubmits:
+            # if tracker.resubmitted.has_key(job) and tracker.resubmitted[job] >= resubmits:
+            if job in tracker.resubmitted and tracker.resubmitted[job] >= resubmits:
                 # Stop trying to resubmit the job
                 continue
             p,c,r = job.split('_')
@@ -278,7 +279,8 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             gridpack.setProcess(p)
             #TODO: Might not want to split it up like this
             if stype == ScanType.SLINSPACE:
-                if proc_run_wl.has_key(p.getName()):
+                # if proc_run_wl.has_key(p.getName()):
+                if p.getName() in proc_run_wl:
                     submitted += submit_1dim_jobs(
                         gp=gridpack,
                         dofs=dofs,
@@ -364,7 +366,8 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             # The dof already has limits, re-use them
             low_lim = dof.getLow()
             high_lim = dof.getHigh()
-        elif wc_limits.has_key(lim_key):
+        # elif wc_limits.has_key(lim_key):
+        elif lim_key in wc_limits:
             # Use limits from the limits file for this process
             low_lim  = round(wc_limits[lim_key][0],6)
             high_lim = round(wc_limits[lim_key][1],6)
@@ -379,8 +382,13 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             model = gp.getModel()
             model_dir = "addons/models/{model}".format(model=model)
             ref_restrict = restrict_ops['ref']
-            new_restrict = "{ref}_{name}.dat".format(ref=ref_restrict.removesuffix('.dat'),name=dof.getName())
-            new_model = "{model}-{restrict}".format(model=model,restrict=new_restrict.removesuffix('.dat'))
+            # We can't use str.removesuffix since it isn't available in python3.6
+            if ref_restrict.endswith('.dat'):
+                new_restrict = "{ref}_{name}".format(ref=ref_restrict.replace('.dat',''),name=dof.getName())
+            # The model import syntax in MG expects a specific naming convention -> MODEL-massless_NAME,
+            #   where _NAME corresponds to the restrict .dat card and would look like: restrict_massless_NAME.dat
+            new_model = "{model}-massless_{restrict}".format(model=model,restrict=dof.getName())
+            new_restrict = new_restrict + ".dat"
 
             ref_restrict = os.path.join(model_dir,ref_restrict)
             new_restrict = os.path.join(model_dir,new_restrict)
@@ -400,7 +408,8 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
         ###############################
 
         for idx,start in enumerate(linspace(low_lim,high_lim,runs)):
-            if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
+            # if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
+            if dof_name in run_wl and idx not in run_wl[dof_name]:
                 continue
             pt = {}
             pt[dof.getName()] = start
