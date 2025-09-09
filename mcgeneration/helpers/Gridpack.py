@@ -247,7 +247,7 @@ class Gridpack(object):
         #       sure the restrict card exists and is placed in the correct location.
         if self.ops['restrict']:
             model, restrict = self.ops['restrict']['replace']
-            print("{ind}Using restrict card {restrict} for model {model}".format(model=model,restrict=restrict))
+            print("{ind}Using restrict card {restrict} for model {model}".format(ind=indent_str,model=model,restrict=restrict))
             sed_str = "s|import model {model}|import model {restrict}|g".format(model=model,restrict=restrict)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
