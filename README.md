@@ -31,6 +31,33 @@ gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
 # Alternatively via setOptions
 gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
 ```
+- The `restrict` option will tell the code to create a restrict card for the model you choose to use. The value you pass when setting the `restrict` option is a dictionary with the following structure.
+```python
+restrict = {
+    "ref": "restrict_massless.dat",
+    "blocks": ["SMEFT","SMEFTcpv"],
+    "keep": True
+}
+gp.setOptions(restrict=restrict)
+```
+- The `restrict` option will tell the code to create a restrict card for the model you choose to use. The value you pass when setting the `restrict` option is a dictionary with the following structure. At the moment, the `restrict` option only has an effect when using `ScanType.SLINSPACE`.
+```python
+restrict = {
+    "ref": "restrict_massless.dat",
+    "blocks": ["SMEFT","SMEFTcpv"],
+    "keep": True
+}
+gp.setOptions(restrict=restrict)
+```
+`ref`
+: This should be the name of a restrict card that is already located in the directory of the model you intend to use. It will be used as a template reference to create the actual restrict card that Madgraph will be pointed to.
+
+`blocks`
+: This is a list of UFO block names that the code will consider when deciding to keep or exclude certain parameters. Any parameters specified under other blocks will be kept at the values they had in the reference restrict card. The block names _are_ case sensitive!
+
+`keep`
+: A booleon value that indicates how to treat matched parameters. If `True`, then only matched parameters are kept and all others in the block are set to 0. If `False`, then only the matched parameters are set to 0.
+
 
 # Resubmitting failed gridpacks:
 Sometimes a gridpack will get past the `codegen` stage but fail in the `integrate`, resulting in a `.tar.xz` file less than 10 MB. <br>
