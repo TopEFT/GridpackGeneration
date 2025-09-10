@@ -31,15 +31,6 @@ gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
 # Alternatively via setOptions
 gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
 ```
-- The `restrict` option will tell the code to create a restrict card for the model you choose to use. The value you pass when setting the `restrict` option is a dictionary with the following structure.
-```python
-restrict = {
-    "ref": "restrict_massless.dat",
-    "blocks": ["SMEFT","SMEFTcpv"],
-    "keep": True
-}
-gp.setOptions(restrict=restrict)
-```
 - The `restrict` option will tell the code to create a restrict card for the model you choose to use. The value you pass when setting the `restrict` option is a dictionary with the following structure. At the moment, the `restrict` option only has an effect when using `ScanType.SLINSPACE`.
 ```python
 restrict = {
