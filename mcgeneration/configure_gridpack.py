@@ -357,7 +357,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
 def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
     submitted = 0
     delay    =  10.0   # Time between successful submits (in seconds)
-    wc_limits = parse_limit_file(os.path.join("addons/limits","dim6top_LO_UFO_limits.txt"))
+    wc_limits = parse_limit_file(os.path.join("addons/limits","SMEFTsim_top_limits.txt"))
     for dof in dofs:
         dof_name = dof.getName()
         lim_key = "{process}_{wc}".format(process=gp.getOption('process'),wc=dof_name)
