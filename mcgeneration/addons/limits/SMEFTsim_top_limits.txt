@@ -25,7 +25,7 @@ tllq_cleQt3Re1    -22.84  22.84
 tllq_cleQt3Re2    -22.84  22.84  
 tllq_cleQt3Re3    -22.84  22.84  
 tllq_ctl     -157.91 157.91 
-tllq_ctH      -78.02  80.42  
+tllq_ctHRe      -78.02  80.42  
 ttH_cQe1      -157.91 157.91 
 ttH_cQe2      -157.91 157.91 
 ttH_cQe3      -157.91 157.91 
@@ -53,7 +53,7 @@ ttH_cleQt3Re1     -157.91 157.91
 ttH_cleQt3Re2     -157.91 157.91 
 ttH_cleQt3Re3     -157.91 157.91 
 ttH_ctl      -157.91 157.91 
-ttH_ctH       -20.06  52.09  
+ttH_ctHRe       -20.06  52.09  
 ttbar_cQe1    -157.91 157.91 
 ttbar_cQe2    -157.91 157.91 
 ttbar_cQe3    -157.91 157.91 
@@ -81,7 +81,7 @@ ttbar_cleQt3Re1   -157.91 157.91
 ttbar_cleQt3Re2   -157.91 157.91 
 ttbar_cleQt3Re3   -157.91 157.91 
 ttbar_ctl    -157.91 157.91 
-ttbar_ctH     -157.91 157.91 
+ttbar_ctHRe     -157.91 157.91 
 ttll_cQe1     -43.53  43.91  
 ttll_cQe2     -43.53  43.91  
 ttll_cQe3     -43.53  43.91  
@@ -110,7 +110,7 @@ ttll_cleQt3Re2    -8.21   8.21
 ttll_cleQt3Re2    -8.21   8.21   
 ttll_cleQt3Re3    -8.21   8.21   
 ttll_ctl     -43.53  44.26  
-ttll_ctH      -47.35  79.26  
+ttll_ctHRe      -47.35  79.26  
 ttlnu_cQe1    -157.91 157.91 
 ttlnu_cQe2    -157.91 157.91 
 ttlnu_cQe3    -157.91 157.91 
@@ -138,4 +138,4 @@ ttlnu_cleQt3Re1   -157.91 157.91
 ttlnu_cleQt3Re2   -157.91 157.91 
 ttlnu_cleQt3Re3   -157.91 157.91 
 ttlnu_ctl    -157.91 157.91 
-ttlnu_ctH     -157.91 157.91 
+ttlnu_ctHRe     -157.91 157.91 
