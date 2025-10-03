@@ -31,9 +31,15 @@ gp = Gridpack(replace_model=['dim6top_LO_UFO','smloop'])
 # Alternatively via setOptions
 gp.setOptions(replace_model=['dim6top_LO_UFO','smloop'])
 ```
-## Making Run 2 gridpacks on CMS Connect:
-To correctly make gridpacks for Run 2 (based on slc7/cc7) you must enter singularity:
+-
+-# Resubmitting failed gridpacks:
+-Sometimes a gridpack will get past the `codegen` stage but fail in the `integrate`, resulting in a `.tar.xz` file less than 10 MB. <br>
+-Use the `resubmit.py` script to resubmit these files (:memo: this script *must* be run with `python3`)
+-```python
+-python3 resubmit.py
+## Making Run 3 gridpacks on CMS Connect:
+To correctly make gridpacks for Run 3 (based on slc7/cc7) you must enter singularity:
 ```
-cmssw-cc7-condor-python27
+cmssw-cc7-condor
 ```
 This command should be executed from the base `genproductions` folder (*not* the MadGraph5 folder, otherwise the git repository won't be available).
