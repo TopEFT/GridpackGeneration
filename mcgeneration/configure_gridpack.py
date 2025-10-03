@@ -467,6 +467,8 @@ def main():
     # Options that should overwrite w/e was set in the corresponding template run card
     rc_ops = {
         'run_tag': 'tag_1'  # This is just an example, since all template run cards already have this as the setting
+        'ebeam1': '6800'  # This is just an example, since all template run cards already have this as the setting
+        'ebeam2': '6800'  # This is just an example, since all template run cards already have this as the setting
     }
 
     proc_run_wl = {}    # {proc_name: {dof_name: [runs] } }
