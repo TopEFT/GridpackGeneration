@@ -11,7 +11,7 @@ def run_process(inputs,verbose=True,indent=0):
     p = subprocess.Popen(inputs,stdout=subprocess.PIPE)
     stdout = []
     while True:
-        l = p.stdout.readline()
+        l = p.stdout.readline().decode()
         if l == '' and p.poll() is not None:
             break
         if l:
