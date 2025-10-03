@@ -118,7 +118,7 @@ cQtQb8 = DegreeOfFreedom(name='cQtQb8' ,relations=[['cQtQb8'],1.0])
 
 # Two-heavy-two-light quarks
 clq1  = DegreeOfFreedom(name='clq1'  ,relations=[['clq1'],1.0])
-cHbox = DegreeOfFreedom(name='cHbox'  ,relations=[['cHbox'],1.0])
+# cHbox = DegreeOfFreedom(name='cHbox'  ,relations=[['cHbox'],1.0])
 ctb8  = DegreeOfFreedom(name='ctb8'  ,relations=[['ctb8'],1.0])
 clu   = DegreeOfFreedom(name='clu'   ,relations=[['clu'],1.0])
 cld   = DegreeOfFreedom(name='cld'   ,relations=[['cld'],1.0])
@@ -399,58 +399,58 @@ def main():
     #]
     scan_files = {
         'ttHJet': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_ttHJet.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_ttHJet.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_ttHJet.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_ttHJet.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_ttHJet.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_ttHJet.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_ttHJet.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_ttHJet.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_ttHJet.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_ttHJet.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
         'ttlnuJet': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_ttlnuJet.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_ttlnuJet.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_ttlnuJet.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_ttlnuJet.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
         'ttllNuNuJetNoHiggs': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_ttllJet.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_ttllJet.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_ttllJet.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_ttllJet.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_ttllJet.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_ttllJet.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_ttllJet.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_ttllJet.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_ttllJet.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_ttllJet.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
         'tHq4f': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_tHq.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_tHq.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_tHq.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_tHq.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_tHq.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_tHq.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_tHq.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_tHq.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_tHq.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_tHq.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
         'tllq4fNoSchanWNoHiggs0p': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_tllq.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_tllq.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_tllq.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_tllq.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_tllq.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_tllq.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_tllq.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_tllq.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_tllq.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_tllq.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
         'ttbarJet': [
-            'scanfiles/startpts_scale_by_1p1_dim6top_ttbarJet.txt',
-            'scanfiles/startpts_scale_by_1p3_dim6top_ttbarJet.txt',
-            'scanfiles/startpts_scale_by_1p5_dim6top_ttbarJet.txt',
-            'scanfiles/startpts_scale_by_2p0_dim6top_ttbarJet.txt',
-            'scanfiles/startpts_scale_by_5p0_dim6top_ttbarJet.txt',
-            'scanfiles/top19001_lo_startpt_dim6top_22d.txt',
-            'scanfiles/top19001_hi_startpt_dim6top_22d.txt',
+            'scanfiles/startpts_scale_by_1p1_Run3_dim6top_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_1p3_Run3_dim6top_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_1p5_Run3_dim6top_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_2p0_Run3_dim6top_ttbarJet.txt',
+            'scanfiles/startpts_scale_by_5p0_Run3_dim6top_ttbarJet.txt',
+            'scanfiles/top19001_lo_startpt_Run3_dim6top_22d.txt',
+            'scanfiles/top19001_hi_startpt_Run3_dim6top_22d.txt',
         ],
     }
 
@@ -461,7 +461,8 @@ def main():
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8,                    # 4-heavy quarks
         # New from SMP-24-003
-        clq1, cHbox, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8
+        clq1, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8 # No cHbox in dim6top
+        # clq1, cHbox, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8
     ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
