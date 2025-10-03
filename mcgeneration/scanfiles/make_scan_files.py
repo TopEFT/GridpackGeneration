@@ -322,7 +322,7 @@ def main():
     file_name_lst = ["startpts_scale_by_5p0","startpts_scale_by_2p0","startpts_scale_by_1p5","startpts_scale_by_1p3","startpts_scale_by_1p1","startpts_ttgamma_SMEFTsim"]
     file_name_lst = ["startpts_scale_by_1p1"]
     file_name_lst = ["startpts_ttgamma_SMEFTsim"]
-    file_name_lst = ["startpts_scale_by_1p1_dim6top"]
+    file_name_lst = ["startpts_scale_by_1p1_Run3_dim6top"]
     for f_name in file_name_lst:
         d = open_json(f_name)
         for process_name,process_startpt in d.items():
