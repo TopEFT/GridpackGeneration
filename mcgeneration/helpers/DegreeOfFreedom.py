@@ -70,6 +70,21 @@ class DegreeOfFreedom(object):
 #]
 
 if __name__ == "__main__":
+
+    cbB = DegreeOfFreedom(name='cbB', relations=[['cbB'], 1.0])
+    cHbox = DegreeOfFreedom(name='cHbox', relations=[['cHbox'], 1.0])
+    cld = DegreeOfFreedom(name='cld', relations=[['cld'], 1.0])
+    clq1 = DegreeOfFreedom(name='clq1', relations=[['clq1'], 1.0])
+    clu = DegreeOfFreedom(name='clu', relations=[['clu'], 1.0])
+    cQb8 = DegreeOfFreedom(name='cQb8', relations=[['cQb8'], 1.0])
+    cQd1 = DegreeOfFreedom(name='cQd1', relations=[['cQd1'], 1.0])
+    cQd8 = DegreeOfFreedom(name='cQd8', relations=[['cQd8'], 1.0])
+    cQu1 = DegreeOfFreedom(name='cQu1', relations=[['cQu1'], 1.0])
+    cQu8 = DegreeOfFreedom(name='cQu8', relations=[['cQu8'], 1.0])
+    ctb8 = DegreeOfFreedom(name='ctb8', relations=[['ctb8'], 1.0])
+    ctd1 = DegreeOfFreedom(name='ctd1', relations=[['ctd1'], 1.0])
+    ctd8 = DegreeOfFreedom(name='ctd8', relations=[['ctd8'], 1.0])
+    ctu8 = DegreeOfFreedom(name='ctu8', relations=[['ctu8'], 1.0])
     ctp   = DegreeOfFreedom(name='ctp',relations=[['ctp'],1.0])
     cpQM  = DegreeOfFreedom(name='cpQM',relations=[['cpQM'],1.0])
     cpQ3  = DegreeOfFreedom(name='cpQ3',relations=[['cpQ3'],1.0])

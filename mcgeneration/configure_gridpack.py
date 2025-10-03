@@ -117,6 +117,12 @@ cQtQb1 = DegreeOfFreedom(name='cQtQb1' ,relations=[['cQtQb1'],1.0])
 cQtQb8 = DegreeOfFreedom(name='cQtQb8' ,relations=[['cQtQb8'],1.0])
 
 # Two-heavy-two-light quarks
+clq1  = DegreeOfFreedom(name='clq1'  ,relations=[['clq1'],1.0])
+cHbox = DegreeOfFreedom(name='cHbox'  ,relations=[['cHbox'],1.0])
+ctb8  = DegreeOfFreedom(name='ctb8'  ,relations=[['ctb8'],1.0])
+clu   = DegreeOfFreedom(name='clu'   ,relations=[['clu'],1.0])
+cld   = DegreeOfFreedom(name='cld'   ,relations=[['cld'],1.0])
+cbB   = DegreeOfFreedom(name='cbB' ,relations=[['cbB'],1.0])
 cQq13 = DegreeOfFreedom(name='cQq13' ,relations=[['cQq13'],1.0])
 cQq83 = DegreeOfFreedom(name='cQq83' ,relations=[['cQq83'],1.0])
 cQq11 = DegreeOfFreedom(name='cQq11' ,relations=[['cQq11'],1.0])
@@ -379,7 +385,7 @@ def main():
     random.seed()
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
-    tag   = 'ExampleTag'
+    tag   = 'Run3With41WCsDim6Top'
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
@@ -448,12 +454,14 @@ def main():
         ],
     }
 
-    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,ttbarJet,ttgamma]
+    proc_list = [ttHJet,ttlnuJet,ttllNuNuJetNoHiggs,tHq4f,tllq4fNoSchanWNoHiggs0p,tttt]#,ttgamma]
     dof_list  = [
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
         ctt1,cQQ1,cQt1,cQt8                     # 4-heavy quarks
+        # New from SMP-24-003
+        clq1, cHbox, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8
     ]
 
     # Options that should overwrite w/e was set in the corresponding template run card
