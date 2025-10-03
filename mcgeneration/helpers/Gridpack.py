@@ -688,8 +688,8 @@ class Gridpack(object):
             return True
         elif btype == BatchType.CONDOR:
             # Not currently working
-            print("\tCondor running is not currently working. Sorry!")
-            #subprocess.Popen(['./submit_condor_gridpack_generation.sh',setup,target_dir]).communicate()
+            #print("\tCondor running is not currently working. Sorry!")
+            subprocess.Popen(['./submit_glados_condor_gridpack_generation.sh',setup,target_dir])#.communicate()
             #run_process(['./submit_condor_gridpack_generation.sh',setup,target_dir])
             return True
         elif btype == BatchType.NONE:
