@@ -224,6 +224,7 @@ make_gridpack () {
     
       if [ "$queue" == "local" ]; then
           echo "set run_mode 2" >> mgconfigscript
+	  echo "set nb_core 8" >> mgconfigscript
       elif [ "$queue" == "pdmv" ]; then
           echo "set run_mode 2" >> mgconfigscript
 	  echo "set nb_core $NB_CORE" >> mgconfigscript
@@ -721,10 +722,8 @@ echo $SYSTEM_RELEASE
 if [ -n "$5" ]; then
     scram_arch=${5}
 else
-    if [[ $SYSTEM_RELEASE == *"release 6"* ]]; then 
-        scram_arch=slc6_amd64_gcc700 
-    elif [[ $SYSTEM_RELEASE == *"release 7"* ]]; then 
-        scram_arch=slc7_amd64_gcc700 
+    if [[ $SYSTEM_RELEASE == *"release 7"* ]]; then 
+        scram_arch=slc7_amd64_gcc10 
     elif [[ $SYSTEM_RELEASE == *"release 9"* ]]; then
         scram_arch=el9_amd64_gcc11
     else 
