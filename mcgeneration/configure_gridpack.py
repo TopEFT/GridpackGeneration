@@ -385,7 +385,7 @@ def main():
     random.seed()
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
-    tag   = 'Run3With41WCsDim6Top'
+    tag   = 'ExampleTag'
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
