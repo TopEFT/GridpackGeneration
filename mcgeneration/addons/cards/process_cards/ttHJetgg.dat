@@ -29,7 +29,7 @@ set gauge unitary
 set complex_mass_scheme False
 set max_npoint_for_channel 0
 set auto_convert_model T
-import model dim6top_LO_UFO
+import model SMEFTsim_topU3l_MwScheme_UFO
 define p = p b b~
 define j = p
 generate g g > t t~ h NP=1 @0
