@@ -122,7 +122,7 @@ clq1  = DegreeOfFreedom(name='clq1'  ,relations=[['clq1'],1.0])
 ctb8  = DegreeOfFreedom(name='ctb8'  ,relations=[['ctb8'],1.0])
 clu   = DegreeOfFreedom(name='clu'   ,relations=[['clu'],1.0])
 cld   = DegreeOfFreedom(name='cld'   ,relations=[['cld'],1.0])
-cbB   = DegreeOfFreedom(name='cbB' ,relations=[['cbB'],1.0])
+cbZ   = DegreeOfFreedom(name='cbZ' ,relations=[['cbZ'],1.0])
 cQq13 = DegreeOfFreedom(name='cQq13' ,relations=[['cQq13'],1.0])
 cQq83 = DegreeOfFreedom(name='cQq83' ,relations=[['cQq83'],1.0])
 cQq11 = DegreeOfFreedom(name='cQq11' ,relations=[['cQq11'],1.0])
@@ -147,7 +147,7 @@ coeffs_2Hvy_2Lgt = [cQq13,cQq83,cQq11,cQq81,cQu1,cQu8,cQd1,cQd8,ctq1,ctq8,ctu1,c
 def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,stype,scan_files=[],proc_run_wl={},attempt_resubmit=False):
     #NOTE: The proc_run_wl is only use for SLINSPACE mode
     if runs == 0:
-        print("ERROR: For Batch jobs, need to specify at least 1 run!")
+        print("ERROR: For Zatch jobs, need to specify at least 1 run!")
         return
 
     tracker = JobTracker(fdir=os.getcwd())
@@ -459,9 +459,9 @@ def main():
         ctp,cpQM,ctW,ctZ,ctG,cbW,cpQ3,cptb,cpt, # TOP-19-001 2-heavy
         cQl3i,cQlMi,cQei,ctli,ctei,ctlSi,ctlTi, # TOP-19-001 4f
         cQq13,cQq83,cQq11,ctq1,cQq81,ctq8,      # 2-light 2-heavey quarks
-        ctt1,cQQ1,cQt1,cQt8,                    # 4-heavy quarks
+        #ctt1,cQQ1,cQt1,cQt8,                    # 4-heavy quarks
         # New from SMP-24-003
-        clq1, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8 # No cHbox in dim6top
+        clq1, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbZ, ctu8, cQu8 # No cHbox in dim6top
         # clq1, cHbox, ctu1, ctb8, clu, cld, cQb8, ctd8, cQd1, cQd8, ctd1, cQu1, cbB, ctu8, cQu8
     ]
 
