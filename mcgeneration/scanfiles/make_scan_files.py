@@ -2,12 +2,12 @@ import random
 import json
 
 # wc_names_list is in the order for the scanpoints file
-WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "ctt1", "cQQ1", "cQt1", "cQt8", "clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"] # Include 4hq needed for tttt
-WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "ctt1", "cQQ1", "cQt1", "cQt8", "clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"] # Include 4hq needed for tttt
-WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"]
-WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"]
-new_list = ["clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"]
-new_list = ["clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbB", "ctu8", "cQu8"] # no cHbox
+WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "ctt1", "cQQ1", "cQt1", "cQt8", "clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"] # Include 4hq needed for tttt
+WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "ctt1", "cQQ1", "cQt1", "cQt8", "clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"] # Include 4hq needed for tttt
+WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"]
+WC_NAMES_LST = ["ctp", "cpQM", "ctW", "ctZ", "ctG", "cbW", "cpQ3", "cptb", "cpt", "cQl3i", "cQlMi", "cQei", "ctli", "ctei", "ctlSi", "ctlTi", "cQq13", "cQq83", "cQq11", "ctq1", "cQq81", "ctq8", "clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"]
+new_list = ["clq1", "cHbox", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"]
+new_list = ["clq1", "ctu1", "ctb8", "clu", "cld", "cQb8", "ctd8", "cQd1", "cQd8", "ctd1", "cQu1", "cbZ", "ctu8", "cQu8"] # no cHbox
 
 TOP19001_LIMS = {
     "ctW"   : [-3.08, 2.87],
