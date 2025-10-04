@@ -7,7 +7,7 @@ EFTMCPATH=`pwd -P`
 GENPRODPATH=${EFTMCPATH}/../../genproductions
 if [ "$(hostname)" == "cmscon.hep.wisc.edu" ]; then
     # path for cmsconnect submit node
-    GENPRODPATH="/home/${USER}/genproductions_run3"/genproductions
+    GENPRODPATH="/home/${USER}/genproductions_dim6top_run3"/genproductions
 elif [ "$(hostname)" == "condor.crc.nd.edu" ]; then
     GENPRODPATH="/scratch365/${USER}"/genproductions
 fi
