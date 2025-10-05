@@ -11,12 +11,12 @@ def run_process(inputs,verbose=True,indent=0):
     p = subprocess.Popen(inputs,stdout=subprocess.PIPE)
     stdout = []
     while True:
-        l = p.stdout.readline().decode('utf-8')
+        l = p.stdout.readline().decode('utf-8', errors='replace').rstrip()
         if l == '' and p.poll() is not None:
             break
         if l:
             stdout.append(l.strip())
-            if verbose: print(indent_str+l.strip())
+            if verbose: print(f'{indent_str}{l}')
     return stdout
 
 def find_process(p_name,p_lst):
