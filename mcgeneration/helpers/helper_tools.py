@@ -3,6 +3,8 @@ import random
 import subprocess
 import shutil
 import re
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Pipes subprocess messages to STDOUT
 def run_process(inputs,verbose=True,indent=0):
