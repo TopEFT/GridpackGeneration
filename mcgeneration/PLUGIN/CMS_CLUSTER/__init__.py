@@ -58,7 +58,9 @@ hostname = socket.gethostname()
 def singularityWraper():
     if "lxplus" in hostname:
         return f'\nMY.WantOS = \"{hostname.split(".")[0].replace("lxplus","el")}\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
-    elif "uscms" in hostname:
+    elif "cmscon" in hostname:
+        return '\nMY.WantOS = \"scl7\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
+    else:
         return '\nMY.WantOS = \"scl7\"\n' # Following https://batchdocs.web.cern.ch/local/submit.html#os-selection-via-containers and simply using hostname 
 
 def cleansubproc(subproc):
