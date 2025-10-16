@@ -206,7 +206,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             gridpack.setProcess(p)
             #TODO: Might not want to split it up like this
             if stype == ScanType.SLINSPACE:
-                if proc_run_wl.has_key(p.getName()):
+                if p.getName() in proc_run_wl:
                     submitted += submit_1dim_jobs(
                         gp=gridpack,
                         dofs=dofs,
@@ -292,14 +292,14 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             # The dof already has limits, re-use them
             low_lim = dof.getLow()
             high_lim = dof.getHigh()
-        elif wc_limits.has_key(lim_key):
+        elif lim_key in wc_limits:
             # Use limits from the limits file for this process
             low_lim  = round(wc_limits[lim_key][0],6)
             high_lim = round(wc_limits[lim_key][1],6)
         else:
             low_lim,high_lim = gp.getOption('default_limits')
         for idx,start in enumerate(linspace(low_lim,high_lim,runs)):
-            if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
+            if dof_name in run_wl and idx not in run_wl[dof_name]:
                 continue
             pt = {}
             pt[dof.getName()] = start
