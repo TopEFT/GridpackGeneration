@@ -186,7 +186,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             if tracker.getTarballTime(job) > 3*(tar_cut+delay):
                 # Skip checking jobs that finished sufficiently long ago
                 continue
-            if tracker.resubmitted.has_key(job) and tracker.resubmitted[job] >= resubmits:
+            if job in tracker.resubmitted and tracker.resubmitted[job] >= resubmits:
                 # Stop trying to resubmit the job
                 continue
             p,c,r = job.split('_')
