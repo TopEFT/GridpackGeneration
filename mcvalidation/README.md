@@ -13,7 +13,7 @@ Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](h
 :warning: Update the link to the `mc_validation` folder in `master` once the PR is merged.
 
 Steps for validation
-1. Crate a gridpack
+1. Create a gridpack
 2. Make nanoGEN samples using `scan.py`
 3. Make jsons for TopEFT to process using `make_jsons.py` (**NOTE**: this can be slow, so you can also make the jsons by hand, just be sure to use the correct cross setion and upate the `nSumOfWeights` field with the results from the sow processor, the `nEvents` and `nGenEvents` fields are not used and can be set to 0.)
 4. Draw the quadratic parameterization curves and extract staring points, example
