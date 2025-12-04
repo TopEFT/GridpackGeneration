@@ -11,18 +11,18 @@ Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](h
 
 Steps for validation
 1. Crate a gridpack
-1. Make nanoGEN samples
-1. Make jsons for TopEFT to process
-1. Draw the quadratic parameterization curves and extract staring points, example
+2. Make nanoGEN samples
+3. Make jsons for TopEFT to process
+4. Draw the quadratic parameterization curves and extract staring points, example
 ```
 python quad_curves.py /scratch365/byates2/wc_validation/1D/2022_tWZll_4f_StPt6_1M_run0.pkl.gz --json ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZll_4f_StPt6_1M_run0.json --dout 2022_tWZll_4f --scale 1.1
 ```
 It's best to try multiple starting points, e.g. `--scale 1.1`, `--scale 1.3`, `--scale 1.5` will return the WC value where SM value of that process is scaled by 10, 30, or 50%
-1. Process the files, example on glados using `futures` (only use `futures` if the files are small since this runs locally and uses up resources)
+5. Process the files, example on glados using `futures` (only use `futures` if the files are small since this runs locally and uses up resources)
 ```
 python run_gen_analysis.py ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZll_4f_StPt6_1M_run0.json -o 2022_tWZll_4f_StPt6_1M_run0 -p /scratch365/byates2/wc_validation/ -x futures -r file:///cms/cephfs/data/
 ```
-1. The `comp_norm.py` script allows you to plot your samples vs another, example
+6. The `comp_norm.py` script allows you to plot your samples vs another, example
 ```
 python comp_norm.py /scratch365/byates2/wc_validation/2022_tWZll_4f_StPt6_1M_run0.pkl.gz histos/2022_TWZToLL_Wlep_central.pkl.gz ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZ_noDecay_1j_Mll30_StPt4_1M_xQcut5_run0.json
 ```
