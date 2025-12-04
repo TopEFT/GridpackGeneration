@@ -2,11 +2,14 @@
 ## Basic procedure
 To validate a gridpack, we need samples to process. Since our Coffea framework uses nanoAOD files, the quickest way to validate a gridpack is to make nanoGEN samples. These contain _only_ GEN level information, and are stored using the nano format (flat columnar tables)
 The `scan.py` script can run over multiple gridpacks and submit jobs to CRAB.
+
 :warning: Since this uses CRAB, make sure you have a proper `voms-proxy` configured!
 This script can be run from anywhere that has access to the CMS Grid: lxplus, glados, Nebraska, etc.
+
 :warning: We have not run this script from CMS Connect. It might be possible, but you'd need to find the XRootD redirector. It's easier to store you're gridpacks in a known, good area like EOS, CERNBox, or ceph on glados.
 
 Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](https://github.com/TopEFT/topeft/pull/491).
+
 :warning: Update the link to the `mc_validation` folder in `master` once the PR is merged.
 
 Steps for validation
