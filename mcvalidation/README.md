@@ -22,7 +22,7 @@ Steps for validation
 ```
 python quad_curves.py /scratch365/byates2/wc_validation/1D/2022_tWZll_4f_StPt6_1M_run0.pkl.gz --json ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZll_4f_StPt6_1M_run0.json --dout 2022_tWZll_4f --scale 1.1
 ```
-It's best to try multiple starting points, e.g. `--scale 1.1`, `--scale 1.3`, `--scale 1.5` will return the WC value where SM value of that process is scaled by 10, 30, or 50%
+It's best to try multiple starting points, e.g. `--scale 1.1`, `--scale 1.3`, `--scale 1.5` will return the WC value where yield is scaled by 10, 30, or 50% of the SM.
 
 5. Process the files, example on glados using `futures` (only use `futures` if the files are small since this runs locally and uses up resources)
 ```
