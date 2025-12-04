@@ -18,8 +18,10 @@ Steps for validation
 2. Make nanoGEN samples using `scan.py` (**NOTE**: since this GridpackGeneration repo is so large, it's easier to just manually download this one script on the server you'll submit from)
 ### TopEFT repo
 3. Make jsons for TopEFT to process using `make_jsons.py` (**NOTE**: this can be slow, so you can also make the jsons by hand, just be sure to use the correct cross setion and upate the `nSumOfWeights` field with the results from the sow processor, the `nEvents` and `nGenEvents` fields are not used and can be set to 0.)
-4. When making mulitple starting points, make sure they can consistently reweight to eachother using `validate_eft_wc.py`
-`python validate_eft_wc.py --proc $proc  --tag Run3Dim6TopWithTOP22006AxisScan --wc-tag 7pts_500 --wc ctp`
+4. When making mulitple starting points, make sure they can consistently reweight to eachother using `validate_eft_wc.py`, exmaple
+```
+python validate_eft_wc.py --proc $proc  --tag Run3Dim6TopWithTOP22006AxisScan --wc-tag 7pts_500 --wc ctp
+```
 5. Draw the quadratic parameterization curves and extract staring points, example
 ```
 python quad_curves.py /scratch365/byates2/wc_validation/1D/2022_tWZll_4f_StPt6_1M_run0.pkl.gz --json ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZll_4f_StPt6_1M_run0.json --dout 2022_tWZll_4f --scale 1.1
