@@ -20,7 +20,7 @@ Steps for validation
 3. Make jsons for TopEFT to process using `make_jsons.py` (**NOTE**: this can be slow, so you can also make the jsons by hand, just be sure to use the correct cross setion and upate the `nSumOfWeights` field with the results from the sow processor, the `nEvents` and `nGenEvents` fields are not used and can be set to 0.)
 4. When making mulitple starting points, make sure they can consistently reweight to eachother using `validate_eft_wc.py`, exmaple
 ```
-python validate_eft_wc.py --proc $proc  --tag Run3Dim6TopWithTOP22006AxisScan --wc-tag 7pts_500 --wc ctp
+python validate_eft_wc.py --proc ttH --tag Run3Dim6TopWithTOP22006AxisScan --wc-tag 7pts_500 --wc ctp
 ```
 5. Draw the quadratic parameterization curves and extract staring points, example
 ```
