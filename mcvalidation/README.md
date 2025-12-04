@@ -13,6 +13,9 @@ Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](h
 :warning: Update the link to the `mc_validation` folder in `master` once [PR #491](https://github.com/TopEFT/topeft/pull/491) is merged.
 
 Steps for validation
+
+:white_check_mark: Most of these scripts will have docstrings at the top for more info
+
 ### GridpackGeneration repo
 1. Create a gridpack
 2. Make nanoGEN samples using `scan.py` (**NOTE**: since this GridpackGeneration repo is so large, it's easier to just manually download this one script on the server you'll submit from)
