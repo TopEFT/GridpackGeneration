@@ -8,9 +8,9 @@ This script can be run from anywhere that has access to the CMS Grid: lxplus, gl
 
 :warning: We have not run this script from CMS Connect. It might be possible, but you'd need to find the XRootD redirector. It's easier to store you're gridpacks in a known, good area like EOS, CERNBox, or ceph on glados.
 
-Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](https://github.com/TopEFT/topeft/pull/491).
+Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](https://github.com/TopEFT/topeft/tree/validation_scripts/analysis/mc_validation).
 
-:warning: Update the link to the `mc_validation` folder in `master` once the PR is merged.
+:warning: Update the link to the `mc_validation` folder in `master` once [PR #491](https://github.com/TopEFT/topeft/pull/491) is merged.
 
 Steps for validation
 1. Create a gridpack
