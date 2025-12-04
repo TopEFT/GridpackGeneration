@@ -14,8 +14,8 @@ Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](h
 
 Steps for validation
 1. Crate a gridpack
-2. Make nanoGEN samples
-3. Make jsons for TopEFT to process
+2. Make nanoGEN samples using `scan.py`
+3. Make jsons for TopEFT to process using `make_jsons.py` (*NOTE*: this can be slow, so you can also make the jsons by hand, just be sure to use the correct cross setion and upate the `nSumOfWeights` field with the results from the sow processor, the `nEvents` and `nGenEvents` fields are not used and can be set to 0.)
 4. Draw the quadratic parameterization curves and extract staring points, example
 ```
 python quad_curves.py /scratch365/byates2/wc_validation/1D/2022_tWZll_4f_StPt6_1M_run0.pkl.gz --json ../../input_samples/sample_jsons/signal_samples/private_UL/2022_tWZll_4f_StPt6_1M_run0.json --dout 2022_tWZll_4f --scale 1.1
