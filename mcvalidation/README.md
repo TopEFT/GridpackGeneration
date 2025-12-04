@@ -6,7 +6,7 @@ The `scan.py` script can run over multiple gridpacks and submit jobs to CRAB.
 :warning: Since this uses CRAB, make sure you have a proper `voms-proxy` configured!
 This script can be run from anywhere that has access to the CMS Grid: lxplus, glados, Nebraska, etc.
 
-:warning: We have not run this script from CMS Connect. It might be possible, but you'd need to find the XRootD redirector. It's easier to store you're gridpacks in a known, good area like EOS, CERNBox, or ceph on glados.
+:warning: We have not run this script from CMS Connect. It might be possible, but you'd need to find the XRootD redirector. It's easier to store you're gridpacks in a known, good area like EOS, CERNBox, or ceph on glados and run the script from one of the recommended sites above.
 
 Once the nanoGEN samples are made, you can use our TopEFT [validation scripts](https://github.com/TopEFT/topeft/tree/validation_scripts/analysis/mc_validation).
 
