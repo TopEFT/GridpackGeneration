@@ -70,7 +70,7 @@ config.Site.storageSite = "T3_US_NotreDame"
 
 
 fragments = {
-    'ttll': 'TTWJets_5f_LO_MLM-fragment.py',
+    'ttll': 'ttlnuJets_custom_ND-fragment.py',
     'ttH': 'ttHJets_custom_ND-fragment.py',
     'ttA': 'ttgamma_custom_ND-fragment.py',
     'ttlnu': 'ttlnuJets_custom_ND-fragment.py',
