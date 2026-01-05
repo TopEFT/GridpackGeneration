@@ -65,6 +65,7 @@ class Gridpack(object):
             'replace_model': None,          # If not None overwrites the import model line of the process card
             'flavor_scheme': 5,
             'default_limits': [-10,10],
+            'restrict': False,
         }
 
         self.setOptions(**kwargs)
@@ -109,6 +110,35 @@ class Gridpack(object):
             template_dir=p.getTemplateDir(),
             flavor_scheme=p.getFlavorScheme(self.CARD_DIR)
         )
+
+    # The (baseline) model is defined for the process card, which is specified by the MGProcess. If
+    #   the user has specified a new model via the 'replace_model' option, then the model we get from
+    #   the template process card likely won't be the same model that gets used in the actual process
+    #   card that MG reads. This is b/c we replace the 'import model' line in the >copied< version of
+    #   the process card.
+    def getModel(self):
+        if not self.getOption("process"):
+            raise RuntimeError("No process set")
+        if self.getOption("replace_model"):
+            # User has specified a different model to use, so we return that one
+            old, new = self.getOption("replace_model")
+            # If the new model actually corresponds to a restrict card, we need to only return the
+            #   piece that corresponds to the model as a whole. MG syntax for restrict cards is of
+            #   the form: MODEL-RESTRICT, this also means that we should never use a '-' anywhere in
+            #   the name of a model or a restrict card
+            new = new.split('-')[0]
+            return new
+        process_card = os.path.join(self.HOME_DIR,self.CARD_DIR,self.ops['template_dir'],self.ops['process_card'])
+        search_str = "import model"
+        with open(process_card,'r') as f:
+            for l in f.readlines():
+                # Ignore comments
+                l = l.split(sep="#",maxsplit=1)[0]
+                l = l.strip()
+                if l.startswith(search_str):
+                    model = l[len(search_str):]
+                    return model.strip()
+        raise RuntimeError("Unable to find 'import model' line in {pcard} for {pname}".format(pcard=self.ops['process_card'],pname=self.ops['process']))
 
     def loadRunCard(self):
         """
@@ -205,6 +235,20 @@ class Gridpack(object):
             new = self.ops['replace_model'][1]
             print("{ind}Using {model} model".format(model=new,ind=indent_str))
             sed_str = "s|import model {old}|import model {new}|g".format(old=old,new=new)
+            subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
+
+        # Note: It is assumed that the user has made sure that the 'replace' info matches what the
+        #       current state of the copied process card is, e.g. if 'replace_model' has been used,
+        #       then the 'model' part of the 'replace' info should already correspond to w/e the
+        #       'replace_model' option changed things to.
+        # TODO: Since the getModel() method does take care to consider the case where the user has
+        #       specified the 'replace_model' option, we might be able to use that to help ensure
+        #       things are a little more consistent. The user would still be responsible for making
+        #       sure the restrict card exists and is placed in the correct location.
+        if self.ops['restrict']:
+            model, restrict = self.ops['restrict']['replace']
+            print("{ind}Using restrict card {restrict} for model {model}".format(ind=indent_str,model=model,restrict=restrict))
+            sed_str = "s|import model {model}|import model {restrict}|g".format(model=model,restrict=restrict)
             subprocess.Popen(['sed','-i','-e',sed_str,fpath]).communicate()
 
         # Replace SUBSETUP in the process card with the correct name

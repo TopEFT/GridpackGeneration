@@ -4,7 +4,7 @@ import shutil
 import random
 import time
 
-from helpers.helper_tools import linspace, parse_limit_file, find_process
+from helpers.helper_tools import linspace, parse_limit_file, find_process, make_restrict_card
 from helpers.ScanType import ScanType
 from helpers.BatchType import BatchType
 from helpers.DegreeOfFreedom import DegreeOfFreedom
@@ -258,7 +258,8 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             if tracker.getTarballTime(job) > 3*(tar_cut+delay):
                 # Skip checking jobs that finished sufficiently long ago
                 continue
-            if tracker.resubmitted.has_key(job) and tracker.resubmitted[job] >= resubmits:
+            # if tracker.resubmitted.has_key(job) and tracker.resubmitted[job] >= resubmits:
+            if job in tracker.resubmitted and tracker.resubmitted[job] >= resubmits:
                 # Stop trying to resubmit the job
                 continue
             p,c,r = job.split('_')
@@ -278,7 +279,8 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
             gridpack.setProcess(p)
             #TODO: Might not want to split it up like this
             if stype == ScanType.SLINSPACE:
-                if proc_run_wl.has_key(p.getName()):
+                # if proc_run_wl.has_key(p.getName()):
+                if p.getName() in proc_run_wl:
                     submitted += submit_1dim_jobs(
                         gp=gridpack,
                         dofs=dofs,
@@ -355,7 +357,7 @@ def cmsconnect_chain_submit(gridpack,dofs,proc_list,tag_postfix,rwgt_pts,runs,st
 def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
     submitted = 0
     delay    =  10.0   # Time between successful submits (in seconds)
-    wc_limits = parse_limit_file(os.path.join("addons/limits","dim6top_LO_UFO_limits.txt"))
+    wc_limits = parse_limit_file(os.path.join("addons/limits","SMEFTsim_top_limits.txt"))
     for dof in dofs:
         dof_name = dof.getName()
         lim_key = "{process}_{wc}".format(process=gp.getOption('process'),wc=dof_name)
@@ -364,14 +366,50 @@ def submit_1dim_jobs(gp,dofs,npts,runs,tag_postfix='',max_submits=-1,run_wl={}):
             # The dof already has limits, re-use them
             low_lim = dof.getLow()
             high_lim = dof.getHigh()
-        elif wc_limits.has_key(lim_key):
+        # elif wc_limits.has_key(lim_key):
+        elif lim_key in wc_limits:
             # Use limits from the limits file for this process
             low_lim  = round(wc_limits[lim_key][0],6)
             high_lim = round(wc_limits[lim_key][1],6)
         else:
             low_lim,high_lim = gp.getOption('default_limits')
+
+        ###############################
+        restrict_ops = gp.getOption('restrict')
+        if restrict_ops:
+            # The getModel() method takes care of the case where we've specified a different model than
+            #   what the MGProcess process card uses
+            model = gp.getModel()
+            model_dir = "addons/models/{model}".format(model=model)
+            ref_restrict = restrict_ops['ref']
+            # We can't use str.removesuffix since it isn't available in python3.6
+            if ref_restrict.endswith('.dat'):
+                new_restrict = "{ref}_{name}".format(ref=ref_restrict.replace('.dat',''),name=dof.getName())
+            # The model import syntax in MG expects a specific naming convention -> MODEL-massless_NAME,
+            #   where _NAME corresponds to the restrict .dat card and would look like: restrict_massless_NAME.dat
+            new_model = "{model}-massless_{restrict}".format(model=model,restrict=dof.getName())
+            new_restrict = new_restrict + ".dat"
+
+            ref_restrict = os.path.join(model_dir,ref_restrict)
+            new_restrict = os.path.join(model_dir,new_restrict)
+            # Create a new restrict card in the directory of the model specified by the MGProcess
+            keep = restrict_ops['keep']
+            # Its ok to specify a parameter that doesn't show up in a particular lhablock. Also,
+            #   for operators that have been defined as linear combinations, we need to use the actual
+            #   parameter names, rather than what we get from dof.getName()
+            blocks = {k: list(dof.getCoefficients()) for k in restrict_ops['blocks']}
+            make_restrict_card(ref_restrict,new_restrict,keep=keep,**blocks)
+            # We can't use the 'replace_model' option to set the restrict card as this will overwrite
+            #   that option, which might have already been used to specify a different model. Modifying
+            #   the gridpack options like this feels rather dangerous, but not sure how to do this
+            #   any other way
+            restrict_ops['replace'] = [model,new_model]
+            gp.setOptions(restrict=restrict_ops)
+        ###############################
+
         for idx,start in enumerate(linspace(low_lim,high_lim,runs)):
-            if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
+            # if run_wl.has_key(dof_name) and idx not in run_wl[dof_name]:
+            if dof_name in run_wl and idx not in run_wl[dof_name]:
                 continue
             pt = {}
             pt[dof.getName()] = start
@@ -457,7 +495,15 @@ def main():
     random.seed()
     stype = ScanType.FROMFILE
     btype = BatchType.CMSCONNECT
-    tag   = 'Run3_52WCs_SMEFTsim_top'
+    tag   = 'Example1'
+    # Set the restrict option to None or False to avoid using the restrict card machinary
+    restrict = {
+        "ref": "restrict_massless.dat", # Name of the restrict card to use as the reference
+        "blocks": ["SMEFT","SMEFTcpv"], # Name of the lhablock(s) that we want to modify
+        "keep": True,                   # Keep only the parameters we specify
+        "replace": None,                # This needs to be set prior to each Gridpack.setup() call
+    }
+    # restrict = None
     runs  = 1               # if set to 0, will only make a single gridpack
     npts  = 0
     #scan_files = [
@@ -569,6 +615,7 @@ def main():
     gridpack.setOptions(runcard_ops=rc_ops)
     # For using a different model
     gridpack.setOptions(coupling_string="SMHLOOP=0 NP=1 NPprop=0",replace_model=["SMEFTsim_topU3l_MwScheme_UFO","SMEFTsim_top_MwScheme_UFO"])
+    gridpack.setOptions(restrict=restrict)
     # For creating feynman diagrams
     #gridpack.setOptions(btype=BatchType.LOCAL,save_diagrams=True,replace_model="dim6top_LO_UFO_each_coupling_order_v2020-05-19")
     #gridpack.setOptions(coupling_string="FCNC=0 DIM6^2=1 DIM6_ctB^2=1 DIM6_ctW^2=1") # For example
